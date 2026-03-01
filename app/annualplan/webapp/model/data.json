@@ -1,0 +1,247 @@
+{
+  "filters": {
+    "salesOffice": "",
+    "customer": "",
+    "contractNumber": "",
+    "status": ""
+  },
+  "filterOptions": {
+    "salesOffices": [
+      { "key": "", "text": "All Sales Offices" },
+      { "key": "NORTH", "text": "North Zone – Delhi" },
+      { "key": "WEST", "text": "West Zone – Mumbai" },
+      { "key": "SOUTH", "text": "South Zone – Chennai" },
+      { "key": "EAST", "text": "East Zone – Kolkata" }
+    ],
+    "statuses": [
+      { "key": "", "text": "All Statuses" },
+      { "key": "PENDING", "text": "Pending Review" },
+      { "key": "APPROVED", "text": "Approved" },
+      { "key": "REJECTED", "text": "Rejected" },
+      { "key": "UNDER_REVIEW", "text": "Under Review" }
+    ]
+  },
+  "summaryInfo": {
+    "zone": "North Zone - Delhi",
+    "fiscalYear": "FY 2025 - 26",
+    "totalPlans": 8,
+    "pending": 3,
+    "approved": 4,
+    "rejected": 1
+  },
+  "plans": [
+    {
+      "planId": "PLN-001",
+      "customer": "ABC Power Ltd",
+      "customerId": "CUST-1001",
+      "contractNumber": "CTR-2025-001",
+      "material": "RLNG",
+      "industry": "Power",
+      "salesOffice": "North Zone - Delhi",
+      "submittedOn": "12 Jan 2025",
+      "status": "PENDING",
+      "statusText": "Pending Review",
+      "statusState": "Warning",
+      "acq": 1000,
+      "aacq": 1200,
+      "upwardFlex": 25,
+      "downwardFlex": 5,
+      "makeUpGas": 200,
+      "makeGoodGas": 0,
+      "fmDeficiency": 0,
+      "sdDays": 15,
+      "topPercent": 80,
+      "uom": "MMSCM",
+      "quarterlyLimits": {
+        "q1Limit": 26,
+        "q2Limit": 27,
+        "q3Limit": 24,
+        "q4Limit": 25
+      },
+      "monthlyPlan": {
+        "jan": 95, "feb": 100, "mar": 105,
+        "apr": 115, "may": 120, "jun": 110,
+        "jul": 90, "aug": 95, "sep": 85,
+        "oct": 80, "nov": 105, "dec": 100
+      },
+      "quarterlyTotals": {
+        "q1": 300, "q1Pct": 25, "q1State": "Success",
+        "q2": 345, "q2Pct": 29, "q2State": "Error",
+        "q3": 270, "q3Pct": 23, "q3State": "Success",
+        "q4": 285, "q4Pct": 24, "q4State": "Success"
+      },
+      "annualTotal": 1200,
+      "shutdownDays": [
+        { "month": "March", "days": 3, "dcq": 10 }
+      ],
+      "rejectionReason": ""
+    },
+    {
+      "planId": "PLN-002",
+      "customer": "XYZ Fertilizer Co.",
+      "customerId": "CUST-1002",
+      "contractNumber": "CTR-2025-002",
+      "material": "RLNG",
+      "industry": "Fertilizer",
+      "salesOffice": "North Zone - Delhi",
+      "submittedOn": "14 Jan 2025",
+      "status": "APPROVED",
+      "statusText": "Approved",
+      "statusState": "Success",
+      "acq": 700,
+      "aacq": 850,
+      "upwardFlex": 20,
+      "downwardFlex": 5,
+      "makeUpGas": 150,
+      "makeGoodGas": 0,
+      "fmDeficiency": 0,
+      "sdDays": 10,
+      "topPercent": 75,
+      "uom": "MMSCM",
+      "quarterlyLimits": {
+        "q1Limit": 26, "q2Limit": 27, "q3Limit": 24, "q4Limit": 25
+      },
+      "monthlyPlan": {
+        "jan": 65, "feb": 70, "mar": 75,
+        "apr": 80, "may": 72, "jun": 78,
+        "jul": 60, "aug": 65, "sep": 55,
+        "oct": 62, "nov": 68, "dec": 100
+      },
+      "quarterlyTotals": {
+        "q1": 210, "q1Pct": 25, "q1State": "Success",
+        "q2": 230, "q2Pct": 27, "q2State": "Warning",
+        "q3": 180, "q3Pct": 21, "q3State": "Success",
+        "q4": 230, "q4Pct": 27, "q4State": "Warning"
+      },
+      "annualTotal": 850,
+      "shutdownDays": [],
+      "rejectionReason": ""
+    },
+    {
+      "planId": "PLN-003",
+      "customer": "PQR Steel Corp",
+      "customerId": "CUST-1003",
+      "contractNumber": "CTR-2025-003",
+      "material": "PNG",
+      "industry": "Industrial",
+      "salesOffice": "North Zone - Delhi",
+      "submittedOn": "15 Jan 2025",
+      "status": "REJECTED",
+      "statusText": "Rejected",
+      "statusState": "Error",
+      "acq": 500,
+      "aacq": 620,
+      "upwardFlex": 22,
+      "downwardFlex": 0,
+      "makeUpGas": 120,
+      "makeGoodGas": 0,
+      "fmDeficiency": 0,
+      "sdDays": 20,
+      "topPercent": 70,
+      "uom": "MMSCM",
+      "quarterlyLimits": {
+        "q1Limit": 26, "q2Limit": 27, "q3Limit": 24, "q4Limit": 25
+      },
+      "monthlyPlan": {
+        "jan": 50, "feb": 55, "mar": 60,
+        "apr": 70, "may": 75, "jun": 80,
+        "jul": 45, "aug": 48, "sep": 47,
+        "oct": 42, "nov": 48, "dec": 50
+      },
+      "quarterlyTotals": {
+        "q1": 165, "q1Pct": 27, "q1State": "Warning",
+        "q2": 225, "q2Pct": 36, "q2State": "Error",
+        "q3": 140, "q3Pct": 23, "q3State": "Success",
+        "q4": 140, "q4Pct": 23, "q4State": "Success"
+      },
+      "annualTotal": 670,
+      "shutdownDays": [],
+      "rejectionReason": "Q2 quantity exceeds quarterly limit of 27%. Please resubmit with adjusted monthly quantities."
+    },
+    {
+      "planId": "PLN-004",
+      "customer": "LMN Energy Ltd",
+      "customerId": "CUST-1004",
+      "contractNumber": "CTR-2025-004",
+      "material": "RLNG",
+      "industry": "Power",
+      "salesOffice": "North Zone - Delhi",
+      "submittedOn": "16 Jan 2025",
+      "status": "PENDING",
+      "statusText": "Pending Review",
+      "statusState": "Warning",
+      "acq": 800,
+      "aacq": 970,
+      "upwardFlex": 22,
+      "downwardFlex": 3,
+      "makeUpGas": 150,
+      "makeGoodGas": 0,
+      "fmDeficiency": 0,
+      "sdDays": 12,
+      "topPercent": 78,
+      "uom": "MMSCM",
+      "quarterlyLimits": {
+        "q1Limit": 26, "q2Limit": 27, "q3Limit": 24, "q4Limit": 25
+      },
+      "monthlyPlan": {
+        "jan": 78, "feb": 82, "mar": 80,
+        "apr": 88, "may": 84, "jun": 90,
+        "jul": 72, "aug": 76, "sep": 68,
+        "oct": 70, "nov": 80, "dec": 82
+      },
+      "quarterlyTotals": {
+        "q1": 240, "q1Pct": 25, "q1State": "Success",
+        "q2": 262, "q2Pct": 27, "q2State": "Warning",
+        "q3": 216, "q3Pct": 22, "q3State": "Success",
+        "q4": 232, "q4Pct": 24, "q4State": "Success"
+      },
+      "annualTotal": 970,
+      "shutdownDays": [],
+      "rejectionReason": ""
+    },
+    {
+      "planId": "PLN-005",
+      "customer": "DEF Textiles Pvt",
+      "customerId": "CUST-1005",
+      "contractNumber": "CTR-2025-005",
+      "material": "CNG",
+      "industry": "Textile",
+      "salesOffice": "North Zone - Delhi",
+      "submittedOn": "17 Jan 2025",
+      "status": "UNDER_REVIEW",
+      "statusText": "Under Review",
+      "statusState": "Information",
+      "acq": 300,
+      "aacq": 390,
+      "upwardFlex": 30,
+      "downwardFlex": 0,
+      "makeUpGas": 90,
+      "makeGoodGas": 0,
+      "fmDeficiency": 0,
+      "sdDays": 8,
+      "topPercent": 65,
+      "uom": "MMSCM",
+      "quarterlyLimits": {
+        "q1Limit": 26, "q2Limit": 27, "q3Limit": 24, "q4Limit": 25
+      },
+      "monthlyPlan": {
+        "jan": 30, "feb": 32, "mar": 35,
+        "apr": 38, "may": 36, "jun": 40,
+        "jul": 28, "aug": 30, "sep": 27,
+        "oct": 29, "nov": 32, "dec": 33
+      },
+      "quarterlyTotals": {
+        "q1": 97, "q1Pct": 25, "q1State": "Success",
+        "q2": 114, "q2Pct": 29, "q2State": "Error",
+        "q3": 85, "q3Pct": 22, "q3State": "Success",
+        "q4": 94, "q4Pct": 24, "q4State": "Success"
+      },
+      "annualTotal": 390,
+      "shutdownDays": [],
+      "rejectionReason": ""
+    }
+  ],
+  "selectedPlan": null,
+  "detailVisible": false,
+  "busy": false
+}

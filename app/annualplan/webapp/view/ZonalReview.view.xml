@@ -1,0 +1,450 @@
+<mvc:View controllerName="com.ingenx.annualplan.controller.ZonalReview"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:f="sap.f"
+    xmlns:table="sap.ui.table"
+    xmlns:l = "sap.ui.layout"
+    xmlns:core = "sap.ui.core"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt">
+   <Page showHeader="false">
+   
+     <ScrollContainer id="zonal_Scrollcontainer" vertical="true">
+      <tnt:ToolHeader id="zonal__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
+            <Title id="zonal__Mapping_Title" textAlign="Center" text="Zonal Annual Plan Review" wrapping="false">
+                <layoutData>
+                    <OverflowToolbarLayoutData id="zonal__Mapping_OverflowToolbarLayoutData" priority="Disappear" />
+                </layoutData>
+            </Title>
+            <ToolbarSpacer id="zonal__Mapping_ToolbarSpacer" />
+           
+        </tnt:ToolHeader>
+               <!-- filter area  -->
+                        <HBox class="filterArea">
+                            <HBox class="headerSelectArea">
+                                <VBox class="sapUiSmallMarginEnd">
+                                  <Label id="zonal_salesOfficeLabel" text="Sales Office" labelFor="selSalesOffice" design="Bold" width="90px"/>
+                        <Select
+                            id="xonal_SalesOffice"
+                            width="200px"
+                            selectedKey="{/filters/salesOffice}"
+                            change=".onFilterChange">
+                            <items>
+                                <core:Item id="zonal_Item" key="" text="All Sales Offices"/>
+                                <core:Item id="zonal_Item1" key="NORTH" text="North Zone - Delhi"/>
+                                <core:Item id="zonal_Item2" key="WEST" text="West Zone - Mumbai"/>
+                                <core:Item id="zonal_Item3" key="SOUTH" text="South Zone - Chennai"/>
+                                <core:Item id="zonal_Item4" key="EAST" text="East Zone - Kolkata"/>
+                            </items>
+                        </Select>
+                                </VBox>
+                                <VBox class="sapUiSmallMarginEnd">
+                                        <Label id="zonal_customerLabel" text="Customer" labelFor="selCustomer" design="Bold" width="70px"/>
+                        <Select
+                            id="zonal_customerSelect"
+                            width="200px"
+                            selectedKey="{/filters/customer}"
+                            change=".onFilterChange">
+                            <items>
+                                <core:Item id="zonal_Item5" key="" text="All Customers"/>
+                                <core:Item id="zonal_Item6" key="CUST-1001" text="ABC Power Ltd"/>
+                                <core:Item id="zonal_Item7" key="CUST-1002" text="XYZ Fertilizer Co."/>
+                                <core:Item id="zonal_Item8" key="CUST-1003" text="PQR Steel Corp"/>
+                                <core:Item id="zonal_Item9" key="CUST-1004" text="LMN Energy Ltd"/>
+                                <core:Item id="zonal_Item10" key="CUST-1005" text="DEF Textiles Pvt"/>
+                            </items>
+                        </Select>
+                                </VBox>
+                                <VBox class="sapUiSmallMarginEnd">
+                                    <Label id="zonal_contractNoLabel" text="Contract No." labelFor="selContract" design="Bold" width="90px"/>
+                        <Select
+                            id="zonal_contractNoSelect"
+                            width="200px"
+                            selectedKey="{/filters/contractNumber}"
+                            change=".onFilterChange">
+                            <items>
+                                <core:Item id="zonal_Item11" key="" text="All Contracts"/>
+                                <core:Item id="zonal_Item12" key="CTR-2025-001" text="CTR-2025-001"/>
+                                <core:Item id="zonal_Item13" key="CTR-2025-002" text="CTR-2025-002"/>
+                                <core:Item id="zonal_Item14" key="CTR-2025-003" text="CTR-2025-003"/>
+                                <core:Item id="zonal_Item15" key="CTR-2025-004" text="CTR-2025-004"/>
+                                <core:Item id="zonal_Item16" key="CTR-2025-005" text="CTR-2025-005"/>
+                            </items>
+                        </Select>
+                                </VBox>
+                                <VBox class="sapUiSmallMarginEnd">
+                                      <Label id="zonal_statusLabel" text="Status" labelFor="selStatus" design="Bold" width="50px"/>
+                        <Select
+                            id="zonal_statusSelect"
+                            width="200px"
+                            selectedKey="{/filters/status}"
+                            change=".onFilterChange">
+                            <items>
+                                <core:Item id="zonal_Item17" key="" text="All Statuses"/>
+                                <core:Item id="zonal_Item18" key="PENDING" text="Pending Review"/>
+                                <core:Item id="zonal_Item19" key="APPROVED" text="Approved"/>
+                                <core:Item id="zonal_Item20" key="REJECTED" text="Rejected"/>
+                                <core:Item id="zonal_Item21" key="UNDER_REVIEW" text="Under Review"/>
+                            </items>
+                        </Select>
+                        </VBox>
+                        <VBox>
+                         <Label text=""/>
+                        <HBox>
+                             <Button id="zonal_Button3" text="Go" type="Emphasized" icon="sap-icon://search" press=".onApplyFilter"/>
+                             <Button id="zonal_Button4" text="Clear" class="sapUiTinyMarginBegin" type="Ghost" press=".onClearFilter"/>
+                        </HBox>
+                        </VBox>
+                            </HBox>
+                        </HBox>
+
+                        <!--Body CONTENT – Plans Table + Detail Panel -->
+                        <VBox class="filterArea sapUiSmallMarginTop">
+                            <Toolbar id="zonal_Toolbar1" width="100%">
+                                <Title id="zonal_tableTitle" text="Annual Plans" level="H4"/>
+                                <ObjectStatus id="zonal_ObjectStatus3" text="{/summaryInfo/totalPlans}" state="Information" class="sapUiSmallMarginBegin"/>
+                                <ToolbarSpacer id="zonal_ToolbarSpacer4"/>
+                                <OverflowToolbarButton id="zonal_OverflowToolbarButton1" icon="sap-icon://column-select-all" tooltip="Column Settings" press=".onColumnSettings"/>
+                                <OverflowToolbarButton id="zonal_OverflowToolbarButton2" icon="sap-icon://refresh" tooltip="Refresh" press=".onRefresh"/>
+                                <Button id="zonal_Button5" text="Bulk Approve" type="Ghost" icon="sap-icon://sys-enter-2" press=".onBulkApprove"/>
+                                <Button id="zonal_Button6" text="Bulk Reject"  type="Ghost" icon="sap-icon://sys-cancel-2"  press=".onBulkReject"/>
+                            </Toolbar>
+
+                             
+                <table:Table
+                    id="annualplansTable"
+                    rows="{path: '/plans', filters: []}"
+                    selectionMode="MultiToggle"
+                    alternateRowColors="true"
+                    visibleRowCount="5"
+                    rowHeight="48"
+                    enableBusyIndicator="true"
+                    busy="{/busy}"
+                    rowSelectionChange=".onRowSelectionChange"
+                    class="sapUiSmallMarginTop zonalPlanTable">
+
+                    <!-- Column: Customer -->
+                    <table:Column id="zonal_nColumn" width="14rem" label="Customer" sortProperty="customer" filterProperty="customer">
+                        <Label id="zonal_nLabel4" text="Customer"/>
+                        <table:template>
+                            <Link id="zonal_nLink" text="{customer}" press=".onCustomerPress" wrapping="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: Contract -->
+                    <table:Column id="zonal_nColumn1" width="12rem" label="Contract No." sortProperty="contractNumber">
+                        <Label id="zonal_nLabel5" text="Contract No."/>
+                        <table:template>
+                            <Text id="zonal_nText3" text="{contractNumber}" wrapping="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: Material -->
+                    <table:Column id="zonal_nColumn2" width="7rem" label="Material" sortProperty="material">
+                        <Label id="zonal_nLabel6" text="Material"/>
+                        <table:template>
+                            <ObjectStatus id="zonal_nObjectStatus4" text="{material}" state="Information"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: Industry -->
+                    <table:Column id="zonal_nColumn3" width="9rem" label="Industry" sortProperty="industry">
+                        <Label id="zonal_nLabel7" text="Industry"/>
+                        <table:template>
+                            <Text id="zonal_nText4" text="{industry}" wrapping="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: AACQ -->
+                    <table:Column id="zonal_nColumn4" width="10rem" label="AACQ (MMSCM)" hAlign="End" sortProperty="aacq">
+                        <Label id="zonal_nLabel8" text="AACQ (MMSCM)"/>
+                        <table:template>
+                            <ObjectNumber id="zonal_nObjectNumber" number="{aacq}" unit="{uom}" emphasized="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: Submitted On -->
+                    <table:Column id="zonal_nColumn5" width="10rem" label="Submitted On" sortProperty="submittedOn">
+                        <Label id="zonal_nLabel9" text="Submitted On"/>
+                        <table:template>
+                            <Text id="zonal_nText5" text="{submittedOn}" wrapping="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: Status -->
+                    <table:Column id="zonal_nColumn6" width="11rem" label="Status" sortProperty="statusText">
+                        <Label id="zonal_nLabel10" text="Status"/>
+                        <table:template>
+                            <ObjectStatus id="zonal_nObjectStatus5"
+                                text="{statusText}"
+                                state="{statusState}"
+                                icon="{= ${status} === 'APPROVED' ? 'sap-icon://accept' :
+                                       ${status} === 'REJECTED' ? 'sap-icon://decline' :
+                                       ${status} === 'PENDING'  ? 'sap-icon://pending' :
+                                                                   'sap-icon://in-progress' }"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Column: Actions -->
+                    <table:Column id="zonal_Column7" width="22rem" label="Actions">
+                        <Label id="zonal_Label11" text="Actions"/>
+                        <table:template>
+                            <HBox id="zonal_HBox1" alignItems="Center">
+                                <!-- View -->
+                                <Button id="zonal_Button7"
+                                    text="View"
+                                    type="Ghost"
+                                    icon="sap-icon://display"
+                                    press=".onViewPlan"
+                                    class="sapUiTinyMarginEnd"/>
+                                <!-- Edit – visible only for PENDING / UNDER_REVIEW -->
+                                <Button id="zonal_Button8"
+                                    text="Edit"
+                                    type="Ghost"
+                                    icon="sap-icon://edit"
+                                    press=".onEditPlan"
+                                    visible="{= ${status} === 'PENDING' || ${status} === 'UNDER_REVIEW'}"
+                                    class="sapUiTinyMarginEnd"/>
+                                <!-- Approve -->
+                                <Button id="zonal_Button9"
+                                    text="Approve"
+                                    type="Accept"
+                                    icon="sap-icon://sys-enter-2"
+                                    press=".onApprovePlan"
+                                    visible="{= ${status} === 'PENDING' || ${status} === 'UNDER_REVIEW'}"
+                                    class="sapUiTinyMarginEnd"/>
+                                <!-- Reject -->
+                                <Button id="zonal_Button10"
+                                    text="Reject"
+                                    type="Reject"
+                                    icon="sap-icon://sys-cancel-2"
+                                    press=".onRejectPlanDialog"
+                                    visible="{= ${status} === 'PENDING' || ${status} === 'UNDER_REVIEW'}"
+                                    class="sapUiTinyMarginEnd"/>
+                                <!-- Re-open -->
+                                <Button id="zonal_Button11"
+                                    text="Re-open"
+                                    type="Ghost"
+                                    icon="sap-icon://undo"
+                                    press=".onReopenPlan"
+                                    visible="{= ${status} === 'REJECTED' }"/>
+                            </HBox>
+                        </table:template>
+                    </table:Column>
+
+                </table:Table>
+            </VBox>
+
+             <!-- ── DETAIL PANEL (shown on View / row click) ── -->
+                <Panel
+                    id="detailPanel"
+                    visible="{/detailVisible}"
+                    headerText="Annual Plan Detail"
+                    expandable="true"
+                    expanded="true"
+                    width="99%"
+                    class="sapUiMediumMarginTop filterArea">
+
+                    <content>
+                        <!-- Plan Header Info (ObjectHeader) -->
+                        <ObjectHeader
+                            id="detailObjectHeader"
+                            title="{/selectedPlan/customer}"
+                            number="{/selectedPlan/aacq}"
+                            numberUnit="{/selectedPlan/uom}"
+                            intro="{/selectedPlan/contractNumber} · {/selectedPlan/material} · {/selectedPlan/industry}"
+                            backgroundDesign="Solid">
+                            <attributes>
+                                <ObjectAttribute id="_IDGenObjectAttribute" title="Fiscal Year" text="FY 2025–26"/>
+                                <ObjectAttribute id="_IDGenObjectAttribute1" title="Sales Office" text="{/selectedPlan/salesOffice}"/>
+                                <ObjectAttribute id="_IDGenObjectAttribute2" title="Submitted On" text="{/selectedPlan/submittedOn}"/>
+                            </attributes>
+                            <statuses>
+                                <ObjectStatus id="_IDGenObjectStatus6"
+                                    title="Status"
+                                    text="{/selectedPlan/statusText}"
+                                    state="{/selectedPlan/statusState}"/>
+                            </statuses>
+                        </ObjectHeader>
+
+                        <!-- Contract Meta Data – Form -->
+                        <l:Grid id="_IDGenGrid" defaultSpan="XL3 L3 M6 S12" class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+                            <l:content>
+                                <l:VerticalLayout id="_IDGenVerticalLayout2">
+                                    <Label id="_IDGenLabel12" text="ACQ (MMSCM)" design="Bold"/>
+                                    <Text id="_IDGenText6" text="{/selectedPlan/acq}"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout3">
+                                    <Label id="_IDGenLabel13" text="AACQ (MMSCM)" design="Bold"/>
+                                    <Text id="_IDGenText7" text="{/selectedPlan/aacq}"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout4">
+                                    <Label id="_IDGenLabel14" text="Upward Flex %" design="Bold"/>
+                                    <Text id="_IDGenText8" text="{/selectedPlan/upwardFlex}%"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout5">
+                                    <Label id="_IDGenLabel15" text="Downward Flex %" design="Bold"/>
+                                    <Text id="_IDGenText9" text="{/selectedPlan/downwardFlex}%"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout6">
+                                    <Label id="_IDGenLabel16" text="Make-Up Gas" design="Bold"/>
+                                    <Text id="_IDGenText10" text="{/selectedPlan/makeUpGas}"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout7">
+                                    <Label id="_IDGenLabel17" text="TOP %" design="Bold"/>
+                                    <Text id="_IDGenText11" text="{/selectedPlan/topPercent}%"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout8">
+                                    <Label id="_IDGenLabel18" text="S/D Days" design="Bold"/>
+                                    <Text id="_IDGenText12" text="{/selectedPlan/sdDays} days"/>
+                                </l:VerticalLayout>
+                                <l:VerticalLayout id="_IDGenVerticalLayout9">
+                                    <Label id="_IDGenLabel19" text="UOM" design="Bold"/>
+                                    <Text id="_IDGenText13" text="{/selectedPlan/uom}"/>
+                                </l:VerticalLayout>
+                            </l:content>
+                        </l:Grid>
+
+                        <!-- Quarterly Summary Bar -->
+                        <Title id="_IDGenTitle2" text="Quarterly Summary vs. Limits" level="H5"
+                            class="sapUiMediumMarginTop sapUiSmallMarginBegin"/>
+                        <HBox id="_IDGenHBox2" class="sapUiSmallMargin" wrap="Wrap">
+                            <!-- Q1 -->
+                            <VBox id="_IDGenVBox" class="sapUiSmallMarginEnd" width="140px">
+                                <ObjectStatus id="_IDGenObjectStatus7"
+                                    title="Q1 (Jan–Mar)"
+                                    text="{/selectedPlan/quarterlyTotals/q1} ({/selectedPlan/quarterlyTotals/q1Pct}%)"
+                                    state="{/selectedPlan/quarterlyTotals/q1State}"/>
+                                <Text id="_IDGenText14" text="Limit: {/selectedPlan/quarterlyLimits/q1Limit}%" class="sapUiTinyMarginTop"/>
+                            </VBox>
+                            <!-- Q2 -->
+                            <VBox id="_IDGenVBox1" class="sapUiSmallMarginEnd" width="140px">
+                                <ObjectStatus id="_IDGenObjectStatus8"
+                                    title="Q2 (Apr–Jun)"
+                                    text="{/selectedPlan/quarterlyTotals/q2} ({/selectedPlan/quarterlyTotals/q2Pct}%)"
+                                    state="{/selectedPlan/quarterlyTotals/q2State}"/>
+                                <Text id="_IDGenText15" text="Limit: {/selectedPlan/quarterlyLimits/q2Limit}%" class="sapUiTinyMarginTop"/>
+                            </VBox>
+                            <!-- Q3 -->
+                            <VBox id="_IDGenVBox2" class="sapUiSmallMarginEnd" width="140px">
+                                <ObjectStatus id="_IDGenObjectStatus9"
+                                    title="Q3 (Jul–Sep)"
+                                    text="{/selectedPlan/quarterlyTotals/q3} ({/selectedPlan/quarterlyTotals/q3Pct}%)"
+                                    state="{/selectedPlan/quarterlyTotals/q3State}"/>
+                                <Text id="_IDGenText16" text="Limit: {/selectedPlan/quarterlyLimits/q3Limit}%" class="sapUiTinyMarginTop"/>
+                            </VBox>
+                            <!-- Q4 -->
+                            <VBox id="_IDGenVBox3" class="sapUiSmallMarginEnd" width="140px">
+                                <ObjectStatus id="_IDGenObjectStatus10"
+                                    title="Q4 (Oct–Dec)"
+                                    text="{/selectedPlan/quarterlyTotals/q4} ({/selectedPlan/quarterlyTotals/q4Pct}%)"
+                                    state="{/selectedPlan/quarterlyTotals/q4State}"/>
+                                <Text id="_IDGenText17" text="Limit: {/selectedPlan/quarterlyLimits/q4Limit}%" class="sapUiTinyMarginTop"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Month-wise Table -->
+                        <Title id="_IDGenTitle3" text="Month-wise Planned Quantities (MMSCM)" level="H5"
+                            class="sapUiSmallMarginTop sapUiSmallMarginBegin"/>
+
+                        <table:Table
+                            id="monthlyTable"
+                            rows="{path: '/selectedPlan/monthlyRows'}"
+                            selectionMode="None"
+                            alternateRowColors="false"
+                            visibleRowCount="1"
+                            rowHeight="44"
+                            class="sapUiSmallMargin zonalPlanTable">
+                            <table:columns>
+                                <table:Column id="_IDGenColumn8" width="5rem" hAlign="Center"><Label id="_IDGenLabel20" text="Jan"/><table:template><Text id="_IDGenText18" text="{jan}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn9" width="5rem" hAlign="Center"><Label id="_IDGenLabel21" text="Feb"/><table:template><Text id="_IDGenText19" text="{feb}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn10" width="5rem" hAlign="Center"><Label id="_IDGenLabel22" text="Mar"/><table:template><Text id="_IDGenText20" text="{mar}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn11" width="6.5rem" hAlign="Center"><Label id="_IDGenLabel23" text="Q1 Total"/><table:template><ObjectStatus id="_IDGenObjectStatus11" text="{q1}" state="{q1State}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn12" width="5rem" hAlign="Center"><Label id="_IDGenLabel24" text="Apr"/><table:template><Text id="_IDGenText21" text="{apr}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn13" width="5rem" hAlign="Center"><Label id="_IDGenLabel25" text="May"/><table:template><Text id="_IDGenText22" text="{may}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn14" width="5rem" hAlign="Center"><Label id="_IDGenLabel26" text="Jun"/><table:template><Text id="_IDGenText23" text="{jun}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn15" width="6.5rem" hAlign="Center"><Label id="_IDGenLabel27" text="Q2 Total"/><table:template><ObjectStatus id="_IDGenObjectStatus12" text="{q2}" state="{q2State}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn16" width="5rem" hAlign="Center"><Label id="_IDGenLabel28" text="Jul"/><table:template><Text id="_IDGenText24" text="{jul}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn17" width="5rem" hAlign="Center"><Label id="_IDGenLabel29" text="Aug"/><table:template><Text id="_IDGenText25" text="{aug}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn18" width="5rem" hAlign="Center"><Label id="_IDGenLabel30" text="Sep"/><table:template><Text id="_IDGenText26" text="{sep}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn19" width="6.5rem" hAlign="Center"><Label id="_IDGenLabel31" text="Q3 Total"/><table:template><ObjectStatus id="_IDGenObjectStatus13" text="{q3}" state="{q3State}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn20" width="5rem" hAlign="Center"><Label id="_IDGenLabel32" text="Oct"/><table:template><Text id="_IDGenText27" text="{oct}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn21" width="5rem" hAlign="Center"><Label id="_IDGenLabel33" text="Nov"/><table:template><Text id="_IDGenText28" text="{nov}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn22" width="5rem" hAlign="Center"><Label id="_IDGenLabel34" text="Dec"/><table:template><Text id="_IDGenText29" text="{dec}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn23" width="6.5rem" hAlign="Center"><Label id="_IDGenLabel35" text="Q4 Total"/><table:template><ObjectStatus id="_IDGenObjectStatus14" text="{q4}" state="{q4State}"/></table:template></table:Column>
+                                <table:Column id="_IDGenColumn24" width="7rem" hAlign="Center"><Label id="_IDGenLabel36" text="Annual Total"/><table:template><ObjectNumber id="_IDGenObjectNumber1" number="{annual}" emphasized="true"/></table:template></table:Column>
+                            </table:columns>
+                        </table:Table>
+
+                        <!-- Shutdown Days Table -->
+                        <Panel
+                            id="shutdownPanel"
+                            headerText="Shutdown / Planned Maintenance Days"
+                            expandable="true"
+                            expanded="false"
+                            visible="{= ${/selectedPlan/shutdownDays} &amp;&amp; ${/selectedPlan/shutdownDays}.length > 0}"
+                            class="sapUiSmallMargin">
+                            <List id="_IDGenList" items="{/selectedPlan/shutdownDays}" noDataText="No shutdown days planned">
+                                <StandardListItem id="_IDGenStandardListItem"
+                                    title="Month: {month}"
+                                    description="Days: {days} | Applicable DCQ: {dcq} MMSCM"/>
+                            </List>
+                        </Panel>
+
+                        <!-- Rejection Reason (for rejected plans) -->
+                        <MessageStrip
+                            id="rejectionMsgStrip"
+                            text="Rejection Reason: {/selectedPlan/rejectionReason}"
+                            type="Error"
+                            showIcon="true"
+                            visible="{= ${/selectedPlan/status} === 'REJECTED' &amp;&amp; !!${/selectedPlan/rejectionReason}}"
+                            class="sapUiSmallMargin"/>
+
+                    </content>
+
+                    <!-- Detail Panel Footer Bar -->
+                    <HBox>
+                        <Toolbar id="_IDGenToolbar2">
+                            <Label id="_IDGenLabel37" text="Rejection Reason:" visible="{= ${/selectedPlan/status} !== 'APPROVED'}"/>
+                            <Input
+                                id="rejectionReasonInput"
+                                placeholder="Enter reason before rejecting…"
+                                width="280px"
+                                visible="{= ${/selectedPlan/status} !== 'APPROVED'}"
+                                class="sapUiSmallMarginEnd"/>
+                            <ToolbarSpacer id="_IDGenToolbarSpacer5"/>
+                            <Button id="_IDGenButton12"
+                                text="Edit Quantities"
+                                type="Ghost"
+                                icon="sap-icon://edit"
+                                press=".onEditDetailPlan"
+                                visible="{= ${/selectedPlan/status} === 'PENDING' || ${/selectedPlan/status} === 'UNDER_REVIEW'}"/>
+                            <Button id="_IDGenButton13"
+                                text="Reject with Reason"
+                                type="Reject"
+                                icon="sap-icon://sys-cancel-2"
+                                press=".onRejectPlan"
+                                visible="{= ${/selectedPlan/status} === 'PENDING' || ${/selectedPlan/status} === 'UNDER_REVIEW'}"
+                                class="sapUiSmallMarginBegin"/>
+                            <Button id="_IDGenButton14"
+                                text="Approve Plan"
+                                type="Accept"
+                                icon="sap-icon://sys-enter-2"
+                                press=".onApprovePlanDetail"
+                                visible="{= ${/selectedPlan/status} === 'PENDING' || ${/selectedPlan/status} === 'UNDER_REVIEW'}"
+                                class="sapUiSmallMarginBegin"/>
+                            <Button id="_IDGenButton15"
+                                text="Submit Decision"
+                                type="Emphasized"
+                                icon="sap-icon://paper-plane"
+                                press=".onSubmitDecision"
+                                visible="{= ${/selectedPlan/status} === 'PENDING' || ${/selectedPlan/status} === 'UNDER_REVIEW'}"
+                                class="sapUiSmallMarginBegin"/>
+                        </Toolbar>
+                    </HBox>
+                </Panel>
+       
+     </ScrollContainer>
+</Page>
+ 
+</mvc:View>

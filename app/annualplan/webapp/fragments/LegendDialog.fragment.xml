@@ -1,0 +1,80 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="legendDialog"
+        title="Colour Coding Legend"
+        contentWidth="520px"
+        type="Message">
+
+        <content>
+            <l:VerticalLayout width="100%" class="sapUiSmallMargin">
+
+                <Title text="Monthly / Quarterly Cell Colours" level="H5"
+                    class="sapUiSmallMarginBottom"/>
+
+                <List>
+                    <StandardListItem
+                        icon="sap-icon://error"
+                        iconInset="false"
+                        title="Red – Limit Exceeded"
+                        description="Monthly cell contributes to quarterly violation. Quarterly total exceeds the configured % limit."
+                        info="Action Required"
+                        infoState="Error"/>
+                    <StandardListItem
+                        icon="sap-icon://warning"
+                        iconInset="false"
+                        title="Amber – Near Threshold"
+                        description="Value is within 2% of the quarterly limit. Monitor closely and consider adjusting."
+                        info="Warning"
+                        infoState="Warning"/>
+                    <StandardListItem
+                        icon="sap-icon://accept"
+                        iconInset="false"
+                        title="Green – Compliant"
+                        description="Quarterly percentage is within the configured limit. No action required."
+                        info="OK"
+                        infoState="Success"/>
+                </List>
+
+                <Title text="Quarterly Limit Reference" level="H5"
+                    class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+
+                <l:Grid defaultSpan="XL3 L3 M6 S12">
+                    <l:content>
+                        <VBox class="sapUiSmallMargin">
+                            <Label text="Q1 (Jan–Mar)" design="Bold"/>
+                            <ObjectStatus text="≤ {dash>/quarterlyLimits/q1Limit}%" state="Success"/>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin">
+                            <Label text="Q2 (Apr–Jun)" design="Bold"/>
+                            <ObjectStatus text="≤ {dash>/quarterlyLimits/q2Limit}%" state="Success"/>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin">
+                            <Label text="Q3 (Jul–Sep)" design="Bold"/>
+                            <ObjectStatus text="≤ {dash>/quarterlyLimits/q3Limit}%" state="Success"/>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin">
+                            <Label text="Q4 (Oct–Dec)" design="Bold"/>
+                            <ObjectStatus text="≤ {dash>/quarterlyLimits/q4Limit}%" state="Success"/>
+                        </VBox>
+                    </l:content>
+                </l:Grid>
+
+                <MessageStrip
+                    text="Quarterly limits are maintained in Screen 1 – Quarterly Percentage Maintenance by the Corporate team."
+                    type="Information"
+                    showIcon="true"
+                    class="sapUiSmallMarginTop"/>
+
+            </l:VerticalLayout>
+        </content>
+
+        <endButton>
+            <Button text="Close" type="Emphasized" press=".onCloseLegend"/>
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

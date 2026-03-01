@@ -1,0 +1,58 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="rejectDialog"
+        title="Reject Annual Plan"
+        type="Message"
+        state="Error"
+        contentWidth="480px">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- Plan Info -->
+                <ObjectStatus
+                    title="Customer"
+                    text="{dialog>/customer}"
+                    state="None"
+                    class="sapUiSmallMarginBottom"/>
+                <ObjectStatus
+                    title="Contract"
+                    text="{dialog>/contractNumber}"
+                    state="None"
+                    class="sapUiSmallMarginBottom"/>
+
+                <MessageStrip
+                    text="This plan will be sent back to the customer with the rejection reason."
+                    type="Warning"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Label text="Rejection Reason" required="true" design="Bold"
+                    class="sapUiSmallMarginTop"/>
+                <TextArea
+                    id="dialogRejectReason"
+                    value="{dialog>/rejectionReason}"
+                    placeholder="Enter a clear reason for rejection so the customer can revise their plan…"
+                    rows="4"
+                    width="100%"
+                    growing="true"/>
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="Confirm Reject"
+                type="Reject"
+                icon="sap-icon://sys-cancel-2"
+                press=".onConfirmReject"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" type="Ghost" press=".onCancelReject"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

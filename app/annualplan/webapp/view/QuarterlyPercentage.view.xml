@@ -1,0 +1,324 @@
+<mvc:View controllerName="com.ingenx.annualplan.controller.QuarterlyPercentage"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:f="sap.f"
+    xmlns:table="sap.ui.table"
+    xmlns:l = "sap.ui.layout"
+    xmlns:core = "sap.ui.core"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt">
+   <Page showHeader="false">
+   
+     <ScrollContainer id="annualPlan_Scrollcontainer" vertical="true">
+      <tnt:ToolHeader id="annualPlan__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
+            <Title id="annualPlan__Mapping_Title" textAlign="Center" text="Quarterly Percentage Maintenance" wrapping="false">
+                <layoutData>
+                    <OverflowToolbarLayoutData id="annualPlan__Mapping_OverflowToolbarLayoutData" priority="Disappear" />
+                </layoutData>
+            </Title>
+            <ToolbarSpacer id="annualPlan__Mapping_ToolbarSpacer" />
+        </tnt:ToolHeader>
+
+        <!-- filter content -->
+         <HBox class="filterArea" justifyContent="SpaceBetween">
+             <HBox>
+              <Label text="Material" class="sapUiTinyMargin" design="Bold"/>
+                <MultiComboBox
+                    id="materialMultiInput"
+                    selectionChange="handleSelectionChange"
+                    selectionFinish="handleSelectionFinish"
+                    width="250px"
+                    items="{
+                        path: 'quarterlyModel>/MaterialVH',
+                        sorter: { path: 'Material' }
+                    }">
+                    <core:Item key="{quarterlyModel>Material}"
+                    text="{quarterlyModel>MaterialDesc}"/>
+                </MultiComboBox>
+             </HBox>
+             <HBox>
+                 <Button
+                        id="btnEditMode"
+                        class="sapUiTinyMarginEnd"
+                        text="{= ${qtrPct>/ui/editMode} ? 'Cancel Edit' : 'Edit'}"
+                        icon="{= ${qtrPct>/ui/editMode} ? 'sap-icon://cancel' : 'sap-icon://edit'}"
+                        type="{= ${qtrPct>/ui/editMode} ? 'Ghost' : 'Ghost'}"
+                        press=".onToggleEditMode"/>
+                        <Button
+                        id="btnAddRow"
+                        class="sapUiTinyMarginEnd"
+                        text="Add Material"
+                        icon="sap-icon://add"
+                        type="Ghost"
+                        enabled="{qtrPct>/ui/editMode}"
+                        press=".onAddRow"/>
+                    <!-- Save -->
+                    <Button
+                        id="btnSave"
+                        text="Save"
+                        class="sapUiTinyMarginEnd"
+                        icon="sap-icon://save"
+                        type="Emphasized"
+                        enabled="{qtrPct>/ui/saveEnabled}"
+                        press=".onSave"/>
+                    <Button
+                        icon="sap-icon://information"
+                        tooltip="Validation Rules"
+                        press=".onShowValidationInfo"/>
+             </HBox>
+         </HBox>
+
+
+         <!-- Body content -->
+         <VBox class="filterArea">
+                <MessageStrip
+                    id="editModeStrip"
+                    text="You are in Edit Mode. Make changes and click Save, or Cancel Edit to discard."
+                    type="Information"
+                    showIcon="true"
+                    visible="{qtrPct>/ui/editMode}"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- Unsaved Changes Warning -->
+                <MessageStrip
+                    id="unsavedStrip"
+                    text="You have unsaved changes. Click Save to persist, or Cancel Edit to discard."
+                    type="Warning"
+                    showIcon="true"
+                    visible="{= ${qtrPct>/ui/hasChanges} &amp;&amp; ${qtrPct>/ui/editMode}}"
+                    class="sapUiSmallMarginBottom"/>
+
+                <!-- ── TABLE TOOLBAR ── -->
+                <Toolbar id="_IDGenToolbar">
+                    <Title id="_IDGenTitle4" text="Material Quarterly Limits" level="H4"/>
+                    <ObjectStatus id="_IDGenObjectStatus1"
+                        text="{qtrPct>/summary/totalMaterials} Materials"
+                        state="Information"
+                        class="sapUiSmallMarginBegin"/>
+                    <ToolbarSpacer id="_IDGenToolbarSpacer"/>
+                    <Button id="_IDGenButton"
+                        icon="sap-icon://download"
+                        text="Export"
+                        type="Ghost"
+                        press=".onExport"/>
+                    <Button id="_IDGenButton1"
+                        icon="sap-icon://refresh"
+                        tooltip="Refresh"
+                        type="Ghost"
+                        press=".onRefresh"/>
+                </Toolbar>
+
+
+                <table:Table
+                    id="qtrPctTable"
+                    rows="{qtrPct>/quarterlyPercentages}"
+                    selectionMode="None"
+                    alternateRowColors="true"
+                    visibleRowCount="{= Math.max(${qtrPct>/quarterlyPercentages}.length + 1, 5)}"
+                    rowHeight="56"
+                    enableBusyIndicator="true"
+                    busy="{qtrPct>/ui/busy}"
+                    class="sapUiSmallMarginTop zonalPlanTable">
+
+                    <!-- ── Col: # (row number) ── -->
+                    <table:Column id="_IDGenColumn" width="3.5rem" hAlign="Center">
+                        <Label id="_IDGenLabel2" text="#"/>
+                        <table:template>
+                            <Text id="_IDGenText30" text="{qtrPct>__index}" class="sapUiSmallPaddingBegin"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Material ── -->
+                    <table:Column id="_IDGenColumn1" width="14rem" label="Material *">
+                        <Label id="_IDGenLabel3" text="Material *"/>
+                        <table:template>
+                            <!-- READ-ONLY view -->
+                            <HBox id="_IDGenHBox" visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}">
+                                <core:Icon id="_IDGenIcon" src="sap-icon://product" class="sapUiSmallMarginEnd" color="#0070f2"/>
+                                <VBox id="_IDGenVBox6">
+                                    <Text id="_IDGenText31" text="{qtrPct>material}" class="sapUiNoMargin"/>
+                                    <Text id="_IDGenText32" text="{qtrPct>materialDesc}"
+                                        class="sapUiNoMargin"
+                                        />
+                                </VBox>
+                            </HBox>
+                            <!-- EDIT view: Input with Value Help -->
+                            <Input
+                                id="inputMaterial"
+                                value="{qtrPct>material}"
+                                placeholder="Select material…"
+                                showValueHelp="true"
+                                valueHelpRequest=".onMaterialValueHelp"
+                                valueHelpOnly="false"
+                                required="true"
+                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                liveChange=".onFieldChange"
+                                valueState="{qtrPct>materialState}"
+                                valueStateText="{qtrPct>materialStateText}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Q1 % ── -->
+                    <table:Column id="_IDGenColumn2" width="9rem" hAlign="Center" label="Quarter 1 %">
+                        <Label id="_IDGenLabel4" text="Quarter 1 %"/>
+                        <table:template>
+                            <!-- READ-ONLY -->
+                            <ObjectStatus id="_IDGenObjectStatus2"
+                                text="{qtrPct>q1Pct}%"
+                                state="None"
+                                visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}"/>
+                            <!-- EDIT -->
+                            <StepInput
+                                id="stepQ1"
+                                value="{qtrPct>q1Pct}"
+                                min="1"
+                                max="97"
+                                step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                change=".onPctChange"
+                                valueState="{qtrPct>q1State}"
+                                valueStateText="Must be between 1–97"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Q2 % ── -->
+                    <table:Column id="_IDGenColumn3" width="9rem" hAlign="Center" label="Quarter 2 %">
+                        <Label id="_IDGenLabel5" text="Quarter 2 %"/>
+                        <table:template>
+                            <!-- READ-ONLY -->
+                            <ObjectStatus id="_IDGenObjectStatus3"
+                                text="{qtrPct>q2Pct}%"
+                                state="None"
+                                visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}"/>
+                            <!-- EDIT -->
+                            <StepInput
+                                id="stepQ2"
+                                value="{qtrPct>q2Pct}"
+                                min="1"
+                                max="97"
+                                step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                change=".onPctChange"
+                                valueState="{qtrPct>q2State}"
+                                valueStateText="Must be between 1–97"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Q3 % ── -->
+                    <table:Column id="_IDGenColumn4" width="9rem" hAlign="Center" label="Quarter 3 %">
+                        <Label id="_IDGenLabel6" text="Quarter 3 %"/>
+                        <table:template>
+                            <!-- READ-ONLY -->
+                            <ObjectStatus id="_IDGenObjectStatus4"
+                                text="{qtrPct>q3Pct}%"
+                                state="None"
+                                visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}"/>
+                            <!-- EDIT -->
+                            <StepInput
+                                id="stepQ3"
+                                value="{qtrPct>q3Pct}"
+                                min="1"
+                                max="97"
+                                step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                change=".onPctChange"
+                                valueState="{qtrPct>q3State}"
+                                valueStateText="Must be between 1–97"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Q4 % ── -->
+                    <table:Column id="_IDGenColumn5" width="9rem" hAlign="Center" label="Quarter 4 %">
+                        <Label id="_IDGenLabel7" text="Quarter 4 %"/>
+                        <table:template>
+                            <!-- READ-ONLY -->
+                            <ObjectStatus id="_IDGenObjectStatus5"
+                                text="{qtrPct>q4Pct}%"
+                                state="None"
+                                visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}"/>
+                            <!-- EDIT -->
+                            <StepInput
+                                id="stepQ4"
+                                value="{qtrPct>q4Pct}"
+                                min="1"
+                                max="97"
+                                step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                change=".onPctChange"
+                                valueState="{qtrPct>q4State}"
+                                valueStateText="Must be between 1–97"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Total ── -->
+                    <table:Column id="_IDGenColumn6" width="8rem" hAlign="Center" label="Total %">
+                        <Label id="_IDGenLabel8" text="Total %"/>
+                        <table:template>
+                            <ObjectStatus id="_IDGenObjectStatus15"
+                                text="{qtrPct>total}%"
+                                state="{qtrPct>totalState}"
+                                icon="{= ${qtrPct>totalState} === 'Success' ? 'sap-icon://accept' :
+                                          ${qtrPct>totalState} === 'Error'   ? 'sap-icon://error' :
+                                                                                'sap-icon://warning' }"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Last Updated ── -->
+                    <table:Column id="_IDGenColumn7" width="12rem" label="Last Updated">
+                        <Label id="_IDGenLabel9" text="Last Updated"/>
+                        <table:template>
+                            <VBox id="_IDGenVBox7" visible="{= !${qtrPct>isNew}}">
+                                <Text id="_IDGenText33" text="{qtrPct>lastUpdatedOn}"
+                                   />
+                                <Text id="_IDGenText34" text="By: {qtrPct>lastUpdatedBy}"
+                                    />
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Actions ── -->
+                    <table:Column id="_IDGenColumn25" width="10rem" hAlign="Center" label="Actions">
+                        <Label id="_IDGenLabel10" text="Actions"/>
+                        <table:template>
+                            <HBox id="_IDGenHBox1" alignItems="Center" justifyContent="Center">
+                                <!-- Delete row (only in edit mode) -->
+                                <Button id="_IDGenButton2"
+                                    icon="sap-icon://delete"
+                                    type="Reject"
+                                    tooltip="Delete Row"
+                                    press=".onDeleteRow"
+                                    visible="{qtrPct>/ui/editMode}"/>
+                                <!-- View icon (only in view mode) -->
+                                <core:Icon id="_IDGenIcon1"
+                                    src="sap-icon://display"
+                                    color="#0070f2"
+                                    tooltip="Read-only – switch to Edit Mode to modify"
+                                    visible="{= !${qtrPct>/ui/editMode}}"/>
+                            </HBox>
+                        </table:template>
+                    </table:Column>
+
+                </table:Table>
+               
+         </VBox>
+             
+     </ScrollContainer>
+</Page>
+ 
+</mvc:View>

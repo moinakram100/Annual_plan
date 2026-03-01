@@ -1,0 +1,72 @@
+<mvc:View controllerName="com.ingenx.annualplan.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="Annual Plan">
+
+         <GenericTile
+                class="sapUiTinyMargin"
+                header="Quarterly Percentage Maintenance"
+                press="onPressQuarterlyPercentageTile"
+            >
+                <TileContent>
+                    <ImageContent
+                    />
+                </TileContent>
+         </GenericTile>
+
+         <GenericTile
+                class="sapUiTinyMargin"
+                header="Annual Plan"
+                press="onPressAnnualPlanTile"
+            >
+                <TileContent>
+                    <ImageContent
+                    />
+                </TileContent>
+         </GenericTile>
+
+         <GenericTile
+                class="sapUiTinyMargin"
+                header="Zonal Review"
+                press="onPressZonalReviewTile"
+            >
+                <TileContent>
+                    <ImageContent
+                    />
+                </TileContent>
+         </GenericTile>
+
+         <GenericTile
+                class="sapUiTinyMargin"
+                header="Dashboard"
+                press="onPressDashboardTile"
+            >
+                <TileContent>
+                    <ImageContent
+                    />
+                </TileContent>
+         </GenericTile>
+
+         <GenericTile
+                class="sapUiTinyMargin"
+                header="Reduction"
+                press="onPressReductionTile"
+            >
+                <TileContent>
+                    <ImageContent
+                    />
+                </TileContent>
+         </GenericTile>
+
+         <GenericTile
+                class="sapUiTinyMargin"
+                header="Approval Workflow"
+                press="onPressApprovalTile"
+            >
+                <TileContent>
+                    <ImageContent
+                    />
+                </TileContent>
+         </GenericTile>
+    </Page>
+</mvc:View>

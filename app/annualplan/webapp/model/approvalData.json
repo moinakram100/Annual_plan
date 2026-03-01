@@ -1,0 +1,213 @@
+{
+  "filters": {
+    "requestType": "",
+    "status":      "",
+    "material":    "",
+    "customer":    ""
+  },
+  "approvalRequests": [
+    {
+      "requestId":      "APR-001",
+      "type":           "ANNUAL_PLAN",
+      "typeLabel":      "Annual Plan",
+      "customer":       "ABC Power Ltd",
+      "customerId":     "CUST-1001",
+      "contract":       "CTR-2025-001",
+      "material":       "RLNG",
+      "industry":       "Power",
+      "salesOffice":    "North Zone - Delhi",
+      "submittedBy":    "ABC Power Portal",
+      "submittedOn":    "12 Jan 2025",
+      "uom":            "MMSCM",
+      "aacq":           1200,
+      "status":         "PENDING",
+      "statusText":     "Pending Approval",
+      "statusState":    "Warning",
+      "priority":       "HIGH",
+      "daysWaiting":    5,
+      "approverComment":"",
+      "monthlyPlan": {
+        "jan":95, "feb":100, "mar":105,
+        "apr":115,"may":120, "jun":110,
+        "jul":90, "aug":95,  "sep":85,
+        "oct":80, "nov":105, "dec":100
+      },
+      "quarterlyTotals": {
+        "q1":300,"q1Pct":25,"q1State":"Success",
+        "q2":345,"q2Pct":29,"q2State":"Error",
+        "q3":270,"q3Pct":23,"q3State":"Success",
+        "q4":285,"q4Pct":24,"q4State":"Success"
+      },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 },
+      "annualTotal":    1200,
+      "reductionApplied": false,
+      "reductionDetails": null,
+      "workflowSteps": [
+        { "step":1, "label":"Submitted by Customer", "status":"DONE",    "date":"12 Jan 2025", "by":"ABC Power Portal"  },
+        { "step":2, "label":"Zonal Review",           "status":"DONE",    "date":"14 Jan 2025", "by":"Zonal Team - Delhi" },
+        { "step":3, "label":"Corporate Approval",     "status":"CURRENT", "date":"",            "by":""                  },
+        { "step":4, "label":"Contract Update",        "status":"PENDING", "date":"",            "by":""                  }
+      ],
+      "contractInfo": {
+        "acq":1000, "upwardFlex":25, "downwardFlex":5,
+        "makeUpGas":200, "makeGoodGas":0, "sdDays":15, "topPct":80
+      }
+    },
+    {
+      "requestId":      "APR-002",
+      "type":           "REDUCTION",
+      "typeLabel":      "Reduction",
+      "customer":       "LMN Energy Ltd",
+      "customerId":     "CUST-1004",
+      "contract":       "CTR-2025-004",
+      "material":       "RLNG",
+      "industry":       "Power",
+      "salesOffice":    "North Zone - Delhi",
+      "submittedBy":    "Zonal Team",
+      "submittedOn":    "15 Jan 2025",
+      "uom":            "MMSCM",
+      "aacq":           970,
+      "status":         "PENDING",
+      "statusText":     "Pending Approval",
+      "statusState":    "Warning",
+      "priority":       "MEDIUM",
+      "daysWaiting":    2,
+      "approverComment":"",
+      "monthlyPlan": {
+        "jan":70, "feb":74, "mar":72,
+        "apr":88, "may":84, "jun":90,
+        "jul":65, "aug":69, "sep":62,
+        "oct":67, "nov":77, "dec":72
+      },
+      "quarterlyTotals": {
+        "q1":216,"q1Pct":22,"q1State":"Success",
+        "q2":262,"q2Pct":27,"q2State":"Warning",
+        "q3":196,"q3Pct":20,"q3State":"Success",
+        "q4":216,"q4Pct":22,"q4State":"Success"
+      },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 },
+      "annualTotal":    890,
+      "reductionApplied": true,
+      "reductionDetails": {
+        "monthFrom":"jan","monthTo":"mar","reductionPct":10,
+        "totalReducedQty":24,"reapportionedAcross":9,
+        "originalAnnualTotal":970,"revisedAnnualTotal":970
+      },
+      "workflowSteps": [
+        { "step":1, "label":"Reduction Proposed",    "status":"DONE",    "date":"13 Jan 2025", "by":"Zonal Team - Delhi" },
+        { "step":2, "label":"Reduction Applied",     "status":"DONE",    "date":"14 Jan 2025", "by":"Zonal Team - Delhi" },
+        { "step":3, "label":"Corporate Approval",    "status":"CURRENT", "date":"",            "by":""                  },
+        { "step":4, "label":"Contract Update",       "status":"PENDING", "date":"",            "by":""                  }
+      ],
+      "contractInfo": {
+        "acq":800, "upwardFlex":22, "downwardFlex":3,
+        "makeUpGas":150, "makeGoodGas":0, "sdDays":12, "topPct":78
+      }
+    },
+    {
+      "requestId":      "APR-003",
+      "type":           "ANNUAL_PLAN",
+      "typeLabel":      "Annual Plan",
+      "customer":       "XYZ Fertilizer Co.",
+      "customerId":     "CUST-1002",
+      "contract":       "CTR-2025-002",
+      "material":       "RLNG",
+      "industry":       "Fertilizer",
+      "salesOffice":    "West Zone - Mumbai",
+      "submittedBy":    "XYZ Fertilizer Portal",
+      "submittedOn":    "10 Jan 2025",
+      "uom":            "MMSCM",
+      "aacq":           850,
+      "status":         "APPROVED",
+      "statusText":     "Approved",
+      "statusState":    "Success",
+      "priority":       "LOW",
+      "daysWaiting":    0,
+      "approverComment":"Plan is within quarterly limits. Approved for contract update.",
+      "monthlyPlan": {
+        "jan":65, "feb":70, "mar":75,
+        "apr":80, "may":72, "jun":78,
+        "jul":60, "aug":65, "sep":55,
+        "oct":62, "nov":68, "dec":100
+      },
+      "quarterlyTotals": {
+        "q1":210,"q1Pct":25,"q1State":"Success",
+        "q2":230,"q2Pct":27,"q2State":"Warning",
+        "q3":180,"q3Pct":21,"q3State":"Success",
+        "q4":230,"q4Pct":27,"q4State":"Warning"
+      },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 },
+      "annualTotal":    850,
+      "reductionApplied": false,
+      "reductionDetails": null,
+      "workflowSteps": [
+        { "step":1, "label":"Submitted by Customer", "status":"DONE", "date":"10 Jan 2025", "by":"XYZ Fertilizer Portal" },
+        { "step":2, "label":"Zonal Review",          "status":"DONE", "date":"11 Jan 2025", "by":"Zonal Team - Mumbai"   },
+        { "step":3, "label":"Corporate Approval",    "status":"DONE", "date":"13 Jan 2025", "by":"Corporate Team"        },
+        { "step":4, "label":"Contract Update",       "status":"DONE", "date":"14 Jan 2025", "by":"System (Auto)"         }
+      ],
+      "contractInfo": {
+        "acq":700, "upwardFlex":20, "downwardFlex":5,
+        "makeUpGas":150, "makeGoodGas":0, "sdDays":10, "topPct":75
+      }
+    },
+    {
+      "requestId":      "APR-004",
+      "type":           "ANNUAL_PLAN",
+      "typeLabel":      "Annual Plan",
+      "customer":       "DEF Textiles Pvt",
+      "customerId":     "CUST-1005",
+      "contract":       "CTR-2025-005",
+      "material":       "CNG",
+      "industry":       "Textile",
+      "salesOffice":    "South Zone - Chennai",
+      "submittedBy":    "DEF Textiles Portal",
+      "submittedOn":    "11 Jan 2025",
+      "uom":            "MMSCM",
+      "aacq":           390,
+      "status":         "REJECTED",
+      "statusText":     "Rejected",
+      "statusState":    "Error",
+      "priority":       "LOW",
+      "daysWaiting":    0,
+      "approverComment":"Q2 quantities exceed the 27% limit by 2%. Customer must revise and resubmit.",
+      "monthlyPlan": {
+        "jan":30, "feb":32, "mar":35,
+        "apr":38, "may":36, "jun":40,
+        "jul":28, "aug":30, "sep":27,
+        "oct":29, "nov":32, "dec":33
+      },
+      "quarterlyTotals": {
+        "q1":97, "q1Pct":25,"q1State":"Success",
+        "q2":114,"q2Pct":29,"q2State":"Error",
+        "q3":85, "q3Pct":22,"q3State":"Success",
+        "q4":94, "q4Pct":24,"q4State":"Success"
+      },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 },
+      "annualTotal":    390,
+      "reductionApplied": false,
+      "reductionDetails": null,
+      "workflowSteps": [
+        { "step":1, "label":"Submitted by Customer", "status":"DONE",     "date":"11 Jan 2025", "by":"DEF Textiles Portal" },
+        { "step":2, "label":"Zonal Review",          "status":"DONE",     "date":"12 Jan 2025", "by":"Zonal Team - Chennai"},
+        { "step":3, "label":"Corporate Approval",    "status":"REJECTED",  "date":"14 Jan 2025", "by":"Corporate Team"      },
+        { "step":4, "label":"Contract Update",       "status":"SKIPPED",  "date":"",            "by":""                    }
+      ],
+      "contractInfo": {
+        "acq":300, "upwardFlex":30, "downwardFlex":0,
+        "makeUpGas":90, "makeGoodGas":0, "sdDays":8, "topPct":65
+      }
+    }
+  ],
+  "filteredRequests": [],
+  "selectedRequest":  null,
+  "ui": {
+    "busy":          false,
+    "dataLoaded":    false,
+    "detailVisible": false,
+    "fiscalYear":    "FY 2025-26",
+    "pendingCount":  2,
+    "approvedCount": 1,
+    "rejectedCount": 1
+  }
+}

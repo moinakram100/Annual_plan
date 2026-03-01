@@ -1,0 +1,74 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="validationInfoDialog"
+        title="Validation Rules – Quarterly % Maintenance"
+        contentWidth="500px"
+        type="Message">
+
+        <content>
+            <l:VerticalLayout width="100%" class="sapUiSmallMargin">
+
+                <MessageStrip
+                    text="These rules are enforced on every Save action."
+                    type="Information"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Title text="Field Validations" level="H5" class="sapUiSmallMarginBottom"/>
+
+                <List>
+                    <StandardListItem
+                        icon="sap-icon://accept"
+                        iconInset="false"
+                        title="Material is mandatory"
+                        description="Each row must have a valid material selected via Value Help."/>
+                    <StandardListItem
+                        icon="sap-icon://accept"
+                        iconInset="false"
+                        title="Percentages must be numeric and positive"
+                        description="Q1–Q4 values must be greater than 0 and ≤ 100."/>
+                    <StandardListItem
+                        icon="sap-icon://accept"
+                        iconInset="false"
+                        title="Sum of Q1 + Q2 + Q3 + Q4 must equal 100%"
+                        description="The total column turns green (100%) or red (≠ 100%)."/>
+                    <StandardListItem
+                        icon="sap-icon://accept"
+                        iconInset="false"
+                        title="Duplicate materials are not allowed"
+                        description="Each material may appear only once per fiscal year."/>
+                </List>
+
+                <Title text="System Behaviour on Save" level="H5"
+                    class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+                <List>
+                    <StandardListItem
+                        icon="sap-icon://chain-link"
+                        iconInset="false"
+                        title="Data is stored centrally"
+                        description="Saved percentages are available to all downstream screens."/>
+                    <StandardListItem
+                        icon="sap-icon://email"
+                        iconInset="false"
+                        title="Email notification triggered"
+                        description="All Zonal Offices are notified via email upon save."/>
+                    <StandardListItem
+                        icon="sap-icon://locked"
+                        iconInset="false"
+                        title="Read-only for Zonal users"
+                        description="These values become reference-only for Zonal and Customer roles."/>
+                </List>
+
+            </l:VerticalLayout>
+        </content>
+
+        <endButton>
+            <Button text="Close" type="Emphasized" press=".onCloseValidationInfo"/>
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

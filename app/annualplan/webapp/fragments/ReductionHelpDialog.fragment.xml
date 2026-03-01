@@ -1,0 +1,66 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="reductionHelpDialog"
+        title="How Reduction &amp; Re-apportionment Works"
+        contentWidth="540px"
+        type="Message">
+
+        <content>
+            <l:VerticalLayout width="100%" class="sapUiSmallMargin">
+
+                <MessageStrip
+                    text="AACQ (Annual Allocated Contract Quantity) is sacrosanct and will NEVER change during reduction."
+                    type="Warning"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Title text="Process Steps" level="H5" class="sapUiSmallMarginBottom"/>
+                <List>
+                    <StandardListItem
+                        icon="sap-icon://filter"
+                        iconInset="false"
+                        title="1. Select an Approved Plan"
+                        description="Use the filter bar to find and select an approved annual plan from the list."/>
+                    <StandardListItem
+                        icon="sap-icon://scissors"
+                        iconInset="false"
+                        title="2. Define Reduction Inputs"
+                        description="Choose Single Month or Month Range. Enter the reduction percentage (1–100%). Provide a mandatory reason."/>
+                    <StandardListItem
+                        icon="sap-icon://simulate"
+                        iconInset="false"
+                        title="3. Calculate Preview"
+                        description="Click 'Calculate Preview'. The system shows a 3-row comparison: Original Plan | After Reduction | Difference (Δ)."/>
+                    <StandardListItem
+                        icon="sap-icon://resize-horizontal"
+                        iconInset="false"
+                        title="4. Automatic Re-apportionment"
+                        description="The reduced quantity is automatically distributed proportionally across all remaining months. AACQ stays unchanged."/>
+                    <StandardListItem
+                        icon="sap-icon://paper-plane"
+                        iconInset="false"
+                        title="5. Submit for Approval"
+                        description="Submit the reduced plan for mandatory approval. No contract update happens before the approver confirms."/>
+                </List>
+
+                <Title text="Colour Coding in Preview" level="H5"
+                    class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+                <List>
+                    <StandardListItem icon="sap-icon://error"   iconInset="false" title="Red cell"   description="Month(s) where reduction was applied."/>
+                    <StandardListItem icon="sap-icon://accept"  iconInset="false" title="Green row"  description="After Reduction values – final new monthly plan."/>
+                    <StandardListItem icon="sap-icon://warning" iconInset="false" title="Amber row"  description="Difference (Δ) row – shows how much each month changed."/>
+                </List>
+
+            </l:VerticalLayout>
+        </content>
+
+        <endButton>
+            <Button text="Got it" type="Emphasized" press=".onCloseHelpDialog"/>
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

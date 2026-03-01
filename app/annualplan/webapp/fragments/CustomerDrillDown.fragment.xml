@@ -1,0 +1,100 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:table="sap.ui.table">
+
+    <Dialog
+        id="customerDrillDialog"
+        title="Customer Plan Detail – {drill>/customer}"
+        contentWidth="900px"
+        contentHeight="480px"
+        resizable="true"
+        draggable="true">
+
+        <subHeader>
+            <Bar>
+                <contentLeft>
+                    <ObjectStatus title="Contract"     text="{drill>/contract}"    state="None"/>
+                    <ObjectStatus title="Material"     text="{drill>/material}"    state="Information" class="sapUiSmallMarginBegin"/>
+                    <ObjectStatus title="Industry"     text="{drill>/industry}"    state="None" class="sapUiSmallMarginBegin"/>
+                    <ObjectStatus title="Sales Office" text="{drill>/salesOffice}" state="None" class="sapUiSmallMarginBegin"/>
+                </contentLeft>
+                <contentRight>
+                    <ObjectNumber number="{drill>/aacq}" unit="MMSCM" emphasized="true"/>
+                </contentRight>
+            </Bar>
+        </subHeader>
+
+        <content>
+            <l:VerticalLayout width="100%" class="sapUiSmallMargin">
+
+                <!-- Quarterly compliance summary -->
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="sapUiSmallMarginEnd" width="130px">
+                        <Label text="Q1 (Jan–Mar)" design="Bold"/>
+                        <ObjectStatus
+                            text="{drill>/q1} ({drill>/q1Pct}%)"
+                            state="{drill>/q1State}"/>
+                        <Text text="Limit: {dash>/quarterlyLimits/q1Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="130px">
+                        <Label text="Q2 (Apr–Jun)" design="Bold"/>
+                        <ObjectStatus
+                            text="{drill>/q2} ({drill>/q2Pct}%)"
+                            state="{drill>/q2State}"/>
+                        <Text text="Limit: {dash>/quarterlyLimits/q2Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="130px">
+                        <Label text="Q3 (Jul–Sep)" design="Bold"/>
+                        <ObjectStatus
+                            text="{drill>/q3} ({drill>/q3Pct}%)"
+                            state="{drill>/q3State}"/>
+                        <Text text="Limit: {dash>/quarterlyLimits/q3Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+                    </VBox>
+                    <VBox width="130px">
+                        <Label text="Q4 (Oct–Dec)" design="Bold"/>
+                        <ObjectStatus
+                            text="{drill>/q4} ({drill>/q4Pct}%)"
+                            state="{drill>/q4State}"/>
+                        <Text text="Limit: {dash>/quarterlyLimits/q4Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Monthly breakdown table (single row) -->
+                <Title text="Month-wise Breakdown" level="H5" class="sapUiSmallMarginBottom"/>
+                <table:Table
+                    rows="{drill>/monthlyRow}"
+                    selectionMode="None"
+                    visibleRowCount="1"
+                    rowHeight="44">
+                    <table:columns>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Jan"/><table:template><ObjectStatus text="{jan}" state="{janState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Feb"/><table:template><ObjectStatus text="{feb}" state="{febState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Mar"/><table:template><ObjectStatus text="{mar}" state="{marState}"/></table:template></table:Column>
+                        <table:Column width="6rem" hAlign="Center"><Label text="Q1"/><table:template><ObjectStatus text="{q1}" state="{q1State}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Apr"/><table:template><ObjectStatus text="{apr}" state="{aprState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="May"/><table:template><ObjectStatus text="{may}" state="{mayState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Jun"/><table:template><ObjectStatus text="{jun}" state="{junState}"/></table:template></table:Column>
+                        <table:Column width="6rem" hAlign="Center"><Label text="Q2"/><table:template><ObjectStatus text="{q2}" state="{q2State}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Jul"/><table:template><ObjectStatus text="{jul}" state="{julState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Aug"/><table:template><ObjectStatus text="{aug}" state="{augState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Sep"/><table:template><ObjectStatus text="{sep}" state="{sepState}"/></table:template></table:Column>
+                        <table:Column width="6rem" hAlign="Center"><Label text="Q3"/><table:template><ObjectStatus text="{q3}" state="{q3State}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Oct"/><table:template><ObjectStatus text="{oct}" state="{octState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Nov"/><table:template><ObjectStatus text="{nov}" state="{novState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Dec"/><table:template><ObjectStatus text="{dec}" state="{decState}"/></table:template></table:Column>
+                        <table:Column width="6rem" hAlign="Center"><Label text="Q4"/><table:template><ObjectStatus text="{q4}" state="{q4State}"/></table:template></table:Column>
+                        <table:Column width="7rem" hAlign="Center"><Label text="Annual"/><table:template><ObjectNumber number="{annual}" emphasized="true"/></table:template></table:Column>
+                    </table:columns>
+                </table:Table>
+
+            </l:VerticalLayout>
+        </content>
+
+        <endButton>
+            <Button text="Close" type="Emphasized" press=".onCloseDrillDown"/>
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

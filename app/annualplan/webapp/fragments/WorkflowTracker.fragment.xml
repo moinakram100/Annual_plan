@@ -1,0 +1,65 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <!--
+        Workflow Progress Tracker
+        Renders the 4-step approval workflow as a visual timeline.
+        Bound to apv>/selectedRequest/workflowSteps (array).
+        Each step: { step, label, status, date, by }
+        Status values: DONE | CURRENT | PENDING | REJECTED | SKIPPED
+    -->
+    <HBox alignItems="Center" wrap="NoWrap">
+        <List
+            id="workflowStepList"
+            items="{apv>/selectedRequest/workflowSteps}"
+            mode="None"
+            showNoData="false"
+            backgroundDesign="Transparent">
+            <CustomListItem>
+                <HBox alignItems="Center">
+                    <!-- Step circle icon -->
+                    <VBox alignItems="Center" width="80px">
+                        <core:Icon
+                            src="{= ${apv>status} === 'DONE'     ? 'sap-icon://accept'   :
+                                    ${apv>status} === 'CURRENT'  ? 'sap-icon://pending'  :
+                                    ${apv>status} === 'REJECTED' ? 'sap-icon://decline'  :
+                                    ${apv>status} === 'SKIPPED'  ? 'sap-icon://less'     :
+                                                                    'sap-icon://circle-task' }"
+                            color="{= ${apv>status} === 'DONE'     ? '#007833' :
+                                      ${apv>status} === 'CURRENT'  ? '#e9730c' :
+                                      ${apv>status} === 'REJECTED' ? '#bb0000' :
+                                      ${apv>status} === 'SKIPPED'  ? '#8c8c8c' :
+                                                                      '#c2c2c2'  }"
+                            size="1.5rem"/>
+                        <Text
+                            text="Step {apv>step}"
+                            textAlign="Center"
+                            style="font-size:10px;color:#6a7a8a;"
+                            class="sapUiTinyMarginTop"/>
+                    </VBox>
+
+                    <!-- Step details -->
+                    <VBox width="160px" class="sapUiSmallMarginBegin">
+                        <ObjectStatus
+                            text="{apv>label}"
+                            state="{= ${apv>status} === 'DONE'     ? 'Success' :
+                                      ${apv>status} === 'CURRENT'  ? 'Warning' :
+                                      ${apv>status} === 'REJECTED' ? 'Error'   : 'None' }"/>
+                        <Text text="{apv>date}" style="font-size:11px;color:#6a7a8a;"/>
+                        <Text text="{apv>by}"   style="font-size:11px;color:#6a7a8a;" wrapping="false"/>
+                    </VBox>
+
+                    <!-- Connector arrow (not after last item) -->
+                    <core:Icon
+                        src="sap-icon://arrow-right"
+                        color="#c2c2c2"
+                        size="1rem"
+                        class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
+                        visible="{= ${apv>step} &lt; 4}"/>
+                </HBox>
+            </CustomListItem>
+        </List>
+    </HBox>
+
+</core:FragmentDefinition>

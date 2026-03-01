@@ -1,0 +1,18 @@
+   <core:FragmentDefinition
+       xmlns="sap.m"
+       xmlns:core="sap.ui.core">
+       <SelectDialog
+           noDataText="Loading..."
+           title="Select Material"
+           search="onSalesOrderValueHelpSearch"
+           liveChange="onSalesOrderValueHelpSearch"
+           confirm="onMaterialSelect"
+          items="{quarterlyModel>/MaterialVH}"
+           initialFocus="SearchField">
+           <StandardListItem 
+               title="{quarterlyModel>Material}"
+            description="{quarterlyModel>MaterialDesc}"
+               iconInset="false"
+               type="Active" />
+       </SelectDialog>
+   </core:FragmentDefinition>

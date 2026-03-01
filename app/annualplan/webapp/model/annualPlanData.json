@@ -1,0 +1,90 @@
+{
+  "contractSelection": {
+    "calendarYear": "2025",
+    "customerId": "CUST-1001",
+    "contractNumber": ""
+  },
+  "yearOptions": [
+    { "key": "2025", "text": "2025" },
+    { "key": "2026", "text": "2026" },
+    { "key": "2027", "text": "2027" }
+  ],
+  "contracts": [
+    {
+      "contractNumber": "CTR-2025-001",
+      "customerId":     "CUST-1001",
+      "customerDesc":   "ABC Power Ltd",
+      "material":       "RLNG",
+      "uom":            "MMSCM",
+      "acq":            1000,
+      "upwardFlex":     25,
+      "downwardFlex":   5,
+      "makeUpGas":      200,
+      "makeGoodGas":    0,
+      "fmDeficiency":   0,
+      "aacq":           1220,
+      "sdDaysAllowed":  15,
+      "sdDaysUsed":     3,
+      "topPercent":     80,
+      "salesOffice":    "North Zone – Delhi",
+      "validFrom":      "01 Jan 2025",
+      "validTo":        "31 Dec 2025",
+      "status":         "Active"
+    },
+    {
+      "contractNumber": "CTR-2025-008",
+      "customerId":     "CUST-1001",
+      "customerDesc":   "ABC Power Ltd",
+      "material":       "PNG",
+      "uom":            "MMSCM",
+      "acq":            500,
+      "upwardFlex":     20,
+      "downwardFlex":   5,
+      "makeUpGas":      100,
+      "makeGoodGas":    0,
+      "fmDeficiency":   0,
+      "aacq":           595,
+      "sdDaysAllowed":  10,
+      "sdDaysUsed":     0,
+      "topPercent":     75,
+      "salesOffice":    "North Zone – Delhi",
+      "validFrom":      "01 Jan 2025",
+      "validTo":        "31 Dec 2025",
+      "status":         "Active"
+    }
+  ],
+  "quarterlyLimits": {
+    "q1Limit": 26,
+    "q2Limit": 27,
+    "q3Limit": 24,
+    "q4Limit": 25
+  },
+  "selectedContract": null,
+  "annualPlan": {
+    "planId":   "",
+    "status":   "DRAFT",
+    "jan": 0, "feb": 0, "mar": 0,
+    "apr": 0, "may": 0, "jun": 0,
+    "jul": 0, "aug": 0, "sep": 0,
+    "oct": 0, "nov": 0, "dec": 0,
+    "q1Total": 0, "q1Pct": 0, "q1State": "None", "q1Warning": false,
+    "q2Total": 0, "q2Pct": 0, "q2State": "None", "q2Warning": false,
+    "q3Total": 0, "q3Pct": 0, "q3State": "None", "q3Warning": false,
+    "q4Total": 0, "q4Pct": 0, "q4State": "None", "q4Warning": false,
+    "annualTotal": 0,
+    "annualState": "None",
+    "aacqMatch": false
+  },
+  "shutdownRows": [],
+  "ui": {
+    "busy":             false,
+    "contractSelected": false,
+    "hasChanges":       false,
+    "showSubmitBtn":    false,
+    "planSubmitted":    false,
+    "submitEnabled":    false,
+    "fiscalYear":       "FY 2025–26",
+    "sdDaysRemaining":  15,
+    "warningMessages":  []
+  }
+}

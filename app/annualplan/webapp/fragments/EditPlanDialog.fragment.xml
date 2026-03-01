@@ -1,0 +1,136 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="editPlanDialog"
+        title="Edit Monthly Plan – {edit>/customer}"
+        contentWidth="860px"
+        resizable="true"
+        draggable="true">
+
+        <subHeader>
+            <Bar>
+                <contentLeft>
+                    <ObjectStatus title="AACQ" text="{edit>/aacq} {edit>/uom}" state="Information"/>
+                </contentLeft>
+                <contentMiddle>
+                    <MessageStrip
+                        text="AACQ ({edit>/aacq}) must remain unchanged. Adjust monthly values accordingly."
+                        type="Information"
+                        showIcon="true"/>
+                </contentMiddle>
+                <contentRight>
+                    <ObjectStatus
+                        title="Annual Total"
+                        text="{edit>/editAnnualTotal} {edit>/uom}"
+                        state="{= ${edit>/editAnnualTotal} === ${edit>/aacq} ? 'Success' : 'Error'}"/>
+                </contentRight>
+            </Bar>
+        </subHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <!-- Q1 -->
+                <Title text="Quarter 1 (Jan – Mar)" level="H5" class="sapUiSmallMarginBottom"/>
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="January" design="Bold"/>
+                        <Input id="editJan" type="Number" value="{edit>/monthlyPlan/jan}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="February" design="Bold"/>
+                        <Input id="editFeb" type="Number" value="{edit>/monthlyPlan/feb}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="March" design="Bold"/>
+                        <Input id="editMar" type="Number" value="{edit>/monthlyPlan/mar}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox width="120px">
+                        <Label text="Q1 Total" design="Bold"/>
+                        <ObjectStatus text="{edit>/q1Total}" state="{edit>/q1State}"/>
+                        <Text text="Limit: {edit>/quarterlyLimits/q1Limit}%" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Q2 -->
+                <Title text="Quarter 2 (Apr – Jun)" level="H5" class="sapUiSmallMarginBottom"/>
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="April" design="Bold"/>
+                        <Input id="editApr" type="Number" value="{edit>/monthlyPlan/apr}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="May" design="Bold"/>
+                        <Input id="editMay" type="Number" value="{edit>/monthlyPlan/may}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="June" design="Bold"/>
+                        <Input id="editJun" type="Number" value="{edit>/monthlyPlan/jun}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox width="120px">
+                        <Label text="Q2 Total" design="Bold"/>
+                        <ObjectStatus text="{edit>/q2Total}" state="{edit>/q2State}"/>
+                        <Text text="Limit: {edit>/quarterlyLimits/q2Limit}%" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Q3 -->
+                <Title text="Quarter 3 (Jul – Sep)" level="H5" class="sapUiSmallMarginBottom"/>
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="July" design="Bold"/>
+                        <Input id="editJul" type="Number" value="{edit>/monthlyPlan/jul}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="August" design="Bold"/>
+                        <Input id="editAug" type="Number" value="{edit>/monthlyPlan/aug}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="September" design="Bold"/>
+                        <Input id="editSep" type="Number" value="{edit>/monthlyPlan/sep}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox width="120px">
+                        <Label text="Q3 Total" design="Bold"/>
+                        <ObjectStatus text="{edit>/q3Total}" state="{edit>/q3State}"/>
+                        <Text text="Limit: {edit>/quarterlyLimits/q3Limit}%" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Q4 -->
+                <Title text="Quarter 4 (Oct – Dec)" level="H5" class="sapUiSmallMarginBottom"/>
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="October" design="Bold"/>
+                        <Input id="editOct" type="Number" value="{edit>/monthlyPlan/oct}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="November" design="Bold"/>
+                        <Input id="editNov" type="Number" value="{edit>/monthlyPlan/nov}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd" width="110px">
+                        <Label text="December" design="Bold"/>
+                        <Input id="editDec" type="Number" value="{edit>/monthlyPlan/dec}" liveChange=".onEditMonthChange"/>
+                    </VBox>
+                    <VBox width="120px">
+                        <Label text="Q4 Total" design="Bold"/>
+                        <ObjectStatus text="{edit>/q4Total}" state="{edit>/q4State}"/>
+                        <Text text="Limit: {edit>/quarterlyLimits/q4Limit}%" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button text="Save Changes" type="Emphasized" icon="sap-icon://save" press=".onSaveEditedPlan"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" type="Ghost" press=".onCancelEditPlan"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

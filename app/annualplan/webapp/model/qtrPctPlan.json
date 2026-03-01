@@ -1,0 +1,70 @@
+{
+  "quarterlyPercentages": [
+    {
+      "id": "ROW-001",
+      "material": "RLNG",
+      "materialDesc": "Regasified LNG",
+      "q1Pct": 26,
+      "q2Pct": 27,
+      "q3Pct": 24,
+      "q4Pct": 23,
+      "total": 100,
+      "totalState": "Success",
+      "isEditable": false,
+      "isNew": false,
+      "lastUpdatedBy": "Danish Imam",
+      "lastUpdatedOn": "10 Jan 2025"
+    },
+    {
+      "id": "ROW-002",
+      "material": "PNG",
+      "materialDesc": "Piped Natural Gas",
+      "q1Pct": 25,
+      "q2Pct": 28,
+      "q3Pct": 22,
+      "q4Pct": 25,
+      "total": 100,
+      "totalState": "Success",
+      "isEditable": false,
+      "isNew": false,
+      "lastUpdatedBy": "Danish Imam",
+      "lastUpdatedOn": "10 Jan 2025"
+    },
+    {
+      "id": "ROW-003",
+      "material": "CNG",
+      "materialDesc": "Compressed Natural Gas",
+      "q1Pct": 27,
+      "q2Pct": 26,
+      "q3Pct": 23,
+      "q4Pct": 24,
+      "total": 100,
+      "totalState": "Success",
+      "isEditable": false,
+      "isNew": false,
+      "lastUpdatedBy": "Danish Imam",
+      "lastUpdatedOn": "10 Jan 2025"
+    }
+  ],
+  "materialValueHelp": [
+    { "key": "RLNG",   "text": "RLNG",   "desc": "Regasified LNG"         },
+    { "key": "PNG",    "text": "PNG",    "desc": "Piped Natural Gas"       },
+    { "key": "CNG",    "text": "CNG",    "desc": "Compressed Natural Gas"  },
+    { "key": "APM",    "text": "APM",    "desc": "APM Gas"                 },
+    { "key": "SPOT",   "text": "SPOT",   "desc": "Spot Gas"                },
+    { "key": "TERM",   "text": "TERM",   "desc": "Term Gas"                }
+  ],
+  "ui": {
+    "hasChanges": false,
+    "saveEnabled": false,
+    "busy": false,
+    "editMode": false,
+    "fiscalYear": "FY 2025–26"
+  },
+  "summary": {
+    "totalMaterials": 3,
+    "pendingRows": 0,
+    "lastSavedOn": "10 Jan 2025",
+    "lastSavedBy": "Danish Imam"
+  }
+}

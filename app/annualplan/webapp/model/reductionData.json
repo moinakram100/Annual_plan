@@ -1,0 +1,149 @@
+{
+  "filters": {
+    "material":    "",
+    "salesOffice": "",
+    "customer":    "",
+    "contract":    "",
+    "industry":    ""
+  },
+  "filterOptions": {
+    "materials":    [
+      { "key": "",     "text": "All Materials" },
+      { "key": "RLNG", "text": "RLNG – Regasified LNG"        },
+      { "key": "PNG",  "text": "PNG – Piped Natural Gas"      },
+      { "key": "CNG",  "text": "CNG – Compressed Natural Gas" },
+      { "key": "APM",  "text": "APM – APM Gas"                }
+    ],
+    "salesOffices": [
+      { "key": "",      "text": "All Sales Offices"       },
+      { "key": "NORTH", "text": "North Zone - Delhi"      },
+      { "key": "WEST",  "text": "West Zone - Mumbai"      },
+      { "key": "SOUTH", "text": "South Zone - Chennai"    },
+      { "key": "EAST",  "text": "East Zone - Kolkata"     }
+    ],
+    "customers": [
+      { "key": "",          "text": "All Customers"      },
+      { "key": "CUST-1001", "text": "ABC Power Ltd"      },
+      { "key": "CUST-1002", "text": "XYZ Fertilizer Co." },
+      { "key": "CUST-1003", "text": "PQR Steel Corp"     },
+      { "key": "CUST-1004", "text": "LMN Energy Ltd"     },
+      { "key": "CUST-1005", "text": "DEF Textiles Pvt"   }
+    ],
+    "contracts": [
+      { "key": "",             "text": "All Contracts" },
+      { "key": "CTR-2025-001", "text": "CTR-2025-001"  },
+      { "key": "CTR-2025-002", "text": "CTR-2025-002"  },
+      { "key": "CTR-2025-003", "text": "CTR-2025-003"  },
+      { "key": "CTR-2025-004", "text": "CTR-2025-004"  },
+      { "key": "CTR-2025-005", "text": "CTR-2025-005"  }
+    ],
+    "industries": [
+      { "key": "",           "text": "All Industries" },
+      { "key": "POWER",      "text": "Power"          },
+      { "key": "FERTILIZER", "text": "Fertilizer"     },
+      { "key": "INDUSTRIAL", "text": "Industrial"     },
+      { "key": "TEXTILE",    "text": "Textile"        },
+      { "key": "CHEMICAL",   "text": "Chemical"       }
+    ],
+    "months": [
+      { "key": "jan", "text": "January",   "qtr": "Q1" },
+      { "key": "feb", "text": "February",  "qtr": "Q1" },
+      { "key": "mar", "text": "March",     "qtr": "Q1" },
+      { "key": "apr", "text": "April",     "qtr": "Q2" },
+      { "key": "may", "text": "May",       "qtr": "Q2" },
+      { "key": "jun", "text": "June",      "qtr": "Q2" },
+      { "key": "jul", "text": "July",      "qtr": "Q3" },
+      { "key": "aug", "text": "August",    "qtr": "Q3" },
+      { "key": "sep", "text": "September", "qtr": "Q3" },
+      { "key": "oct", "text": "October",   "qtr": "Q4" },
+      { "key": "nov", "text": "November",  "qtr": "Q4" },
+      { "key": "dec", "text": "December",  "qtr": "Q4" }
+    ]
+  },
+  "planRecords": [
+    {
+      "planId":      "PLN-001",
+      "customer":    "ABC Power Ltd",
+      "customerId":  "CUST-1001",
+      "contract":    "CTR-2025-001",
+      "material":    "RLNG",
+      "industry":    "Power",
+      "salesOffice": "North Zone - Delhi",
+      "uom":         "MMSCM",
+      "aacq":        1200,
+      "status":      "APPROVED",
+      "statusState": "Success",
+      "originalPlan": { "jan":95,"feb":100,"mar":105,"apr":115,"may":120,"jun":110,"jul":90,"aug":95,"sep":85,"oct":80,"nov":105,"dec":100 },
+      "currentPlan":  { "jan":95,"feb":100,"mar":105,"apr":115,"may":120,"jun":110,"jul":90,"aug":95,"sep":85,"oct":80,"nov":105,"dec":100 },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 }
+    },
+    {
+      "planId":      "PLN-002",
+      "customer":    "XYZ Fertilizer Co.",
+      "customerId":  "CUST-1002",
+      "contract":    "CTR-2025-002",
+      "material":    "RLNG",
+      "industry":    "Fertilizer",
+      "salesOffice": "West Zone - Mumbai",
+      "uom":         "MMSCM",
+      "aacq":        850,
+      "status":      "APPROVED",
+      "statusState": "Success",
+      "originalPlan": { "jan":65,"feb":70,"mar":75,"apr":80,"may":72,"jun":78,"jul":60,"aug":65,"sep":55,"oct":62,"nov":68,"dec":100 },
+      "currentPlan":  { "jan":65,"feb":70,"mar":75,"apr":80,"may":72,"jun":78,"jul":60,"aug":65,"sep":55,"oct":62,"nov":68,"dec":100 },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 }
+    },
+    {
+      "planId":      "PLN-004",
+      "customer":    "LMN Energy Ltd",
+      "customerId":  "CUST-1004",
+      "contract":    "CTR-2025-004",
+      "material":    "RLNG",
+      "industry":    "Power",
+      "salesOffice": "North Zone - Delhi",
+      "uom":         "MMSCM",
+      "aacq":        970,
+      "status":      "APPROVED",
+      "statusState": "Success",
+      "originalPlan": { "jan":78,"feb":82,"mar":80,"apr":88,"may":84,"jun":90,"jul":72,"aug":76,"sep":68,"oct":70,"nov":80,"dec":82 },
+      "currentPlan":  { "jan":78,"feb":82,"mar":80,"apr":88,"may":84,"jun":90,"jul":72,"aug":76,"sep":68,"oct":70,"nov":80,"dec":82 },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 }
+    },
+    {
+      "planId":      "PLN-005",
+      "customer":    "DEF Textiles Pvt",
+      "customerId":  "CUST-1005",
+      "contract":    "CTR-2025-005",
+      "material":    "CNG",
+      "industry":    "Textile",
+      "salesOffice": "South Zone - Chennai",
+      "uom":         "MMSCM",
+      "aacq":        390,
+      "status":      "APPROVED",
+      "statusState": "Success",
+      "originalPlan": { "jan":30,"feb":32,"mar":35,"apr":38,"may":36,"jun":40,"jul":28,"aug":30,"sep":27,"oct":29,"nov":32,"dec":33 },
+      "currentPlan":  { "jan":30,"feb":32,"mar":35,"apr":38,"may":36,"jun":40,"jul":28,"aug":30,"sep":27,"oct":29,"nov":32,"dec":33 },
+      "quarterlyLimits": { "q1Limit":26,"q2Limit":27,"q3Limit":24,"q4Limit":25 }
+    }
+  ],
+  "filteredRecords": [],
+  "selectedPlan": null,
+  "reduction": {
+    "monthFrom":        "jan",
+    "monthTo":          "jan",
+    "reductionPct":     10,
+    "mode":             "SINGLE",
+    "previewRows":      [],
+    "reductionApplied": false,
+    "totalReducedQty":  0,
+    "reapportionedQty": 0
+  },
+  "ui": {
+    "busy":          false,
+    "dataLoaded":    false,
+    "planSelected":  false,
+    "previewReady":  false,
+    "submitEnabled": false,
+    "fiscalYear":    "FY 2025-26"
+  }
+}

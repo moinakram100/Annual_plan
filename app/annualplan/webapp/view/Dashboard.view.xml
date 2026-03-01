@@ -1,0 +1,412 @@
+<mvc:View
+    controllerName="com.ingenx.annualplan.controller.Dashboard"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
+    xmlns:l="sap.ui.layout"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+<Page showHeader="false">
+     <ScrollContainer id="dashboard_Scrollcontainer" vertical="true">
+            <tnt:ToolHeader id="dashboard__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
+            <Title id="dashboard__Mapping_Title" textAlign="Center" text="Corporate Dashboard" wrapping="false">
+                <layoutData>
+                    <OverflowToolbarLayoutData id="dashboard__Mapping_OverflowToolbarLayoutData" priority="Disappear" />
+                </layoutData>
+            </Title>
+            <ToolbarSpacer id="dashboard__Mapping_ToolbarSpacer" />
+        </tnt:ToolHeader>
+
+
+        <!-- filter area -->
+        <HBox class="filterArea">
+            <HBox class="headerSelectArea">
+
+            <!-- sales office -->
+                <VBox class="sapUiSmallMarginEnd">
+                 <Label id="dash_Label" text="Sales Office" design="Bold" width="90px"/>
+                        <Select
+                            id="selSalesOffice"
+                            width="200px"
+                            selectedKey="{dash>/filters/salesOffice}">
+                            <items>
+                                <core:Item id="dash_Item" key=""       text="All Sales Offices"    />
+                                <core:Item id="dash_Item1" key="NORTH"  text="North Zone – Delhi"   />
+                                <core:Item id="dash_Item2" key="WEST"   text="West Zone – Mumbai"   />
+                                <core:Item id="dash_Item3" key="SOUTH"  text="South Zone – Chennai" />
+                                <core:Item id="dash_Item4" key="EAST"   text="East Zone – Kolkata"  />
+                            </items>
+                        </Select>
+                </VBox>
+                                                        
+                    <!-- Material -->
+                    <VBox class="sapUiSmallMarginEnd">
+                        <Label id="dash_Label1" text="Material" design="Bold" width="65px"/>
+                        <Select
+                            id="dash_Material"
+                            width="200px"
+                            selectedKey="{dash>/filters/material}">
+                            <items>
+                                <core:Item id="dash_Item5" key=""      text="All Materials" />
+                                <core:Item id="dash_Item6" key="RLNG"  text="RLNG"          />
+                                <core:Item id="dash_Item7" key="PNG"   text="PNG"           />
+                                <core:Item id="dash_Item8" key="CNG"   text="CNG"           />
+                                <core:Item id="dash_Item9" key="APM"   text="APM"           />
+                            </items>
+                        </Select>
+                    </VBox>
+                     <!-- Customer -->
+                    <VBox class="sapUiSmallMarginEnd">
+                     <Label id="dash_Label11" text="Customer" design="Bold" width="70px"/>
+                        <Select
+                            id="dash_Customer"
+                            width="200px"
+                            selectedKey="{dash>/filters/customer}">
+                            <items>
+                                <core:Item id="dash_Item10" key=""           text="All Customers"      />
+                                <core:Item id="dash_Item11" key="CUST-1001"  text="ABC Power Ltd"      />
+                                <core:Item id="dash_Item12" key="CUST-1002"  text="XYZ Fertilizer Co." />
+                                <core:Item id="dash_Item13" key="CUST-1003"  text="PQR Steel Corp"     />
+                                <core:Item id="dash_Item14" key="CUST-1004"  text="LMN Energy Ltd"     />
+                                <core:Item id="dash_Item15" key="CUST-1005"  text="DEF Textiles Pvt"   />
+                                <core:Item id="dash_Item16" key="CUST-1006"  text="GHI Chemicals Ltd"  />
+                                <core:Item id="dash_Item17" key="CUST-1007"  text="JKL Refinery Pvt"   />
+                            </items>
+                        </Select>
+                    </VBox>
+
+                    <!-- Industry -->
+                    <VBox class="sapUiSmallMarginEnd">
+                    <Label id="dash_Label38" text="Industry" design="Bold" width="65px"/>
+                        <Select
+                            id="dash_Industry"
+                            width="200px"
+                            selectedKey="{dash>/filters/industry}">
+                            <items>
+                                <core:Item id="dash_Item18" key=""            text="All Industries" />
+                                <core:Item id="dash_Item19" key="POWER"       text="Power"          />
+                                <core:Item id="dash_Item20" key="FERTILIZER"  text="Fertilizer"     />
+                                <core:Item id="dash_Item21" key="INDUSTRIAL"  text="Industrial"     />
+                                <core:Item id="dash_Item22" key="TEXTILE"     text="Textile"        />
+                                <core:Item id="dash_Item23" key="CHEMICAL"    text="Chemical"       />
+                                <core:Item id="dash_Item24" key="REFINERY"    text="Refinery"       />
+                            </items>
+                        </Select>
+                    </VBox>
+
+                    <VBox class="sapUiSmallMarginEnd">
+                    <Label id="dashboard_Label38" text="Industry" design="Bold" width="65px"/>
+                    <HBox>
+                        <Button id="dashboard_Button6"
+                            text="Go"
+                            type="Emphasized"
+                            icon="sap-icon://search"
+                            press=".onApplyFilter"/>
+                        <Button id="dashboard_Button7"
+                            text="Clear"
+                            type="Ghost"
+                            press=".onClearFilter"
+                            class="sapUiTinyMarginBegin"/>
+                    </HBox>
+                    </VBox>
+            </HBox>
+        </HBox> 
+
+
+               <!-- Body content -->
+            
+                      <VBox
+                    id="noDataBox"
+                    visible="{= !${dash>/ui/dataLoaded}}"
+                    alignItems="Center"
+                    height="430px"
+                    class="sapUiTinyMarginTop filterArea">
+                    <core:Icon id="dash_Icon2"
+                        src="sap-icon://chart-table-view"
+                        size="4rem"
+                        color="#c2c2c2"
+                        class="sapUiSmallMarginBottom"/>
+                    <Title id="dash_Title5" text="No Data Loaded" level="H4"/>
+                    <Text id="dash_Text2"
+                        text="Select filter criteria above and click 'Go' to load annual plans for validation."
+                        class="sapUiSmallMarginTop"
+                        textAlign="Center"/>
+                    <Button id="dash_Button8"
+                        text="Load All Plans"
+                        type="Emphasized"
+                        icon="sap-icon://search"
+                        press=".onApplyFilter"
+                        class="sapUiMediumMarginTop"/>
+                </VBox>
+               <VBox class="filterArea" visible="{dash>/ui/dataLoaded}">  
+                <Toolbar id="dash_Toolbar3" >
+                    <Title id="dash_Title6" text="Annual Plans – Detailed View" level="H4"/>
+                    <ObjectStatus id="dash_ObjectStatus16"
+                        text="{= ${dash>/filteredRows}.length + ' plan(s)'}"
+                        state="Information"
+                        class="sapUiSmallMarginBegin"/>
+                    <ObjectStatus
+                        id="violationBadge"
+                        text="{dash>/kpiSummary/violatingPlans} violation(s)"
+                        state="{= ${dash>/kpiSummary/violatingPlans} > 0 ? 'Error' : 'Success'}"
+                        icon="{= ${dash>/kpiSummary/violatingPlans} > 0 ? 'sap-icon://error' : 'sap-icon://accept'}"
+                        class="sapUiSmallMarginBegin"/>
+                    <ToolbarSpacer id="dash_ToolbarSpacer6"/>
+                    <!-- Group by selector -->
+                    <Label id="dash_Label40" text="Group by:" design="Bold" class="sapUiSmallMarginEnd"/>
+                    <Select
+                        id="selGroupBy"
+                        width="150px"
+                        change=".onGroupByChange">
+                        <items>
+                            <core:Item id="dash_Item25" key=""           text="No Grouping"   />
+                            <core:Item id="dash_Item26" key="salesOffice" text="Sales Office"  />
+                            <core:Item id="dash_Item27" key="material"   text="Material"      />
+                            <core:Item id="dash_Item28" key="industry"   text="Industry"      />
+                        </items>
+                    </Select>
+                    <Button id="dash_Button9"
+                        icon="sap-icon://download"
+                        type="Ghost"
+                        tooltip="Export Table"
+                        press=".onExport"
+                        class="sapUiTinyMarginBegin"/>
+                </Toolbar>
+                <table:Table
+                    id="dashTable"
+                    rows="{dash>/filteredRows}"
+                    selectionMode="None"
+                    alternateRowColors="true"
+                    visibleRowCount="10"
+                    rowHeight="44"
+                    enableBusyIndicator="true"
+                    busy="{dash>/ui/busy}"
+                    visible="{dash>/ui/dataLoaded}"
+                    fixedColumnCount="2"
+                    class="sapUiSmallMarginTop zonalPlanTable">
+
+                    <!-- ── Fixed Col 1: Customer ── -->
+                    <table:Column id="dash_Column26" width="13rem" label="Customer" sortProperty="customer" filterProperty="customer">
+                        <Label id="dash_Label41" text="Customer"/>
+                        <table:template>
+                            <VBox id="dash_VBox4">
+                                <Link id="dash_Link" text="{dash>customer}" press=".onCustomerDrillDown" wrapping="false"/>
+                                <Text id="dash_Text3" text="{dash>salesOffice}"
+                                    wrapping="false"
+                                    />
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Fixed Col 2: Contract ── -->
+                    <table:Column id="dash_Column27" width="11rem" label="Contract" sortProperty="contract">
+                        <Label id="dash_Label42" text="Contract"/>
+                        <table:template>
+                            <VBox id="dash_VBox5">
+                                <Text id="dash_Text4" text="{dash>contract}" wrapping="false"/>
+                                <ObjectStatus id="dash_ObjectStatus17"
+                                    text="{dash>material}"
+                                    state="Information"
+                                    />
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: Industry ── -->
+                    <table:Column id="dash_Column28" width="9rem" label="Industry" sortProperty="industry">
+                        <Label id="dash_Label43" text="Industry"/>
+                        <table:template>
+                            <Text id="dash_Text5" text="{dash>industry}" wrapping="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ── Col: AACQ ── -->
+                    <table:Column id="dash_Column29" width="8rem" hAlign="End" label="AACQ">
+                        <Label id="dash_Label44" text="AACQ"/>
+                        <table:template>
+                            <ObjectNumber id="dash_ObjectNumber" number="{dash>aacq}" unit="MMSCM" emphasized="false"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- ═══ MONTHLY COLUMNS (Jan–Dec) ═══ -->
+                    <!-- Jan -->
+                    <table:Column id="dash_Column30" width="5.5rem" hAlign="Center" label="Jan">
+                        <Label id="dash_Label45" text="Jan"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus18" text="{dash>jan}" state="{dash>janState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Feb -->
+                    <table:Column id="dash_Column31" width="5.5rem" hAlign="Center" label="Feb">
+                        <Label id="dash_Label46" text="Feb"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus19" text="{dash>feb}" state="{dash>febState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Mar -->
+                    <table:Column id="dash_Column32" width="5.5rem" hAlign="Center" label="Mar">
+                        <Label id="dash_Label47" text="Mar"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus20" text="{dash>mar}" state="{dash>marState}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Q1 Total -->
+                    <table:Column id="dash_Column33" width="7rem" hAlign="Center" label="Q1 Total">
+                        <Label id="dash_Label48" text="Q1 Total"/>
+                        <table:template>
+                            <VBox id="dash_VBox8" alignItems="Center">
+                                <ObjectStatus id="dash_ObjectStatus21"
+                                    text="{dash>q1}"
+                                    state="{dash>q1State}"
+                                    icon="{= ${dash>q1State} === 'Error' ? 'sap-icon://error' :
+                                              ${dash>q1State} === 'Warning' ? 'sap-icon://warning' :
+                                                                               'sap-icon://accept' }"/>
+                                <Text id="dash_Text35" text="{dash>q1Pct}%"/>
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Apr -->
+                    <table:Column id="dash_Column34" width="5.5rem" hAlign="Center" label="Apr">
+                        <Label id="dash_Label49" text="Apr"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus22" text="{dash>apr}" state="{dash>aprState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- May -->
+                    <table:Column id="dash_Column35" width="5.5rem" hAlign="Center" label="May">
+                        <Label id="dash_Label50" text="May"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus23" text="{dash>may}" state="{dash>mayState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Jun -->
+                    <table:Column id="dash_Column36" width="5.5rem" hAlign="Center" label="Jun">
+                        <Label id="dash_Label51" text="Jun"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus24" text="{dash>jun}" state="{dash>junState}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Q2 Total -->
+                    <table:Column id="dash_Column37" width="7rem" hAlign="Center" label="Q2 Total">
+                        <Label id="dash_Label52" text="Q2 Total"/>
+                        <table:template>
+                            <VBox id="dash_VBox9" alignItems="Center">
+                                <ObjectStatus id="dash_ObjectStatus25"
+                                    text="{dash>q2}"
+                                    state="{dash>q2State}"
+                                    icon="{= ${dash>q2State} === 'Error' ? 'sap-icon://error' :
+                                              ${dash>q2State} === 'Warning' ? 'sap-icon://warning' :
+                                                                               'sap-icon://accept' }"/>
+                                <Text id="dash_Text36" text="{dash>q2Pct}%" />
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Jul -->
+                    <table:Column id="dash_Column38" width="5.5rem" hAlign="Center" label="Jul">
+                        <Label id="dash_Label53" text="Jul"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus26" text="{dash>jul}" state="{dash>julState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Aug -->
+                    <table:Column id="dash_Column39" width="5.5rem" hAlign="Center" label="Aug">
+                        <Label id="dash_Label54" text="Aug"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus27" text="{dash>aug}" state="{dash>augState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Sep -->
+                    <table:Column id="dash_Column40" width="5.5rem" hAlign="Center" label="Sep">
+                        <Label id="dash_Label55" text="Sep"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus28" text="{dash>sep}" state="{dash>sepState}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Q3 Total -->
+                    <table:Column id="dash_Column41" width="7rem" hAlign="Center" label="Q3 Total">
+                        <Label id="dash_Label56" text="Q3 Total"/>
+                        <table:template>
+                            <VBox id="dash_VBox10" alignItems="Center">
+                                <ObjectStatus id="dash_ObjectStatus29"
+                                    text="{dash>q3}"
+                                    state="{dash>q3State}"
+                                    icon="{= ${dash>q3State} === 'Error' ? 'sap-icon://error' :
+                                              ${dash>q3State} === 'Warning' ? 'sap-icon://warning' :
+                                                                               'sap-icon://accept' }"/>
+                                <Text id="dash_Text37" text="{dash>q3Pct}%" />
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Oct -->
+                    <table:Column id="dash_Column42" width="5.5rem" hAlign="Center" label="Oct">
+                        <Label id="dash_Label57" text="Oct"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus30" text="{dash>oct}" state="{dash>octState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Nov -->
+                    <table:Column id="dash_Column43" width="5.5rem" hAlign="Center" label="Nov">
+                        <Label id="dash_Label58" text="Nov"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus31" text="{dash>nov}" state="{dash>novState}"/>
+                        </table:template>
+                    </table:Column>
+                    <!-- Dec -->
+                    <table:Column id="dash_Column44" width="5.5rem" hAlign="Center" label="Dec">
+                        <Label id="dash_Label59" text="Dec"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus32" text="{dash>dec}" state="{dash>decState}"/>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Q4 Total -->
+                    <table:Column id="dash_Column45" width="7rem" hAlign="Center" label="Q4 Total">
+                        <Label id="dash_Label60" text="Q4 Total"/>
+                        <table:template>
+                            <VBox id="dash_VBox11" alignItems="Center">
+                                <ObjectStatus id="dash_ObjectStatus33"
+                                    text="{dash>q4}"
+                                    state="{dash>q4State}"
+                                    icon="{= ${dash>q4State} === 'Error' ? 'sap-icon://error' :
+                                              ${dash>q4State} === 'Warning' ? 'sap-icon://warning' :
+                                                                               'sap-icon://accept' }"/>
+                                <Text id="dash_Text38" text="{dash>q4Pct}%" />
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                    <!-- Annual Total -->
+                    <table:Column id="dash_Column46" width="8rem" hAlign="Center" label="Annual Total">
+                        <Label id="dash_Label61" text="Annual Total"/>
+                        <table:template>
+                            <ObjectStatus id="dash_ObjectStatus34"
+                                text="{dash>annual}"
+                                state="{dash>annualState}"
+                                />
+                        </table:template>
+                    </table:Column>
+
+                </table:Table>
+                 <MessageStrip
+                    id="violationStrip"
+                    text="⚠ {dash>/kpiSummary/violatingPlans} plan(s) have quarterly percentage violations. Review highlighted cells (🔴 Red = Exceeded, 🟡 Amber = Near limit, 🟢 Green = Compliant)."
+                    type="Warning"
+                    showIcon="true"
+                    showCloseButton="true"
+                    visible="{= ${dash>/ui/dataLoaded} &amp;&amp; ${dash>/kpiSummary/violatingPlans} > 0}"
+                    class="sapUiSmallMarginTop"/>
+             </VBox>  
+
+     </ScrollContainer>
+</Page>     
+
+</mvc:View>
+

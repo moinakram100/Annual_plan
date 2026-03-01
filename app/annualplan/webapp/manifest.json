@@ -1,0 +1,187 @@
+{
+  "_version": "1.82.0",
+  "sap.app": {
+    "id": "com.ingenx.annualplan",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.3",
+      "toolsId": "cbbf98aa-28ce-4c1e-91f0-8ce14d1f354a"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/annual-plan/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.145.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.ingenx.annualplan.i18n.i18n"
+        }
+      },
+       "localData": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/data.json"
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "com.ingenx.annualplan.view",
+        "async": true,
+        "viewPath": "com.ingenx.annualplan.view"
+      },
+      "routes": [
+        {
+          "name": "RouteMain",
+          "pattern": ":?query:",
+          "target": [
+            "TargetMain"
+          ]
+        },
+        {
+          "name": "onRouteQuarterlyPercentage",
+          "pattern": "quarterly",
+          "target": [
+            "TargetQuarterlyScreen"
+          ]
+        },
+        {
+          "name": "onRouteAnnualPlan",
+          "pattern": "annualPlan",
+          "target": [
+            "TargetAnnualPlanScreen"
+          ]
+        },
+        {
+          "name": "onRouteZonalReview",
+          "pattern": "zonalReview",
+          "target": [
+            "TargetZonalReviewScreen"
+          ]
+        },
+        {
+          "name": "onRouteDashboard",
+          "pattern": "dashboard",
+          "target": [
+            "TargetDashboardScreen"
+          ]
+        },
+        {
+          "name": "onRouteReduction",
+          "pattern": "reduction",
+          "target": [
+            "TargetReductionScreen"
+          ]
+        },
+        {
+          "name": "onRouteApproval",
+          "pattern": "approval",
+          "target": [
+            "TargetApprovalScreen"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetMain": {
+          "id": "Main",
+          "name": "Main"
+        },
+        "TargetQuarterlyScreen": {
+          "id": "quarterly",
+          "name": "QuarterlyPercentage"
+        },
+        "TargetAnnualPlanScreen": {
+          "id": "annualPlan",
+          "name": "AnnualPlan"
+        },
+        "TargetZonalReviewScreen": {
+          "id": "zonal",
+          "name": "ZonalReview"
+        },
+        "TargetDashboardScreen": {
+          "id": "dashboard",
+          "name": "Dashboard"
+        },
+        "TargetReductionScreen": {
+          "id": "reduction",
+          "name": "Reduction"
+        },
+        "TargetApprovalScreen": {
+          "id": "approval",
+          "name": "Approval"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.ingenx.annualplan.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

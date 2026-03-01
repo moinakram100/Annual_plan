@@ -1,0 +1,45 @@
+.quarterlyTable{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.sapTntToolHeader .sapMTitle {
+    color: black !important;
+}
+.headerSelectArea {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 8px;
+  width: 100%;
+}
+
+.sapUiBlockLayoutSizeM:not(.sapUiBlockLayoutKeepFontSize) .sapUiBlockCellContent {
+    padding: 0rem 2rem !important;
+    font-size: .875rem;
+}
+.filterArea{
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 13px 0px;
+    padding: 10px;
+    width: 99%;
+    margin: 0.8% 0.5% 0.5% 0.5%;
+    border-radius: 8px;
+    background-color: #fff;
+}
+html, body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.zonalPlanTable{
+   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.dynamicPageArea{
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 13px 0px;
+    /* padding: 10px; */
+    /* width: 98%; */
+    /* margin: 0.8% 0.5% 0.5% 0.5%; */
+    border-radius: 8px;
+    background-color: #fff;
+    margin: 0.2%;
+    margin-right: -2%;
+}
