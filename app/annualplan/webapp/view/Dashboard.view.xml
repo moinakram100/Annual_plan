@@ -121,7 +121,8 @@
                     id="noDataBox"
                     visible="{= !${dash>/ui/dataLoaded}}"
                     alignItems="Center"
-                    height="430px"
+                    justifyContent="Center"
+                    height="370px"
                     class="sapUiTinyMarginTop filterArea">
                     <core:Icon id="dash_Icon2"
                         src="sap-icon://chart-table-view"
@@ -391,6 +392,16 @@
                                 text="{dash>annual}"
                                 state="{dash>annualState}"
                                 />
+                        </table:template>
+                    </table:Column>
+
+                    <table:Column id="dash_Column96" width="12rem" hAlign="Center" label="Actions">
+                        <Label id="dash_Label91" text="Actions"/>
+                        <table:template>
+                          <HBox>
+                            <Button text="Reduction" type="Attention"  press="onPressReductionBtn"/>
+                            <Button text="Approval" class="sapUiTinyMarginBegin" type="Accept" press="onPressApprovalBtn"/>
+                          </HBox>
                         </table:template>
                     </table:Column>
 

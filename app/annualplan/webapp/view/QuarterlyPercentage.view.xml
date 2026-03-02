@@ -7,7 +7,7 @@
     xmlns:core = "sap.ui.core"
     xmlns="sap.m"
     xmlns:tnt="sap.tnt">
-   <Page showHeader="false">
+   <Page id="_IDGenPage" showHeader="false">
    
      <ScrollContainer id="annualPlan_Scrollcontainer" vertical="true">
       <tnt:ToolHeader id="annualPlan__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
@@ -20,23 +20,23 @@
         </tnt:ToolHeader>
 
         <!-- filter content -->
-         <HBox class="filterArea" justifyContent="SpaceBetween">
-             <HBox>
-              <Label text="Material" class="sapUiTinyMargin" design="Bold"/>
+         <HBox id="_IDGenHBox26" class="filterArea" justifyContent="SpaceBetween">
+             <HBox id="_IDGenHBox27">
+              <Label id="_IDGenLabel143" text="Material" class="sapUiTinyMargin" design="Bold"/>
                 <MultiComboBox
                     id="materialMultiInput"
                     selectionChange="handleSelectionChange"
                     selectionFinish="handleSelectionFinish"
                     width="250px"
                     items="{
-                        path: 'quarterlyModel>/MaterialVH',
+                        path: 'qtrPct>/materialValueHelp',
                         sorter: { path: 'Material' }
                     }">
-                    <core:Item key="{quarterlyModel>Material}"
-                    text="{quarterlyModel>MaterialDesc}"/>
+                    <core:Item id="_IDGenItem85" key="{qtrPct>key}"
+                    text="{qtrPct>text}"/>
                 </MultiComboBox>
              </HBox>
-             <HBox>
+             <HBox id="_IDGenHBox28">
                  <Button
                         id="btnEditMode"
                         class="sapUiTinyMarginEnd"
@@ -61,7 +61,7 @@
                         type="Emphasized"
                         enabled="{qtrPct>/ui/saveEnabled}"
                         press=".onSave"/>
-                    <Button
+                    <Button id="_IDGenButton35"
                         icon="sap-icon://information"
                         tooltip="Validation Rules"
                         press=".onShowValidationInfo"/>
@@ -70,7 +70,7 @@
 
 
          <!-- Body content -->
-         <VBox class="filterArea">
+         <VBox id="_IDGenVBox59" class="filterArea">
                 <MessageStrip
                     id="editModeStrip"
                     text="You are in Edit Mode. Make changes and click Save, or Cancel Edit to discard."
@@ -100,10 +100,12 @@
                         icon="sap-icon://download"
                         text="Export"
                         type="Ghost"
+                        visible="false"
                         press=".onExport"/>
                     <Button id="_IDGenButton1"
                         icon="sap-icon://refresh"
                         tooltip="Refresh"
+                        visible="false"
                         type="Ghost"
                         press=".onRefresh"/>
                 </Toolbar>
@@ -115,7 +117,7 @@
                     selectionMode="None"
                     alternateRowColors="true"
                     visibleRowCount="{= Math.max(${qtrPct>/quarterlyPercentages}.length + 1, 5)}"
-                    rowHeight="56"
+                    rowHeight="40"
                     enableBusyIndicator="true"
                     busy="{qtrPct>/ui/busy}"
                     class="sapUiSmallMarginTop zonalPlanTable">
@@ -151,7 +153,7 @@
                                 valueHelpRequest=".onMaterialValueHelp"
                                 valueHelpOnly="false"
                                 required="true"
-                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
                                 liveChange=".onFieldChange"
                                 valueState="{qtrPct>materialState}"
                                 valueStateText="{qtrPct>materialStateText}"/>
@@ -178,7 +180,7 @@
                                 description="%"
                                 textAlign="Center"
                                 width="100%"
-                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
                                 change=".onPctChange"
                                 valueState="{qtrPct>q1State}"
                                 valueStateText="Must be between 1–97"/>
@@ -205,7 +207,7 @@
                                 description="%"
                                 textAlign="Center"
                                 width="100%"
-                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
                                 change=".onPctChange"
                                 valueState="{qtrPct>q2State}"
                                 valueStateText="Must be between 1–97"/>
@@ -232,7 +234,7 @@
                                 description="%"
                                 textAlign="Center"
                                 width="100%"
-                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
                                 change=".onPctChange"
                                 valueState="{qtrPct>q3State}"
                                 valueStateText="Must be between 1–97"/>
@@ -259,7 +261,7 @@
                                 description="%"
                                 textAlign="Center"
                                 width="100%"
-                                visible="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                                editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
                                 change=".onPctChange"
                                 valueState="{qtrPct>q4State}"
                                 valueStateText="Must be between 1–97"/>

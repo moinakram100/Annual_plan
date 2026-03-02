@@ -99,7 +99,7 @@
                         </HBox>
 
                         <!--Body CONTENT – Plans Table + Detail Panel -->
-                        <VBox class="filterArea sapUiSmallMarginTop">
+                        <VBox class="filterArea sapUiSmallMarginTop" >
                             <Toolbar id="zonal_Toolbar1" width="100%">
                                 <Title id="zonal_tableTitle" text="Annual Plans" level="H4"/>
                                 <ObjectStatus id="zonal_ObjectStatus3" text="{/summaryInfo/totalPlans}" state="Information" class="sapUiSmallMarginBegin"/>

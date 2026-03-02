@@ -268,6 +268,16 @@ sap.ui.define([
             }
         },
 
+        onPressReductionBtn : function(){
+             const tile = this.getOwnerComponent().getRouter();
+            tile.navTo("onRouteReduction");
+        },
+
+        onPressApprovalBtn : function(){
+              const tile = this.getOwnerComponent().getRouter();
+              tile.navTo("onRouteApproval");
+        },
+
         onCloseLegend: function () {
             if (this._oLegendDialog) this._oLegendDialog.close();
         },

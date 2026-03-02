@@ -3,91 +3,37 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
     xmlns:l="sap.ui.layout"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core"
     displayBlock="true">
+    <Page showHeader="false">
+    
+    <tnt:ToolHeader id="approval__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
+            <Title id="approval__Mapping_Title" textAlign="Center" text="Approval Workflow" wrapping="false">
+                <layoutData>
+                    <OverflowToolbarLayoutData id="approval__Mapping_OverflowToolbarLayoutData" priority="Disappear" />
+                </layoutData>
+            </Title>
+            <ToolbarSpacer id="approval__Mapping_ToolbarSpacer" />
+        </tnt:ToolHeader>
 
-    <f:DynamicPage id="approvalPage" showFooter="false">
-
-        <!-- ── TITLE ── -->
-        <f:title>
-            <f:DynamicPageTitle id="_IDGenDynamicPageTitle2">
-                <f:heading>
-                    <Title id="_IDGenTitle12" text="Approval Workflow" level="H2"/>
-                </f:heading>
-                <!-- <f:subheading>
-                    <Text text="Review and approve or reject Annual Plan and Reduction requests · {apv>/ui/fiscalYear}"/>
-                </f:subheading> -->
-                <f:snappedHeading>
-                    <HBox id="_IDGenHBox20" alignItems="Center">
-                        <Title id="_IDGenTitle18" text="Approval Workflow" level="H3" class="sapUiSmallMarginEnd"/>
-                        <ObjectStatus id="_IDGenObjectStatus52" text="{apv>/ui/pendingCount} pending" state="Warning"/>
-                    </HBox>
-                </f:snappedHeading>
-                <f:actions>
-                    <Button id="_IDGenButton17" text="Refresh"       icon="sap-icon://refresh"   type="Ghost"     press=".onRefresh"/>
-                    <Button id="_IDGenButton18" text="Export"        icon="sap-icon://download"  type="Ghost"     press=".onExport"/>
-                    <Button id="_IDGenButton24" text="Load All"      icon="sap-icon://search"    type="Emphasized" press=".onLoadAll"/>
-                </f:actions>
-            </f:DynamicPageTitle>
-        </f:title>
-
-        <!-- ── HEADER: Summary KPI Tiles + Filter Bar ── -->
-        <f:header>
-            <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" pinnable="true" backgroundDesign="Solid">
-                <l:VerticalLayout id="_IDGenVerticalLayout10" width="100%">
-
-                    <!-- KPI summary tiles (always visible) -->
-                    <HBox id="_IDGenHBox21" wrap="Wrap" class="sapUiSmallMarginBottom" visible="{apv>/ui/dataLoaded}">
-                        <GenericTile id="_IDGenGenericTile" header="Pending Approval" subheader="Awaiting decision" class="sapUiTinyMargin">
-                            <tileContent>
-                                <TileContent id="_IDGenTileContent">
-                                    <content>
-                                        <NumericContent id="_IDGenNumericContent"
-                                            value="{apv>/ui/pendingCount}"
-                                            valueColor="{= ${apv>/ui/pendingCount} > 0 ? 'Critical' : 'Good'}"
-                                            icon="sap-icon://pending"/>
-                                    </content>
-                                </TileContent>
-                            </tileContent>
-                        </GenericTile>
-                        <GenericTile id="_IDGenGenericTile1" header="Approved" subheader="This period" class="sapUiTinyMargin">
-                            <tileContent>
-                                <TileContent id="_IDGenTileContent1">
-                                    <content>
-                                        <NumericContent id="_IDGenNumericContent1" value="{apv>/ui/approvedCount}" valueColor="Good" icon="sap-icon://accept"/>
-                                    </content>
-                                </TileContent>
-                            </tileContent>
-                        </GenericTile>
-                        <GenericTile id="_IDGenGenericTile2" header="Rejected" subheader="This period" class="sapUiTinyMargin">
-                            <tileContent>
-                                <TileContent id="_IDGenTileContent2">
-                                    <content>
-                                        <NumericContent id="_IDGenNumericContent2"
-                                            value="{apv>/ui/rejectedCount}"
-                                            valueColor="{= ${apv>/ui/rejectedCount} > 0 ? 'Error' : 'Good'}"
-                                            icon="sap-icon://decline"/>
-                                    </content>
-                                </TileContent>
-                            </tileContent>
-                        </GenericTile>
-                    </HBox>
-
-                    <!-- Filter Bar -->
-                    <Toolbar id="_IDGenToolbar7" design="Solid">
-                        <Label id="_IDGenLabel100" text="Request Type" design="Bold" width="95px"/>
-                        <Select id="selType" width="160px" selectedKey="{apv>/filters/requestType}">
+          <HBox id="_IDGenHBox26" class="filterArea" justifyContent="SpaceBetween">
+             <HBox id="_IDGenHBox27">
+               <VBox>
+                <Label id="_IDGenLabel100" text="Request Type" design="Bold" width="95px"/>
+                        <Select id="selType" width="200px" selectedKey="{apv>/filters/requestType}">
                             <items>
                                 <core:Item id="_IDGenItem69" key=""            text="All Types"/>
                                 <core:Item id="_IDGenItem70" key="ANNUAL_PLAN" text="Annual Plan"/>
                                 <core:Item id="_IDGenItem71" key="REDUCTION"   text="Reduction"/>
                             </items>
                         </Select>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer11" width="12px"/>
-                        <Label id="_IDGenLabel101" text="Status" design="Bold" width="52px"/>
-                        <Select id="selStatus" width="160px" selectedKey="{apv>/filters/status}">
+               </VBox>
+               <VBox class="sapUiTinyMarginBegin">
+                   <Label id="_IDGenLabel101" text="Status" design="Bold" width="52px"/>
+                        <Select id="selStatus" width="200px" selectedKey="{apv>/filters/status}">
                             <items>
                                 <core:Item id="_IDGenItem72" key=""         text="All Statuses"/>
                                 <core:Item id="_IDGenItem73" key="PENDING"  text="Pending Approval"/>
@@ -95,9 +41,11 @@
                                 <core:Item id="_IDGenItem75" key="REJECTED" text="Rejected"/>
                             </items>
                         </Select>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer12" width="12px"/>
-                        <Label id="_IDGenLabel102" text="Material" design="Bold" width="65px"/>
-                        <Select id="selMaterial" width="130px" selectedKey="{apv>/filters/material}">
+               </VBox>
+
+               <VBox class="sapUiTinyMarginBegin">
+                   <Label id="_IDGenLabel102" text="Material" design="Bold" width="65px"/>
+                        <Select id="selMaterial" width="200px" selectedKey="{apv>/filters/material}">
                             <items>
                                 <core:Item id="_IDGenItem76" key=""     text="All"/>
                                 <core:Item id="_IDGenItem77" key="RLNG" text="RLNG"/>
@@ -105,9 +53,11 @@
                                 <core:Item id="_IDGenItem79" key="CNG"  text="CNG"/>
                             </items>
                         </Select>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer13" width="12px"/>
-                        <Label id="_IDGenLabel103" text="Customer" design="Bold" width="70px"/>
-                        <Select id="selCustomer" width="165px" selectedKey="{apv>/filters/customer}">
+               </VBox>
+
+               <VBox class="sapUiTinyMarginBegin">
+                  <Label id="_IDGenLabel103" text="Customer" design="Bold" width="70px"/>
+                        <Select id="selCustomer" width="200px" selectedKey="{apv>/filters/customer}">
                             <items>
                                 <core:Item id="_IDGenItem80" key=""           text="All Customers"/>
                                 <core:Item id="_IDGenItem81" key="CUST-1001"  text="ABC Power Ltd"/>
@@ -116,23 +66,21 @@
                                 <core:Item id="_IDGenItem84" key="CUST-1005"  text="DEF Textiles Pvt"/>
                             </items>
                         </Select>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer14" width="12px"/>
-                        <Button id="_IDGenButton25" text="Go"    type="Emphasized" icon="sap-icon://search" press=".onApplyFilter"/>
-                        <Button id="_IDGenButton26" text="Clear" type="Ghost"                               press=".onClearFilter" class="sapUiTinyMarginBegin"/>
-                    </Toolbar>
+               </VBox>
 
-                </l:VerticalLayout>
-            </f:DynamicPageHeader>
-        </f:header>
+               <VBox class="sapUiTinyMarginBegin">
+                  <Label text=""/>
+                  <HBox>
+                      <Button id="_IDGenButton25" text="Go"    type="Emphasized" icon="sap-icon://search" press=".onApplyFilter"/>
+                        <Button id="_IDGenButton26" text="Clear" type="Ghost" press=".onClearFilter" class="sapUiTinyMarginBegin"/>
+                  </HBox>
+               </VBox>
+             </HBox>
+           </HBox>
 
-        <!-- ═══════════════════════════════════════════════════════════
-             CONTENT
-        ════════════════════════════════════════════════════════════ -->
-        <f:content>
-            <l:VerticalLayout id="_IDGenVerticalLayout11" width="100%" class="sapUiSmallMargin">
-
-                <!-- Empty state -->
-                <VBox id="_IDGenVBox43" visible="{= !${apv>/ui/dataLoaded}}" alignItems="Center" class="sapUiLargeMarginTop">
+             <!--Body content  -->
+             <VBox id="_IDGenVBox59" class="filterArea" height="70%">
+             <VBox id="_IDGenVBox43" visible="{= !${apv>/ui/dataLoaded}}" alignItems="Center" class="sapUiLargeMarginTop">
                     <core:Icon id="_IDGenIcon5" src="sap-icon://approvals" size="4rem" color="#c2c2c2" class="sapUiSmallMarginBottom"/>
                     <Title id="_IDGenTitle19" text="No Requests Loaded" level="H4"/>
                     <Text id="_IDGenText" text="Click 'Load All' to load all approval requests, or apply filters and click Go." class="sapUiSmallMarginTop" textAlign="Center"/>
@@ -203,7 +151,7 @@
                         <table:template>
                             <VBox id="_IDGenVBox45">
                                 <Text id="_IDGenText60" text="{apv>contract}" wrapping="false"/>
-                                <ObjectStatus id="_IDGenObjectStatus56" text="{apv>material}" state="Information" style="font-size:11px;"/>
+                                <ObjectStatus id="_IDGenObjectStatus56" text="{apv>material}" state="Information"/>
                             </VBox>
                         </table:template>
                     </table:Column>
@@ -220,10 +168,7 @@
                         <table:template>
                             <VBox id="_IDGenVBox46">
                                 <Text id="_IDGenText61" text="{apv>submittedOn}" wrapping="false"/>
-                                <Text id="_IDGenText62"
-                                    text="{= ${apv>daysWaiting} > 0 ? ${apv>daysWaiting} + ' day(s) waiting' : ''}"
-                                    wrapping="false"
-                                    />
+                               
                             </VBox>
                         </table:template>
                     </table:Column>
@@ -240,7 +185,7 @@
                         </table:template>
                     </table:Column>
 
-                    <table:Column id="_IDGenColumn52" width="16rem" label="Actions">
+                    <table:Column id="_IDGenColumn52" width="20rem" label="Actions">
                         <Label id="_IDGenLabel112" text="Actions"/>
                         <table:template>
                             <HBox id="_IDGenHBox22" alignItems="Center">
@@ -254,31 +199,20 @@
                     </table:Column>
 
                 </table:Table>
+             </VBox>
 
-                <!-- ══ DETAIL PANEL ══ -->
-                <Panel
-                    id="detailPanel"
-                    visible="{apv>/ui/detailVisible}"
-                    expandable="true"
-                    expanded="true"
-                    backgroundDesign="Solid"
-                    class="sapUiSmallMarginBottom">
-
-                    <headerToolbar>
-                        <Toolbar id="_IDGenToolbar12">
-                            <Title id="_IDGenTitle21" text="Request Detail – {apv>/selectedRequest/requestId}" level="H5"/>
+             <!-- body content 2 -->
+             <VBox id="_DGenVBox59" class="filterArea" visible="{apv>/ui/detailVisible}">
+                <HBox>
+                    <Title id="_IDGenTitle21" text="Request Detail – {apv>/selectedRequest/requestId}" level="H5"/>
                             <ToolbarSpacer id="_IDGenToolbarSpacer18"/>
                             <ObjectStatus id="_IDGenObjectStatus58"
                                 text="{apv>/selectedRequest/statusText}"
                                 state="{apv>/selectedRequest/statusState}"
                                 icon="{= ${apv>/selectedRequest/status} === 'APPROVED' ? 'sap-icon://accept'  :
                                           ${apv>/selectedRequest/status} === 'REJECTED' ? 'sap-icon://decline' : 'sap-icon://pending' }"/>
-                        </Toolbar>
-                    </headerToolbar>
-
-                    <content>
-                        <!-- Request ObjectHeader -->
-                        <ObjectHeader id="_IDGenObjectHeader"
+                </HBox>
+                 <ObjectHeader id="_IDGenObjectHeader"
                             title="{apv>/selectedRequest/customer}"
                             number="{apv>/selectedRequest/aacq}"
                             numberUnit="{apv>/selectedRequest/uom}"
@@ -316,8 +250,7 @@
                                 </VBox>
                             </l:content>
                         </l:Grid>
-
-                        <!-- Reduction Details (shown if reduction applied) -->
+                          <!-- Reduction Details (shown if reduction applied) -->
                         <MessageStrip id="_IDGenMessageStrip2"
                             visible="{apv>/selectedRequest/reductionApplied}"
                             text="Reduction: {apv>/selectedRequest/reductionDetails/reductionPct}% applied from {apv>/selectedRequest/reductionDetails/monthFrom} to {apv>/selectedRequest/reductionDetails/monthTo} · Reduced Qty: {apv>/selectedRequest/reductionDetails/totalReducedQty} {apv>/selectedRequest/uom} · Re-apportioned across {apv>/selectedRequest/reductionDetails/reapportionedAcross} months · AACQ unchanged: {apv>/selectedRequest/aacq} {apv>/selectedRequest/uom}"
@@ -358,7 +291,7 @@
                             selectionMode="None"
                             visibleRowCount="1"
                             rowHeight="44"
-                            class="sapUiSmallMargin">
+                            class="sapUiSmallMargin zonalPlanTable">
                             <table:columns>
                                 <table:Column id="_IDGenColumn53" width="5.5rem" hAlign="Center"><Label id="_IDGenLabel125" text="Jan"/><table:template><ObjectStatus id="_IDGenObjectStatus66" text="{jan}" state="{janState}"/></table:template></table:Column>
                                 <table:Column id="_IDGenColumn54" width="5.5rem" hAlign="Center"><Label id="_IDGenLabel126" text="Feb"/><table:template><ObjectStatus id="_IDGenObjectStatus67" text="{feb}" state="{febState}"/></table:template></table:Column>
@@ -397,7 +330,7 @@
 
                         <!-- Approver comment input (pending only) -->
                         <l:VerticalLayout id="_IDGenVerticalLayout14"
-                            width="100%"
+                            width="98%"
                             class="sapUiSmallMargin"
                             visible="{= ${apv>/selectedRequest/status} === 'PENDING'}">
                             <Label id="_IDGenLabel142" text="Approver Comments" design="Bold" class="sapUiSmallMarginBottom"/>
@@ -408,44 +341,24 @@
                                 rows="3"
                                 width="100%"
                                 growing="true"/>
-                        </l:VerticalLayout>
-
-                        <!-- Post-approval processing notice -->
-                        <MessageStrip id="_IDGenMessageStrip6"
-                            text="Upon approval: System will send notifications to Customer and Zonal Office. Contract quantities (ACQ, MCQ) will be updated automatically. DCQ will be recalculated for each month."
-                            type="Information"
-                            showIcon="true"
-                            visible="{= ${apv>/selectedRequest/status} === 'PENDING'}"
-                            class="sapUiSmallMargin"/>
-
-                    </content>
-
-                    <!-- Detail Panel Footer Actions -->
-                   
-                </Panel>
-                
-
-            </l:VerticalLayout>
-            
-        </f:content>
-         <f:footer>
-                        <Toolbar id="_IDGenToolbar13">
-                            <ToolbarSpacer id="_IDGenToolbarSpacer19"/>
-                            <Button id="_IDGenButton33"
+                                <HBox justifyContent="End">
+                                        <Button
                                 text="Approve"
                                 type="Accept"
                                 icon="sap-icon://sys-enter-2"
                                 press=".onApproveDetail"
                                 visible="{= ${apv>/selectedRequest/status} === 'PENDING'}"
                                 class="sapUiSmallMarginEnd"/>
-                            <Button id="_IDGenButton34"
+                            <Button
                                 text="Reject with Comment"
                                 type="Reject"
                                 icon="sap-icon://sys-cancel-2"
                                 press=".onRejectDetail"
                                 visible="{= ${apv>/selectedRequest/status} === 'PENDING'}"/>
-                        </Toolbar>
-                    </f:footer>
+                                </HBox>
+                        </l:VerticalLayout>
 
-    </f:DynamicPage>
+             </VBox>
+             
+             </Page>
 </mvc:View>

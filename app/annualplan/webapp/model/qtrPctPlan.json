@@ -12,7 +12,7 @@
       "totalState": "Success",
       "isEditable": false,
       "isNew": false,
-      "lastUpdatedBy": "Danish Imam",
+      "lastUpdatedBy": "ABC",
       "lastUpdatedOn": "10 Jan 2025"
     },
     {
@@ -27,7 +27,7 @@
       "totalState": "Success",
       "isEditable": false,
       "isNew": false,
-      "lastUpdatedBy": "Danish Imam",
+      "lastUpdatedBy": "LMN",
       "lastUpdatedOn": "10 Jan 2025"
     },
     {
@@ -42,7 +42,7 @@
       "totalState": "Success",
       "isEditable": false,
       "isNew": false,
-      "lastUpdatedBy": "Danish Imam",
+      "lastUpdatedBy": "XYZ",
       "lastUpdatedOn": "10 Jan 2025"
     }
   ],
@@ -65,6 +65,6 @@
     "totalMaterials": 3,
     "pendingRows": 0,
     "lastSavedOn": "10 Jan 2025",
-    "lastSavedBy": "Danish Imam"
+    "lastSavedBy": "ABC"
   }
 }
