@@ -229,7 +229,6 @@
          <!-- monthly qty entered content -->
 
           <VBox class="filterArea sapUiSmallMarginTop">
-             <!-- Pre-load empty state -->
                 <VBox
                     id="emptyState"
                     visible="{= !${ap>/ui/contractSelected}}"

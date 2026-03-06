@@ -1,24 +1,3 @@
-
-/**
- * CorporateDashboard.controller.js
- *
- * Controller for Screen 4 – Corporate Dashboard & Validation
- *
- * Business Rules (from FS):
- *   Rule 1  – Material only: aggregate all customers for that material
- *   Rule 2  – Material + Sales Office: aggregate within the zone
- *   Universal Rule – Any combination of Material / Sales Office /
- *                    Customer / Industry filters the dataset and
- *                    recalculates cumulative KPIs
- *
- *   Color Coding:
- *     Error   (Red)    → quarterly % exceeded
- *     Warning (Amber)  → within 2% of limit (near-threshold)
- *     Success (Green)  → compliant
- *
- * App: iGMS Annual Planning | Module: Corporate Dashboard
- * User Role: Corporate Team
- */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
@@ -40,7 +19,6 @@ sap.ui.define([
 ) {
     "use strict";
 
-    // ── Map: salesOffice filter key → partial text match in data ──────────────
     var ZONE_MAP = {
         NORTH: "North Zone",
         WEST:  "West Zone",
@@ -48,7 +26,6 @@ sap.ui.define([
         EAST:  "East Zone"
     };
 
-    // ── Map: industry filter key → display text in data ──────────────────────
     var INDUSTRY_MAP = {
         POWER:      "Power",
         FERTILIZER: "Fertilizer",
@@ -60,30 +37,18 @@ sap.ui.define([
 
     return Controller.extend("com.ingenx.annualplan.controller.Dashboard", {
 
-        // ════════════════════════════════════════════════════════════════════
-        //  LIFECYCLE
-        // ════════════════════════════════════════════════════════════════════
-
         onInit: function () {
-            // Load dedicated dashboard model
             var oModel = new JSONModel(
                 sap.ui.require.toUrl("com/ingenx/annualplan/model/dashboardData.json")
             );
             this.getView().setModel(oModel, "dash");
 
-            // Lazy-loaded dialog references
             this._oLegendDialog    = null;
             this._oDrillDialog     = null;
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  FILTER BAR
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * GO – Apply filters, compute filtered rows, recalculate KPIs.
-         * Implements Universal Rule: any combination of the 4 filter fields.
-         */
+        //  GO – Apply filters, compute filtered rows, recalculate KPIs.
+        //  Implements Universal Rule: any combination of the 4 filter fields.
         onApplyFilter: function () {
             var oModel   = this.getView().getModel("dash");
             var oFilters = oModel.getProperty("/filters");
@@ -91,18 +56,13 @@ sap.ui.define([
 
             oModel.setProperty("/ui/busy", true);
 
-            // ── Filter ────────────────────────────────────────────────────
             var aFiltered = aAllRows.filter(function (oRow) {
-                // Sales Office filter
                 if (oFilters.salesOffice) {
                     var sZoneText = ZONE_MAP[oFilters.salesOffice] || oFilters.salesOffice;
                     if (oRow.salesOffice.indexOf(sZoneText) === -1) return false;
                 }
-                // Material filter
                 if (oFilters.material && oRow.material !== oFilters.material) return false;
-                // Customer filter
                 if (oFilters.customer && oRow.customerId !== oFilters.customer) return false;
-                // Industry filter
                 if (oFilters.industry) {
                     var sIndText = INDUSTRY_MAP[oFilters.industry] || oFilters.industry;
                     if (oRow.industry !== sIndText) return false;
@@ -110,7 +70,6 @@ sap.ui.define([
                 return true;
             });
 
-            // ── Recalculate KPIs ──────────────────────────────────────────
             var oKPI = this._calcKPIs(aFiltered, oModel.getProperty("/quarterlyLimits"));
 
             oModel.setProperty("/filteredRows",  aFiltered);
@@ -125,9 +84,7 @@ sap.ui.define([
             );
         },
 
-        /**
-         * CLEAR – Reset all filters and hide data.
-         */
+        //  CLEAR – Reset all filters and hide data.
         onClearFilter: function () {
             var oModel = this.getView().getModel("dash");
             oModel.setProperty("/filters", { salesOffice: "", material: "", customer: "", industry: "" });
@@ -136,10 +93,7 @@ sap.ui.define([
             MessageToast.show("Filters cleared.");
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  TOOLBAR ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
+    //    
         onRefresh: function () {
             var oModel = this.getView().getModel("dash");
             if (!oModel.getProperty("/ui/dataLoaded")) {
@@ -148,7 +102,6 @@ sap.ui.define([
             }
             oModel.setProperty("/ui/busy", true);
             setTimeout(function () {
-                // Re-run filter with current selections
                 this.onApplyFilter();
             }.bind(this), 600);
         },
@@ -163,17 +116,11 @@ sap.ui.define([
         },
 
         onKpiTilePress: function () {
-            // Tile press – could drill into chart view in future
+            //  Tile press 
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  GROUP BY
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Group the table rows by the selected property.
-         * Uses sap.ui.model.Sorter on the table binding.
-         */
+        //  Group the table rows by the selected property.
+        //  Uses sap.ui.model.Sorter on the table binding.
         onGroupByChange: function (oEvent) {
             var sKey    = oEvent.getSource().getSelectedKey();
             var oTable  = this.byId("dashTable");
@@ -196,18 +143,11 @@ sap.ui.define([
             MessageToast.show("Grouped by: " + sKey);
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  CUSTOMER DRILL-DOWN
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Click on customer name → open drill-down dialog with full plan detail.
-         */
+        //  Click on customer name → open drill-down dialog with full plan detail.
         onCustomerDrillDown: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("dash");
             var oRow     = oContext.getObject();
 
-            // Build drill model with a one-element monthlyRow array for the table
             var oDrillData = jQuery.extend(true, {}, oRow);
             oDrillData.monthlyRow = [{
                 jan: oRow.jan, feb: oRow.feb, mar: oRow.mar,
@@ -248,10 +188,7 @@ sap.ui.define([
             if (this._oDrillDialog) this._oDrillDialog.close();
         },
 
-        // ════════════════════════════════════════════════════════════════════
         //  LEGEND DIALOG
-        // ════════════════════════════════════════════════════════════════════
-
         onShowLegend: function () {
             if (!this._oLegendDialog) {
                 Fragment.load({
@@ -293,21 +230,9 @@ sap.ui.define([
             if (this._oLegendDialog) this._oLegendDialog.close();
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  PRIVATE HELPERS
-        // ════════════════════════════════════════════════════════════════════
 
-        /**
-         * Calculate cumulative KPI summary from the filtered plan rows.
-         * Implements the FS Universal Rule:
-         *   - Cumulative AACQ
-         *   - Cumulative Q1–Q4 totals and % vs limits
-         *   - Violation / compliant counts
-         *
-         * @param  {object[]} aRows          - filtered plan rows
-         * @param  {object}   oLimits        - { q1Limit, q2Limit, q3Limit, q4Limit }
-         * @returns {object}  KPI summary object
-         */
+        //  Calculate cumulative KPI summary from the filtered plan rows.
+      
         _calcKPIs: function (aRows, oLimits) {
             var cumAACQ = 0, cumQ1 = 0, cumQ2 = 0, cumQ3 = 0, cumQ4 = 0;
             var violating = 0, compliant = 0;
@@ -319,13 +244,11 @@ sap.ui.define([
                 cumQ3   += (r.q3    || 0);
                 cumQ4   += (r.q4    || 0);
 
-                // A plan is "violating" if any quarterly total exceeds its limit
                 var bViolating = (r.q1State === "Error" || r.q2State === "Error" ||
                                   r.q3State === "Error" || r.q4State === "Error");
                 if (bViolating) violating++; else compliant++;
             });
 
-            // Calculate cumulative percentages vs total AACQ
             var q1Pct = cumAACQ ? parseFloat(((cumQ1 / cumAACQ) * 100).toFixed(1)) : 0;
             var q2Pct = cumAACQ ? parseFloat(((cumQ2 / cumAACQ) * 100).toFixed(1)) : 0;
             var q3Pct = cumAACQ ? parseFloat(((cumQ3 / cumAACQ) * 100).toFixed(1)) : 0;
@@ -350,10 +273,6 @@ sap.ui.define([
          *   Red    → exceeded
          *   Amber  → within 2% of limit (near threshold)
          *   Green  → compliant
-         *
-         * @param  {number} pct   - actual percentage
-         * @param  {number} limit - configured quarterly limit %
-         * @returns {string} "Error" | "Warning" | "Success"
          */
         _getState: function (pct, limit) {
             if (pct > limit)           return "Error";
@@ -361,10 +280,7 @@ sap.ui.define([
             return "Success";
         },
 
-        /**
-         * Format current timestamp as a readable string.
-         * @returns {string} e.g. "28 Feb 2025, 09:30 AM"
-         */
+        // Format current timestamp as a readable string.
         _nowString: function () {
             var d      = new Date();
             var months = ["Jan","Feb","Mar","Apr","May","Jun",

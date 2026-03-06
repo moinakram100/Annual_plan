@@ -7,10 +7,8 @@ sap.ui.define([
 ], function (Controller, JSONModel,History, MessageBox, MessageToast) {
     "use strict";
 
-    // Month keys in order — used for building the monthly detail table row
     var MONTHS = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
 
-    // Quarter grouping for state colour lookup
     var QTR_MONTHS = {
         Q1: ["jan","feb","mar"],
         Q2: ["apr","may","jun"],
@@ -19,10 +17,6 @@ sap.ui.define([
     };
 
     return Controller.extend("com.ingenx.annualplan.controller.Approval", {
-
-        // ════════════════════════════════════════════════════════════════════
-        //  LIFECYCLE
-        // ════════════════════════════════════════════════════════════════════
 
         onInit: function () {
             var oModel = new JSONModel(
@@ -37,13 +31,12 @@ sap.ui.define([
        
         onLoadAll: function () {
             var oModel = this.getView().getModel("apv");
-            // Reset filters
             oModel.setProperty("/filters", { requestType:"", status:"", material:"", customer:"" });
             this._applyFilterInternal();
             MessageToast.show("All approval requests loaded.");
         },
 
-        /** Apply active filter criteria */
+        //  Apply active filter criteria 
         c: function () {
             this._applyFilterInternal();
         },
@@ -59,7 +52,7 @@ sap.ui.define([
             MessageToast.show("Filters cleared.");
         },
 
-        /** Internal filter logic — shared by onLoadAll and onApplyFilter */
+        //  Internal filter logic — shared by onLoadAll and onApplyFilter 
         _applyFilterInternal: function () {
             var oModel = this.getView().getModel("apv");
             var oF     = oModel.getProperty("/filters");
@@ -93,34 +86,24 @@ sap.ui.define([
             MessageToast.show("Export – connect to sap.ui.export.Spreadsheet in CAPM build.");
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  ROW SELECTION / REVIEW
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Click on Request ID link → open detail panel for that request
-         */
+        
+        //  Click on Request ID link → open detail panel for that request
         onRequestIdPress: function (oEvent) {
             var oCtx = oEvent.getSource().getBindingContext("apv");
             this._openDetail(oCtx.getObject(), oCtx.getPath());
         },
 
-        /**
-         * "Review" button in row actions → same as clicking the request ID
-         */
+        //  Review button in row actions → same as clicking the request ID
         onReviewRequest: function (oEvent) {
             var oCtx = oEvent.getSource().getBindingContext("apv");
             this._openDetail(oCtx.getObject(), oCtx.getPath());
         },
 
-        /**
-         * Table row selection change — auto-open detail panel for single selection
-         */
+        // Table row selection change — auto-open detail panel for single selection
         onTableSelectionChange: function () {
             var oTable = this.byId("requestsTable");
             var aIdx   = oTable.getSelectedIndices();
 
-            // Auto-open detail only when exactly one row is selected
             if (aIdx.length !== 1) return;
 
             var oModel   = this.getView().getModel("apv");
@@ -130,25 +113,18 @@ sap.ui.define([
             this._openDetail(oRec, sPath);
         },
 
-        /**
-         * Populate /selectedRequest and show the detail panel.
-         * Builds the single-row monthlyRow array for the monthly table.
-         * @param {object} oReq  - raw request record
-         * @param {string} sPath - model path (e.g. "/filteredRequests/0")
-         */
+        //  Populate /selectedRequest and show the detail panel.
+        //  Builds the single-row monthlyRow array for the monthly table.
         _openDetail: function (oReq, sPath) {
             var oModel = this.getView().getModel("apv");
 
-            // Deep clone so edits to comment don't immediately mutate the list
             var oSelected = jQuery.extend(true, {}, oReq);
-            oSelected._sourcePath = sPath;  // remember for write-back on decision
+            oSelected._sourcePath = sPath;  
 
-            // Build monthly table row (single row with 12 month values + 4 qtrs + annual)
             var oMP    = oReq.monthlyPlan;
             var oQT    = oReq.quarterlyTotals;
             var oLim   = oReq.quarterlyLimits;
 
-            // Derive per-month states from which quarter they belong to
             var oMonthState = {};
             ["Q1","Q2","Q3","Q4"].forEach(function (q, qi) {
                 var sQtrState = oQT["q" + (qi+1) + "State"];
@@ -174,7 +150,6 @@ sap.ui.define([
             oModel.setProperty("/selectedRequest", oSelected);
             oModel.setProperty("/ui/detailVisible", true);
 
-            // Scroll to detail panel
             setTimeout(function () {
                 var oPanel = this.byId("detailPanel");
                 if (oPanel && oPanel.getDomRef()) {
@@ -183,10 +158,7 @@ sap.ui.define([
             }.bind(this), 150);
         },
 
-        // ════════════════════════════════════════════════════════════════════
         //  INLINE ROW ACTIONS (Approve / Reject buttons in table row)
-        // ════════════════════════════════════════════════════════════════════
-
         onApproveInline: function (oEvent) {
             var oCtx = oEvent.getSource().getBindingContext("apv");
             var oReq = oCtx.getObject();
@@ -196,19 +168,12 @@ sap.ui.define([
         onRejectInline: function (oEvent) {
             var oCtx = oEvent.getSource().getBindingContext("apv");
             var oReq = oCtx.getObject();
-            // Open detail panel first so user can enter a comment
             this._openDetail(oReq, oCtx.getPath());
             MessageToast.show("Enter a comment below, then click 'Reject with Comment'.");
         },
 
-        // ════════════════════════════════════════════════════════════════════
         //  DETAIL PANEL ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Approve from detail panel footer.
-         * Per FS Step 7: triggers post-approval processing (CAPM action).
-         */
+        //  Approve from detail panel footer.
         onApproveDetail: function () {
             var oModel = this.getView().getModel("apv");
             var oSel   = oModel.getProperty("/selectedRequest");
@@ -217,10 +182,7 @@ sap.ui.define([
             this._confirmApprove([{ req: oSel, path: oSel._sourcePath }]);
         },
 
-        /**
-         * Reject from detail panel footer.
-         * Comment is mandatory per FS ("approver can reject with comments").
-         */
+        //  Reject from detail panel footer.
         onRejectDetail: function () {
             var oModel   = this.getView().getModel("apv");
             var oSel     = oModel.getProperty("/selectedRequest");
@@ -232,7 +194,6 @@ sap.ui.define([
                     "A comment is required when rejecting a request.\n" +
                     "Please enter your reason in the 'Approver Comments' field."
                 );
-                // Focus the comment field
                 var oTA = this.byId("approverCommentInput");
                 if (oTA) oTA.focus();
                 return;
@@ -241,13 +202,7 @@ sap.ui.define([
             this._confirmReject([{ req: oSel, path: oSel._sourcePath, comment: sComment }]);
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  BULK ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Bulk Approve — acts on all selected rows that are PENDING.
-         */
+        // Bulk Approve — acts on all selected rows that are PENDING.
         onBulkApprove: function () {
             var aSelected = this._getSelectedPending();
             if (aSelected.length === 0) {
@@ -257,10 +212,8 @@ sap.ui.define([
             this._confirmApprove(aSelected);
         },
 
-        /**
-         * Bulk Reject — acts on all selected rows that are PENDING.
-         * Uses a shared comment entered in a prompt.
-         */
+        //  Bulk Reject — acts on all selected rows that are PENDING.
+        // Uses a shared comment entered in a prompt.
         onBulkReject: function () {
             var aSelected = this._getSelectedPending();
             if (aSelected.length === 0) {
@@ -268,7 +221,6 @@ sap.ui.define([
                 return;
             }
 
-            // Prompt for a shared rejection comment
             var oDialog = new sap.m.Dialog({
                 title:       "Bulk Reject – Enter Reason",
                 type:        sap.m.DialogType.Message,
@@ -306,14 +258,7 @@ sap.ui.define([
             oDialog.open();
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  CONFIRM & PERSIST APPROVE
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Show confirmation dialog then call _persistDecision for each request.
-         * @param {Array} aItems – [{ req, path, comment? }]
-         */
+        //  Show confirmation dialog then call _persistDecision for each request.
         _confirmApprove: function (aItems) {
             var n     = aItems.length;
             var sDesc = n === 1
@@ -342,10 +287,7 @@ sap.ui.define([
             });
         },
 
-        /**
-         * Show confirmation then reject.
-         * @param {Array} aItems – [{ req, path, comment }]
-         */
+        //  Show confirmation then reject.        
         _confirmReject: function (aItems) {
             var n     = aItems.length;
             var sDesc = n === 1
@@ -369,22 +311,11 @@ sap.ui.define([
         },
 
         /**
-         * Update status in the JSON model and trigger the CAPM OData action stub.
-         *
-         * In CAPM, this would call:
-         *   POST /odata/v4/annual-plan/ApproveRequest
-         *   body: { requestId, decision: "APPROVED"|"REJECTED", comment }
-         *
          * The CAPM handler for ApproveRequest would then:
          *   1. Update AnnualPlan entity status
          *   2. Update Contract.ACQ and Contract.MCQ[]
          *   3. Recalculate DCQ for each month
          *   4. Send notifications via SAP BTP Alert Notification
-         *
-         * @param {object} oReq     – the request object
-         * @param {string} sPath    – model path of the request
-         * @param {string} sStatus  – "APPROVED" | "REJECTED"
-         * @param {string} sComment – approver's comment
          */
         _persistDecision: function (oReq, sPath, sStatus, sComment) {
             var oModel     = this.getView().getModel("apv");
@@ -394,7 +325,6 @@ sap.ui.define([
             var sCtrState  = sStatus === "APPROVED" ? "DONE"              : "SKIPPED";
             var sToday     = this._todayString();
 
-            // ── Update main record in filteredRequests ────────────────────
             if (sPath) {
                 oModel.setProperty(sPath + "/status",      sStatus);
                 oModel.setProperty(sPath + "/statusText",  sText);
@@ -402,8 +332,6 @@ sap.ui.define([
                 oModel.setProperty(sPath + "/approverComment", sComment);
                 oModel.setProperty(sPath + "/daysWaiting", 0);
 
-                // Update workflow steps 3 & 4
-                // Step 3 = Corporate Approval (index 2), Step 4 = Contract Update (index 3)
                 oModel.setProperty(sPath + "/workflowSteps/2/status", sStepState);
                 oModel.setProperty(sPath + "/workflowSteps/2/date",   sToday);
                 oModel.setProperty(sPath + "/workflowSteps/2/by",     "Corporate Team");
@@ -414,7 +342,6 @@ sap.ui.define([
                 }
             }
 
-            // ── Mirror to selectedRequest if it's the same one ────────────
             var oSel = oModel.getProperty("/selectedRequest");
             if (oSel && oSel.requestId === oReq.requestId) {
                 oModel.setProperty("/selectedRequest/status",          sStatus);
@@ -432,10 +359,9 @@ sap.ui.define([
                 }
             }
 
-            // ── Also update the master approvalRequests array ─────────────
             this._syncMasterRecord(oReq.requestId, sStatus, sText, sState, sComment, sToday, sStepState, sCtrState);
 
-            // ── CAPM OData Action (stub) ──────────────────────────────────
+            // CAPM OData Action (stub) 
             // this.getOwnerComponent().getModel("mainService")
             //     .bindContext("/ApproveRequest(...)")
             //     .setParameter("requestId", oReq.requestId)
@@ -445,16 +371,13 @@ sap.ui.define([
             //     .catch(function(oErr) { MessageBox.error(oErr.message); });
             // ─────────────────────────────────────────────────────────────
 
-            // Post-approval simulation (Step 7 log)
             if (sStatus === "APPROVED") {
                 this._simulatePostApprovalProcessing(oReq);
             }
         },
 
-        /**
-         * Sync the decision back to the master /approvalRequests array
-         * so that subsequent filter re-runs show the updated status.
-         */
+        // Sync the decision back to the master /approvalRequests array
+        //  so that subsequent filter re-runs show the updated status.
         _syncMasterRecord: function (sRequestId, sStatus, sText, sState, sComment, sToday, sStepState, sCtrState) {
             var oModel = this.getView().getModel("apv");
             var aAll   = oModel.getProperty("/approvalRequests");
@@ -477,13 +400,8 @@ sap.ui.define([
             }
         },
 
-        /**
-         * Simulate the FS Step 7 post-approval processing log.
-         * In CAPM this is handled server-side by the ApproveRequest action handler.
-         * @param {object} oReq
-         */
+        //  In CAPM this is handled server-side by the ApproveRequest action handler.
         _simulatePostApprovalProcessing: function (oReq) {
-            // Build DCQ values: DCQ[month] = MCQ[month] / daysInMonth
             var DAYS = { jan:31,feb:28,mar:31,apr:30,may:31,jun:30,jul:31,aug:31,sep:30,oct:31,nov:30,dec:31 };
             var oMP  = oReq.monthlyPlan;
             var sDCQ = Object.keys(DAYS).map(function (m) {
@@ -499,13 +417,7 @@ sap.ui.define([
             );
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  POST-DECISION HOUSEKEEPING
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Refresh counts and show a success message after one or more decisions.
-         */
+        //  Refresh counts and show a success message after one or more decisions.
         _afterDecisionBatch: function (n, sVerb) {
             this._refreshSummaryCounts();
 
@@ -522,21 +434,13 @@ sap.ui.define([
                 {
                     title: sVerb + " Successful",
                     onClose: function () {
-                        // Refresh the filtered view
                         this._applyFilterInternal();
                     }.bind(this)
                 }
             );
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  PRIVATE HELPERS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Get all selected table rows that are still PENDING.
-         * Returns array of { req, path }
-         */
+        //  Get all selected table rows that are still PENDING.
         _getSelectedPending: function () {
             var oTable   = this.byId("requestsTable");
             var aIdx     = oTable.getSelectedIndices();
@@ -550,10 +454,8 @@ sap.ui.define([
                 .filter(function (o) { return o.req.status === "PENDING"; });
         },
 
-        /**
-         * Recount pending / approved / rejected across ALL requests
-         * and update the KPI summary tiles.
-         */
+        //  Recount pending / approved / rejected across ALL requests
+      
         _refreshSummaryCounts: function () {
             var oModel = this.getView().getModel("apv");
             var aAll   = oModel.getProperty("/approvalRequests") || [];
@@ -567,7 +469,6 @@ sap.ui.define([
             oModel.setProperty("/ui/rejectedCount", iRejected);
         },
 
-        /** Format today as "DD Mon YYYY" */
         _todayString: function () {
             var d  = new Date();
             var mm = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];

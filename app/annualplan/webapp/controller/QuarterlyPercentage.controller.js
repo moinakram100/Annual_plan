@@ -201,7 +201,7 @@ sap.ui.define([
 
         /** Cancel VH dialog */
         onMaterialVHCancel: function () {
-            // Nothing to do – dialog closes automatically
+            
         },
 
      
@@ -304,23 +304,13 @@ sap.ui.define([
         },
 
         onTilePress: function () {
-            // Tile press – no action needed
+
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  PRIVATE HELPERS
-        // ════════════════════════════════════════════════════════════════════
-
-        /** Convenience getter for the qtrPct model */
         _getModel: function () {
             return this.getView().getModel("qtrPct");
         },
 
-        /**
-         * Recalculate total % for a given row path and update ObjectStatus state.
-         * State: Success (=100) | Warning (>100 but ≤ 110) | Error (≠100 outside range)
-         * @param {string} sRowPath - e.g. "/quarterlyPercentages/0"
-         */
         _recalcRowTotal: function (sRowPath) {
             var oModel = this._getModel();
             var q1 = parseFloat(oModel.getProperty(sRowPath + "/q1Pct")) || 0;
@@ -342,16 +332,11 @@ sap.ui.define([
             oModel.setProperty(sRowPath + "/totalState", sState);
         },
 
-        /**
-         * Full validation pass across all rows.
-         * Sets per-field ValueState for inline error highlighting.
-         * @returns {string[]} Array of human-readable error messages
-         */
         _validateAll: function () {
             var oModel  = this._getModel();
             var aRows   = oModel.getProperty("/quarterlyPercentages");
             var aErrors = [];
-            var oSeen   = {};  // material dedup check
+            var oSeen   = {};  
 
             aRows.forEach(function (oRow, i) {
                 var sPath = "/quarterlyPercentages/" + i;
@@ -415,16 +400,12 @@ sap.ui.define([
             return aErrors;
         },
 
-        /**
-         * Persist data (CAPM OData call stub).
-         * In a real CAPM app, call an OData batch or action here.
-         */
+      
         _persistData: function () {
             var oModel = this._getModel();
             oModel.setProperty("/ui/busy", true);
 
             // ── CAPM / OData stub ──────────────────────────────────────────
-            // Replace with:
             //   var oODataModel = this.getOwnerComponent().getModel("mainService");
             //   oODataModel.submitBatch("quarterlyPctGroup")
             //       .then(this._onSaveSuccess.bind(this))
@@ -437,28 +418,21 @@ sap.ui.define([
             }.bind(this), 800);
         },
 
-        /**
-         * Post-save success handler.
-         * Updates last saved info, clears change flags, sends notification.
-         */
         _onSaveSuccess: function () {
             var oModel = this._getModel();
             var aRows  = oModel.getProperty("/quarterlyPercentages");
             var sToday = this._getTodayString();
 
-            // Stamp all rows with updated metadata and clear isNew
             aRows.forEach(function (oRow, i) {
                 oModel.setProperty("/quarterlyPercentages/" + i + "/isNew",          false);
                 oModel.setProperty("/quarterlyPercentages/" + i + "/isEditable",     false);
                 oModel.setProperty("/quarterlyPercentages/" + i + "/lastUpdatedBy",  "Current User");
                 oModel.setProperty("/quarterlyPercentages/" + i + "/lastUpdatedOn",  sToday);
-                // Clear validation states
                 ["materialState","q1State","q2State","q3State","q4State"].forEach(function (k) {
                     oModel.setProperty("/quarterlyPercentages/" + i + "/" + k, ValueState.None);
                 });
             });
 
-            // Update summary
             oModel.setProperty("/summary/totalMaterials",  aRows.length);
             oModel.setProperty("/summary/lastSavedOn",     sToday);
             oModel.setProperty("/summary/lastSavedBy",     "Current User");
@@ -482,7 +456,7 @@ sap.ui.define([
             );
         },
 
-        /** Exit edit mode and clear all flags */
+        //  Exit edit mode and clear all flags 
         _exitEditMode: function () {
             var oModel = this._getModel();
             oModel.setProperty("/ui/editMode",   false);
@@ -491,7 +465,7 @@ sap.ui.define([
             this._oOriginalData = null;
         },
 
-        /** Restore snapshot and exit edit mode */
+        // Restore snapshot and exit edit mode 
         _discardChanges: function () {
             if (this._oOriginalData) {
                 var oModel = this._getModel();
@@ -502,16 +476,13 @@ sap.ui.define([
             MessageToast.show("Changes discarded.");
         },
 
-        /** Set hasChanges and enable Save button */
+        //  Set hasChanges and enable Save button 
         _setHasChanges: function (bValue) {
             var oModel = this._getModel();
             oModel.setProperty("/ui/hasChanges",  bValue);
             oModel.setProperty("/ui/saveEnabled", bValue);
         },
 
-        /**
-         * Add __index (1-based) property to each row for the # column.
-         */
         _addRowIndexes: function () {
             var oModel = this._getModel();
             var aRows  = oModel.getProperty("/quarterlyPercentages") || [];
@@ -521,9 +492,6 @@ sap.ui.define([
             oModel.setProperty("/quarterlyPercentages", aRows);
         },
 
-        /**
-         * Mark materials already in use in the Value Help list (to prevent duplicates).
-         */
         _markUsedMaterials: function () {
             var oModel    = this._getModel();
             var aRows     = oModel.getProperty("/quarterlyPercentages") || [];
@@ -542,14 +510,9 @@ sap.ui.define([
             });
         },
 
-        /**
-         * Remove a row from the array by its path.
-         * @param {string} sPath - e.g. "/quarterlyPercentages/2"
-         */
         _removeRow: function (sPath) {
             var oModel = this._getModel();
             var aRows  = oModel.getProperty("/quarterlyPercentages");
-            // Extract index from path
             var iIndex = parseInt(sPath.split("/").pop(), 10);
             aRows.splice(iIndex, 1);
             oModel.setProperty("/quarterlyPercentages", aRows);
@@ -559,7 +522,7 @@ sap.ui.define([
             this._updateSummaryPendingCount();
         },
 
-        /** Update the pending rows count in summary */
+        //  Update the pending rows count in summary
         _updateSummaryPendingCount: function () {
             var oModel  = this._getModel();
             var aRows   = oModel.getProperty("/quarterlyPercentages") || [];
@@ -568,7 +531,7 @@ sap.ui.define([
             oModel.setProperty("/summary/totalMaterials", aRows.length);
         },
 
-        /** Format today's date as "DD Mon YYYY" */
+        //  Format today's date as "DD Mon YYYY"
         _getTodayString: function () {
             var d = new Date();
             var months = ["Jan","Feb","Mar","Apr","May","Jun",

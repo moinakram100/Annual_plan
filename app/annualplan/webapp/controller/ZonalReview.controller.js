@@ -9,7 +9,6 @@ sap.ui.define([
 ], function (Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast, Fragment) {
     "use strict";
 
-    // ─── Constants ───────────────────────────────────────────────────────────
     var STATUS = {
         PENDING:      "PENDING",
         APPROVED:     "APPROVED",
@@ -19,43 +18,26 @@ sap.ui.define([
 
     return Controller.extend("com.ingenx.annualplan.controller.ZonalReview", {
 
-        // ════════════════════════════════════════════════════════════════════
-        //  LIFECYCLE
-        // ════════════════════════════════════════════════════════════════════
-
         onInit: function () {
-            // Load JSON model (already bound via manifest), set defaults
             var oModel = this.getOwnerComponent().getModel("localData");
             this.getView().setModel(oModel);
 
-            // Dialog models (lazy-loaded)
             this._oRejectDialog  = null;
             this._oEditDialog    = null;
             this._sEditPlanId    = null;   // planId currently being edited
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  FILTER BAR
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Called when any filter Select changes – we don't auto-apply,
-         * user must press "Go" to apply filters.
-         */
         onFilterChange: function () {
-            // Optionally show a "dirty" indicator – left as UI enhancement
+
         },
 
-        /**
-         * Apply all selected filter values to the plans table binding.
-         */
+        //   Apply all selected filter values to the plans table binding.
         onApplyFilter: function () {
             var oModel   = this.getView().getModel("localData");
             var oFilters = oModel.getProperty("/filters");
             var aFilters = [];
 
             if (oFilters.salesOffice) {
-                // salesOffice filter maps to the salesOffice text field in data
                 aFilters.push(new Filter("salesOffice", FilterOperator.Contains, this._getSalesOfficeText(oFilters.salesOffice)));
             }
             if (oFilters.customer) {
@@ -75,9 +57,7 @@ sap.ui.define([
             MessageToast.show("Filter applied " + oBinding.getLength() + " plan(s) found.");
         },
 
-        /**
-         * Clear all filters and reset the table binding.
-         */
+        //  Clear all filters and reset the table binding.
         onClearFilter: function () {
             var oModel = this.getView().getModel();
             oModel.setProperty("/filters", { salesOffice: "", customer: "", contractNumber: "", status: "" });
@@ -87,9 +67,7 @@ sap.ui.define([
             MessageToast.show("Filters cleared.");
         },
 
-        /**
-         * Helper: resolve salesOffice key -> display text
-         */
+        //  Helper: resolve salesOffice key -> display text
         _getSalesOfficeText: function (sKey) {
             var mMap = {
                 NORTH: "North Zone",
@@ -100,54 +78,35 @@ sap.ui.define([
             return mMap[sKey] || sKey;
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  TABLE ROW ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * VIEW – Opens the detail panel for the selected plan (read-only).
-         * @param {sap.ui.base.Event} oEvent
-         */
+        //  VIEW – Opens the detail panel for the selected plan (read-only).
         onViewPlan: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var oPlan    = oContext.getObject();
             this._openDetailPanel(oPlan);
         },
 
-        /**
-         * EDIT – Opens the Edit Monthly Plan dialog.
-         * @param {sap.ui.base.Event} oEvent
-         */
+        // EDIT – Opens the Edit Monthly Plan dialog.
         onEditPlan: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var oPlan    = oContext.getObject();
             this._openEditDialog(oPlan);
         },
 
-        /**
-         * APPROVE (inline button) – Confirms and sets status to APPROVED.
-         * @param {sap.ui.base.Event} oEvent
-         */
+        // APPROVE (inline button) – Confirms and sets status to APPROVED.
         onApprovePlan: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var oPlan    = oContext.getObject();
             this._confirmApprove(oPlan.planId, oPlan.customer, oContext.getPath());
         },
 
-        /**
-         * REJECT (inline button) – Opens reject dialog.
-         * @param {sap.ui.base.Event} oEvent
-         */
+        //  REJECT (inline button) – Opens reject dialog.
         onRejectPlanDialog: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var oPlan    = oContext.getObject();
             this._openRejectDialog(oPlan, oContext.getPath());
         },
 
-        /**
-         * RE-OPEN – Resets a REJECTED plan back to PENDING.
-         * @param {sap.ui.base.Event} oEvent
-         */
+        //  RE-OPEN – Resets a REJECTED plan back to PENDING.
         onReopenPlan: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var sPath    = oContext.getPath();
@@ -167,22 +126,14 @@ sap.ui.define([
             );
         },
 
-        /**
-         * Customer name pressed – navigate to detail (routing extension point).
-         */
+        //  Customer name pressed – navigate to detail (routing extension point).
         onCustomerPress: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext();
             var oPlan = oContext.getObject();
             this._openDetailPanel(oPlan);
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  BULK ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Bulk Approve all selected rows.
-         */
+        //  Bulk Approve all selected rows.
         onBulkApprove: function () {
             var aSelected = this._getSelectedPlans();
             if (!aSelected.length) {
@@ -218,9 +169,7 @@ sap.ui.define([
             );
         },
 
-        /**
-         * Bulk Reject selected rows.
-         */
+        //  Bulk Reject selected rows.
         onBulkReject: function () {
             var aSelected = this._getSelectedPlans();
             if (!aSelected.length) {
@@ -246,13 +195,7 @@ sap.ui.define([
             );
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  DETAIL PANEL ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * APPROVE from detail panel footer.
-         */
+        //  APPROVE from detail panel footer.
         onApprovePlanDetail: function () {
             var oModel = this.getView().getModel();
             var oPlan  = oModel.getProperty("/selectedPlan");
@@ -260,9 +203,7 @@ sap.ui.define([
             this._confirmApprove(oPlan.planId, oPlan.customer, this._getPathForPlanId(oPlan.planId));
         },
 
-        /**
-         * REJECT from detail panel footer (uses inline reason input).
-         */
+        //  REJECT from detail panel footer (uses inline reason input).
         onRejectPlan: function () {
             var oModel  = this.getView().getModel();
             var oPlan   = oModel.getProperty("/selectedPlan");
@@ -284,18 +225,14 @@ sap.ui.define([
             MessageToast.show("Plan rejected and reason recorded.");
         },
 
-        /**
-         * EDIT from detail panel footer.
-         */
+        // EDIT from detail panel footer.
         onEditDetailPlan: function () {
             var oModel = this.getView().getModel();
             var oPlan  = oModel.getProperty("/selectedPlan");
             if (oPlan) this._openEditDialog(oPlan);
         },
 
-        /**
-         * SUBMIT DECISION – triggers workflow notification (stub).
-         */
+        // SUBMIT DECISION – triggers workflow notification (stub).
         onSubmitDecision: function () {
             var oModel = this.getView().getModel();
             var oPlan  = oModel.getProperty("/selectedPlan");
@@ -307,7 +244,6 @@ sap.ui.define([
                     title: "Submit Decision",
                     onClose: function (sAction) {
                         if (sAction === MessageBox.Action.OK) {
-                            // In CAPM: call OData action / BAPI here
                             MessageToast.show("Decision submitted. Customer and Corporate notified.");
                         }
                     }
@@ -315,15 +251,8 @@ sap.ui.define([
             );
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  REJECT DIALOG (Fragment)
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Open Reject Dialog for a given plan.
-         * @param {object} oPlan  - plan data object
-         * @param {string} sPath  - model binding path of the plan
-         */
+        
+        //  Open Reject Dialog for a given plan.
         _openRejectDialog: function (oPlan, sPath) {
             var oDialogModel = new JSONModel({
                 customer:        oPlan.customer,
@@ -350,7 +279,7 @@ sap.ui.define([
             }
         },
 
-        /** Confirm reject from dialog */
+        //  Confirm reject from dialog
         onConfirmReject: function () {
             var oDialogModel = this._oRejectDialog.getModel("dialog");
             var sReason = oDialogModel.getProperty("/rejectionReason").trim();
@@ -364,7 +293,6 @@ sap.ui.define([
             this._setStatus(sPath, STATUS.REJECTED, "Rejected", "Error");
             oMainModel.setProperty(sPath + "/rejectionReason", sReason);
 
-            // Sync to detail panel if same plan is open
             var oSelectedPlan = oMainModel.getProperty("/selectedPlan");
             if (oSelectedPlan && oSelectedPlan.planId === oDialogModel.getProperty("/planId")) {
                 oMainModel.setProperty("/selectedPlan/status", STATUS.REJECTED);
@@ -378,23 +306,15 @@ sap.ui.define([
             MessageToast.show("Plan rejected. Reason recorded.");
         },
 
-        /** Cancel reject dialog */
+        //  Cancel reject dialog 
         onCancelReject: function () {
             if (this._oRejectDialog) this._oRejectDialog.close();
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  EDIT PLAN DIALOG (Fragment)
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Open Edit Monthly Plan dialog.
-         * @param {object} oPlan - plan data object
-         */
+        //  Open Edit Monthly Plan dialog.
         _openEditDialog: function (oPlan) {
             this._sEditPlanId = oPlan.planId;
 
-            // Build edit model with live quarterly totals
             var oEditData = jQuery.extend(true, {}, oPlan);
             this._recalcEditTotals(oEditData);
 
@@ -428,15 +348,12 @@ sap.ui.define([
             oEditModel.setData(oData);
         },
 
-        /**
-         * Save edited plan back to the main JSON model.
-         */
+        //  Save edited plan back to the main JSON model.
         onSaveEditedPlan: function () {
             var oEditModel = this._oEditDialog.getModel("edit");
             var oEditData  = oEditModel.getData();
             var aacq       = oEditData.aacq;
 
-            // Validate: annual total must equal AACQ
             if (oEditData.editAnnualTotal !== aacq) {
                 MessageBox.error(
                     "Annual total (" + oEditData.editAnnualTotal + ") does not match AACQ (" + aacq + ").\n" +
@@ -467,24 +384,17 @@ sap.ui.define([
             MessageToast.show("Monthly plan updated successfully.");
         },
 
-        /** Cancel edit dialog */
+        //  Cancel edit dialog 
         onCancelEditPlan: function () {
             if (this._oEditDialog) this._oEditDialog.close();
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  DETAIL PANEL
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Populate /selectedPlan and show the detail panel.
-         * Converts monthlyPlan flat object into a one-row array for the table.
-         * @param {object} oPlan
-         */
+       
+        //   Populate /selectedPlan and show the detail panel.
+        //   Converts monthlyPlan flat object into a one-row array for the table.
         _openDetailPanel: function (oPlan) {
             var oModel = this.getView().getModel();
 
-            // Build flat row for the monthly table
             var mp = oPlan.monthlyPlan;
             var qt = oPlan.quarterlyTotals;
             var oMonthlyRow = {
@@ -495,24 +405,19 @@ sap.ui.define([
                 annual: oPlan.annualTotal
             };
 
-            // Clone plan so detail panel gets its own copy
             var oSelected = jQuery.extend(true, {}, oPlan);
             oSelected.monthlyRows = [oMonthlyRow];
 
             oModel.setProperty("/selectedPlan", oSelected);
             oModel.setProperty("/detailVisible", true);
 
-            // Scroll detail panel into view
             var oPanel = this.byId("detailPanel");
             if (oPanel && oPanel.getDomRef()) {
                 oPanel.getDomRef().scrollIntoView({ behavior: "smooth", block: "start" });
             }
         },
 
-        // ════════════════════════════════════════════════════════════════════
         //  HEADER TOOLBAR ACTIONS
-        // ════════════════════════════════════════════════════════════════════
-
         onExport: function () {
             MessageToast.show("Export to Excel – connect to sap.ui.export.Spreadsheet in CAPM.");
         },
@@ -544,16 +449,10 @@ sap.ui.define([
         },
 
         onRowSelectionChange: function () {
-            // Row selection change – can be used for bulk-action button states
+
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  PRIVATE HELPERS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Show approve confirmation and set status.
-         */
+        //  Show approve confirmation and set status.
         _confirmApprove: function (sPlanId, sCustomer, sPath) {
             MessageBox.confirm(
                 "Approve the annual plan for '" + sCustomer + "'?\nThis will be reflected in the customer portal and sent to Corporate.",
@@ -564,7 +463,6 @@ sap.ui.define([
                         if (sAction === MessageBox.Action.OK) {
                             this._setStatus(sPath, STATUS.APPROVED, "Approved", "Success");
 
-                            // Sync detail panel if same plan open
                             var oModel = this.getView().getModel();
                             var oSel   = oModel.getProperty("/selectedPlan");
                             if (oSel && oSel.planId === sPlanId) {
@@ -580,9 +478,7 @@ sap.ui.define([
             );
         },
 
-        /**
-         * Set status fields on a plan at the given model path.
-         */
+        //  Set status fields on a plan at the given model path.
         _setStatus: function (sPath, sStatus, sStatusText, sStatusState) {
             var oModel = this.getView().getModel();
             oModel.setProperty(sPath + "/status",      sStatus);
@@ -590,10 +486,7 @@ sap.ui.define([
             oModel.setProperty(sPath + "/statusState", sStatusState);
         },
 
-        /**
-         * Return the JSON model path for a given planId.
-         * @returns {string} e.g. "/plans/0"
-         */
+        //  Return the JSON model path for a given planId.
         _getPathForPlanId: function (sPlanId) {
             var oModel = this.getView().getModel();
             var aPlans = oModel.getProperty("/plans");
@@ -603,10 +496,7 @@ sap.ui.define([
             return "";
         },
 
-        /**
-         * Get selected rows from the plans table.
-         * @returns {Array<{plan, path}>}
-         */
+        //  Get selected rows from the plans table.
         _getSelectedPlans: function () {
             var oTable  = this.byId("plansTable");
             var aIdxs   = oTable.getSelectedIndices();
@@ -617,11 +507,8 @@ sap.ui.define([
             });
         },
 
-        /**
-         * Recalculate quarterly totals and states for the edit dialog model.
-         * Mutates the passed data object directly.
-         * @param {object} oData - edit model data
-         */
+        //  Recalculate quarterly totals and states for the edit dialog model.
+        // Mutates the passed data object directly.
         _recalcEditTotals: function (oData) {
             var mp     = oData.monthlyPlan;
             var limits = oData.quarterlyLimits;
@@ -645,21 +532,15 @@ sap.ui.define([
             oData.editAnnualTotal = total;
         },
 
-        /**
-         * Determine ObjectStatus state based on % vs limit.
-         * @param {number} pct   - actual percentage
-         * @param {number} limit - allowed limit %
-         * @returns {string} "Success" | "Warning" | "Error"
-         */
+        
+        //  Determine ObjectStatus state based on % vs limit.
         _getQtrState: function (pct, limit) {
             if (pct > limit)           return "Error";
-            if (pct >= limit - 2)      return "Warning";   // within 2% of limit = amber
+            if (pct >= limit - 2)      return "Warning";   
             return "Success";
         },
 
-        /**
-         * Recount plan statuses and update the summary info strip.
-         */
+        //  Recount plan statuses and update the summary info strip.
         _updateSummaryCount: function () {
             var oModel = this.getView().getModel();
             var aPlans = oModel.getProperty("/plans");

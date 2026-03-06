@@ -31,12 +31,10 @@ sap.ui.define([
     var oModel = new sap.ui.model.json.JSONModel();
     this.getView().setModel(oModel, "red");
 
-    // LOAD JSON PROPERLY
     oModel.loadData(
         sap.ui.require.toUrl("com/ingenx/annualplan/model/reductionData.json")
     );
 
-    // WAIT TILL JSON IS LOADED
     oModel.attachRequestCompleted(function () {
 
         console.log("Reduction JSON Loaded");
@@ -49,27 +47,21 @@ sap.ui.define([
 
 },
 
-        _onReductionMatched: function (oEvent) {
-            debugger
-
+    _onReductionMatched: function (oEvent) {
     var oArgs = oEvent.getParameter("arguments");
-
     var oModel = this.getView().getModel("red");
 
-    // Set filters in model
     oModel.setProperty("/filters/material",    oArgs.material);
     oModel.setProperty("/filters/salesOffice", oArgs.salesOffice);
     oModel.setProperty("/filters/customer",    oArgs.customer);
     oModel.setProperty("/filters/contract",    oArgs.contract);
     oModel.setProperty("/filters/industry",    oArgs.industry);
 
-    // 🔥 Now AUTO APPLY FILTER
     this.onApplyFilter();
 
 },
 
-        // ── FILTER BAR ───────────────────────────────────────────────────
-
+        // FILTER BAR
         onApplyFilter: function () {
             var oModel = this.getView().getModel("red");
             var oF     = oModel.getProperty("/filters");
@@ -137,8 +129,7 @@ var aFiltered = aAll.filter(function(r) {
                 }
             },
 
-        // ── PLAN SELECTION ───────────────────────────────────────────────
-
+        //  PLAN SELECTION
         onPlanRowSelect: function () {
             var oTable   = this.byId("planListTable");
             var iIdx     = oTable.getSelectedIndex();
@@ -163,8 +154,7 @@ var aFiltered = aAll.filter(function(r) {
         onModeChange:           function() { this._clearPreview(); },
         onReductionInputChange: function() { this._clearPreview(); },
 
-        // ── PREVIEW REDUCTION (core algorithm) ───────────────────────────
-
+        // PREVIEW REDUCTION (core algorithm)
         onPreviewReduction: function () {
             var oModel   = this.getView().getModel("red");
             var oPlan    = oModel.getProperty("/selectedPlan");
@@ -212,7 +202,6 @@ var aFiltered = aAll.filter(function(r) {
                 return;
             }
 
-            // Step 2: Re-apportion
             var n          = aRemIdx.length;
             var perMonth   = Math.floor(totalReduced / n);
             var residual   = totalReduced - (perMonth * n);
@@ -222,11 +211,9 @@ var aFiltered = aAll.filter(function(r) {
                 if (pos === n - 1) aRevised[idx] += residual;
             });
 
-            // Step 3: AACQ integrity check
             var revisedTotal = aRevised.reduce(function(s,v){ return s+v; }, 0);
             var bIntact      = (revisedTotal === oPlan.aacq);
 
-            // Step 4: Build preview rows
             var oLimits = oPlan.quarterlyLimits;
             var aRows   = MONTH_META.map(function(meta, idx) {
                 var orig    = oOrig[MONTH_KEYS[idx]];
@@ -254,7 +241,6 @@ var aFiltered = aAll.filter(function(r) {
                 };
             });
 
-            // Step 5: Revised quarterly totals
             var rQ1 = aRevised[0]+aRevised[1]+aRevised[2];
             var rQ2 = aRevised[3]+aRevised[4]+aRevised[5];
             var rQ3 = aRevised[6]+aRevised[7]+aRevised[8];
@@ -295,8 +281,7 @@ var aFiltered = aAll.filter(function(r) {
             }
         },
 
-        // ── APPLY REDUCTION ──────────────────────────────────────────────
-
+        // APPLY REDUCTION
         onApplyReduction: function () {
             var oModel  = this.getView().getModel("red");
             var oPlan   = oModel.getProperty("/selectedPlan");
@@ -332,8 +317,7 @@ var aFiltered = aAll.filter(function(r) {
             );
         },
 
-        // ── SUBMIT FOR APPROVAL ──────────────────────────────────────────
-
+        //SUBMIT FOR APPROVAL 
         onSubmitForApproval: function () {
             var oModel  = this.getView().getModel("red");
             var oPlan   = oModel.getProperty("/selectedPlan");

@@ -16,38 +16,24 @@ sap.ui.define([
 ) {
     "use strict";
 
-    // Month field names in model
     var MONTHS = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
 
     return Controller.extend("com.ingenx.annualplan.controller.AnnualPlan", {
-
-        // ════════════════════════════════════════════════════════════════════
-        //  LIFECYCLE
-        // ════════════════════════════════════════════════════════════════════
-
         onInit: function () {
             var oModel = new JSONModel(
                 sap.ui.require.toUrl("com/ingenx/annualplan/model/annualPlanData.json")
             );
             this.getView().setModel(oModel, "ap");
 
-            // Snapshot for reset
             this._oOriginalPlan = null;
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  CONTRACT SELECTION
-        // ════════════════════════════════════════════════════════════════════
-
-        /** Called when year or customer ID selection changes */
         onSelectionChange: function () {
-            // Nothing yet – wait for "Load Contract"
+
         },
 
-        /**
-         * Load Contract button – finds the matching contract from the data
-         * and populates the contract info panel and resets the plan grid.
-         */
+        //  Load Contract button – finds the matching contract from the data
+        //  and populates the contract info panel and resets the plan grid.
         onLoadContract: function () {
             var oModel          = this.getView().getModel("ap");
             var sContractNumber = oModel.getProperty("/contractSelection/contractNumber");
@@ -67,7 +53,7 @@ sap.ui.define([
             // });
             // ─────────────────────────────────────────────────────────────
 
-            // JSON stub: find contract in local data
+            // find contract in local data
             setTimeout(function () {
                 var aContracts = oModel.getProperty("/contracts");
                 var oContract  = aContracts.find(function (c) {
@@ -84,15 +70,12 @@ sap.ui.define([
             }.bind(this), 500);
         },
 
-        /**
-         * Populate screen after contract is loaded.
-         * Calculates AACQ, resets plan, shows contract info panel.
-         * @param {object} oContract - contract master data object
-         */
+        //  Populate screen after contract is loaded.
+        //  Calculates AACQ, resets plan, shows contract info panel.
         _onContractLoaded: function (oContract) {
             var oModel = this.getView().getModel("ap");
 
-            // ── Recalculate AACQ from formula ─────────────────────────────
+            // Recalculate AACQ from formula 
             // AACQ = ACQ + UpwardFlex(as amount) – DownwardFlex(as amount)
             //      + Make-Up Gas + Make-Good Gas
             // Note: Flex% is stored as % value; we apply it to ACQ
@@ -117,8 +100,6 @@ sap.ui.define([
             oModel.setProperty("/ui/planSubmitted",     false);
             oModel.setProperty("/ui/hasChanges",        false);
             oModel.setProperty("/ui/submitEnabled",     false);
-
-            // Reset plan grid
             this._resetPlan();
 
             // Take snapshot for reset
@@ -130,7 +111,7 @@ sap.ui.define([
             );
         },
 
-        /** Clear everything and start fresh */
+        //  Clear everything and start fresh 
         onClearAll: function () {
             var oModel = this.getView().getModel("ap");
             if (oModel.getProperty("/ui/hasChanges")) {
@@ -146,29 +127,17 @@ sap.ui.define([
             }
         },
 
-        /** Customer value help stub */
+        //  Customer value help stub 
         onCustomerVH: function () {
             MessageToast.show("Customer VH – connect to OData CustomerSet in CAPM.");
         },
 
         onContractChange: function () {
-            // Reset panel when contract dropdown changes
             var oModel = this.getView().getModel("ap");
             oModel.setProperty("/ui/contractSelected", false);
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  MONTHLY QUANTITY ENTRY  (core business logic)
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Called on every StepInput change (any month).
-         * 1. Recalculates Q1–Q4 totals and annual total
-         * 2. Computes each quarter as % of AACQ
-         * 3. Validates vs corporate quarterly limits
-         * 4. Sets ObjectStatus states (Success / Warning / Error)
-         * 5. Enables/disables Submit button
-         */
+        //  Called on every StepInput change (any month) with all checks and validations.
         onMonthChange: function () {
             var oModel    = this.getView().getModel("ap");
             var oPlan     = oModel.getProperty("/annualPlan");
@@ -241,18 +210,12 @@ sap.ui.define([
             // ── Show inline warning toast for immediate feedback ──────────
             if (q1Warn || q2Warn || q3Warn || q4Warn) {
                 // Warning strip in view handles persistent display;
-                // show a short toast only when first violation appears
             }
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  SHUTDOWN / MAINTENANCE DAYS
-        // ════════════════════════════════════════════════════════════════════
+        //  Add a new empty shutdown row to the table.
+        //  Subject to remaining S/D days allowance.
 
-        /**
-         * Add a new empty shutdown row to the table.
-         * Subject to remaining S/D days allowance.
-         */
         onAddShutdownRow: function () {
             var oModel      = this.getView().getModel("ap");
             var iRemaining  = oModel.getProperty("/ui/sdDaysRemaining");
@@ -280,19 +243,15 @@ sap.ui.define([
             this._recalcSDRemaining();
         },
 
-        /**
-         * Called on any shutdown row field change.
-         * Recalculates remaining S/D days.
-         */
+        // Called on any shutdown row field change.
+        //  Recalculates remaining S/D days.
         onShutdownChange: function () {
             this._recalcSDRemaining();
             var oModel = this.getView().getModel("ap");
             oModel.setProperty("/ui/hasChanges", true);
         },
 
-        /**
-         * Delete a shutdown row.
-         */
+        //  Delete a shutdown row.
         onDeleteShutdownRow: function (oEvent) {
             var oContext = oEvent.getSource().getBindingContext("ap");
             var sPath    = oContext.getPath();
@@ -305,10 +264,8 @@ sap.ui.define([
             oModel.setProperty("/ui/hasChanges", true);
         },
 
-        /**
-         * Sum all shutdown days rows and update sdDaysRemaining.
-         * Also validates: no single row can exceed remaining days.
-         */
+        //  Sum all shutdown days rows and update sdDaysRemaining.
+        //  Also validates: no single row can exceed remaining days.
         _recalcSDRemaining: function () {
             var oModel       = this.getView().getModel("ap");
             var aRows        = oModel.getProperty("/shutdownRows") || [];
@@ -322,7 +279,6 @@ sap.ui.define([
             var iRemaining = iAllowed - iTotalUsed;
             oModel.setProperty("/ui/sdDaysRemaining", Math.max(iRemaining, 0));
 
-            // Flag rows where days exceed remaining
             aRows.forEach(function (r, i) {
                 oModel.setProperty(
                     "/shutdownRows/" + i + "/daysState",
@@ -331,10 +287,7 @@ sap.ui.define([
             });
         },
 
-        // ════════════════════════════════════════════════════════════════════
         //  SAVE DRAFT
-        // ════════════════════════════════════════════════════════════════════
-
         onSaveDraft: function () {
             var oModel   = this.getView().getModel("ap");
             var oContract= oModel.getProperty("/selectedContract");
@@ -344,10 +297,9 @@ sap.ui.define([
 
             oModel.setProperty("/ui/busy", true);
 
-            // ── CAPM: OData CREATE/UPDATE to AnnualPlan entity ───────────
+            // CAPM: OData CREATE/UPDATE to AnnualPlan entity 
             // var oPayload = this._buildPayload(oContract, oPlan);
             // oODataModel.create("/AnnualPlans", oPayload, { success: ..., error: ... });
-            // ─────────────────────────────────────────────────────────────
 
             setTimeout(function () {
                 oModel.setProperty("/ui/busy",       false);
@@ -356,21 +308,14 @@ sap.ui.define([
             }.bind(this), 400);
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  SUBMIT PLAN
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Final validation and submit.
-         * Per FS: submitted plan goes to Zonal Office for review.
-         */
+        //  Final validation and submit.
+        //  Per FS: submitted plan goes to Zonal Office for review.
         onSubmitPlan: function () {
             var oModel    = this.getView().getModel("ap");
             var oContract = oModel.getProperty("/selectedContract");
             var oPlan     = oModel.getProperty("/annualPlan");
             var aSD       = oModel.getProperty("/shutdownRows") || [];
 
-            // ── Pre-submit validation ─────────────────────────────────────
             var aErrors = this._validateBeforeSubmit(oContract, oPlan, aSD);
             if (aErrors.length > 0) {
                 MessageBox.error(
@@ -381,7 +326,7 @@ sap.ui.define([
                 return;
             }
 
-            // ── Warn about quarterly violations (non-blocking) ────────────
+            // Warn about quarterly violations (non-blocking)
             var aWarnings = [];
             if (oPlan.q1State === "Error") aWarnings.push("Q1 (" + oPlan.q1Pct + "%) exceeds limit of " + oModel.getProperty("/quarterlyLimits/q1Limit") + "%");
             if (oPlan.q2State === "Error") aWarnings.push("Q2 (" + oPlan.q2Pct + "%) exceeds limit of " + oModel.getProperty("/quarterlyLimits/q2Limit") + "%");
@@ -415,21 +360,18 @@ sap.ui.define([
             });
         },
 
-        /**
-         * Persist the submitted plan (CAPM OData action stub).
-         */
+        //  Persist the submitted plan (CAPM OData action stub).
         _persistSubmit: function () {
             var oModel = this.getView().getModel("ap");
             oModel.setProperty("/ui/busy", true);
 
-            // ── CAPM: Call OData action "SubmitAnnualPlan" ────────────────
+            //  CAPM: Call OData action "SubmitAnnualPlan"
             // oODataModel.callFunction("/SubmitAnnualPlan", {
             //     method:  "POST",
             //     urlParameters: { PlanId: sPlanId },
             //     success: this._onSubmitSuccess.bind(this),
             //     error:   this._onSubmitError.bind(this)
             // });
-            // ─────────────────────────────────────────────────────────────
 
             setTimeout(function () {
                 oModel.setProperty("/ui/busy",         false);
@@ -441,10 +383,7 @@ sap.ui.define([
             }.bind(this), 800);
         },
 
-        // ════════════════════════════════════════════════════════════════════
         //  RESET
-        // ════════════════════════════════════════════════════════════════════
-
         onReset: function () {
             var oModel = this.getView().getModel("ap");
             MessageBox.confirm("Reset all monthly quantities to zero?", {
@@ -460,13 +399,7 @@ sap.ui.define([
             });
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  PRIVATE HELPERS
-        // ════════════════════════════════════════════════════════════════════
-
-        /**
-         * Reset the annualPlan model section to all zeros / defaults.
-         */
+        //  Reset the annualPlan model section to all zeros / defaults.
         _resetPlan: function () {
             var oModel = this.getView().getModel("ap");
             var oBlank = {
@@ -485,9 +418,7 @@ sap.ui.define([
             oModel.setProperty("/ui/planSubmitted",   false);
         },
 
-        /**
-         * Full reset: clear contract selection too.
-         */
+        //  Full reset: clear contract selection too.
         _fullReset: function () {
             var oModel = this.getView().getModel("ap");
             oModel.setProperty("/contractSelection/contractNumber", "");
@@ -505,10 +436,6 @@ sap.ui.define([
          *   Warning (Amber) → within 2% of limit
          *   Success (Green) → compliant
          *   None            → no data yet (zero)
-         *
-         * @param  {number} pct   - actual %
-         * @param  {number} limit - corporate limit %
-         * @returns {string} "Error" | "Warning" | "Success" | "None"
          */
         _getQtrState: function (pct, limit) {
             if (pct === 0)        return "None";
@@ -517,13 +444,7 @@ sap.ui.define([
             return "Success";
         },
 
-        /**
-         * Full validation pass before submit.
-         * @param  {object}   oContract
-         * @param  {object}   oPlan
-         * @param  {object[]} aSD       - shutdown rows
-         * @returns {string[]} error messages
-         */
+        //  Full validation pass before submit.
         _validateBeforeSubmit: function (oContract, oPlan, aSD) {
             var aErrors = [];
 
@@ -564,9 +485,7 @@ sap.ui.define([
             return aErrors;
         },
 
-        /**
-         * Build OData payload for CAPM (reference stub).
-         */
+        //  Build OData payload for CAPM (reference stub).
         _buildPayload: function (oContract, oPlan) {
             return {
                 ContractNumber: oContract.contractNumber,
