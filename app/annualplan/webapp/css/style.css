@@ -43,3 +43,21 @@ html, body {
     margin: 0.2%;
     margin-right: -2%;
 }
+
+.mainFooter{
+    background: #fff;
+    color: #131e29;
+    box-shadow: 0 0 0 .0625rem rgba(34,53,72,0.48),0 .125rem .5rem 0 rgba(34,53,72,0.3) !important;
+    border-radius: .75rem !important;
+    margin : 0.5rem !important;
+    border: none;
+    padding: 7px;
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    width: 97.6%;
+}
+.panelStyle{
+    margin-bottom: 3.2% !important;
+}

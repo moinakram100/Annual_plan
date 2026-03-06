@@ -133,7 +133,7 @@
         },
         {
           "name": "onRouteReduction",
-          "pattern": "reduction",
+          "pattern": "reduction/{material}/{salesOffice}/{customer}/{contract}/{industry}",
           "target": [
             "TargetReductionScreen"
           ]

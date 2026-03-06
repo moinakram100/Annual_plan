@@ -51,6 +51,7 @@
                 class="sapUiTinyMargin"
                 header="Reduction"
                 press="onPressReductionTile"
+                visible="false"
             >
                 <TileContent>
                     <ImageContent
@@ -61,6 +62,7 @@
          <GenericTile
                 class="sapUiTinyMargin"
                 header="Approval Workflow"
+                visible="false"
                 press="onPressApprovalTile"
             >
                 <TileContent>

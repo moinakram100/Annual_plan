@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/core/routing/History",
     "sap/m/MessageBox",
     "sap/m/MessageToast"
-], function (Controller, JSONModel, MessageBox, MessageToast) {
+], function (Controller, JSONModel,History, MessageBox, MessageToast) {
     "use strict";
 
     // Month keys in order — used for building the monthly detail table row
@@ -28,17 +29,12 @@ sap.ui.define([
                 sap.ui.require.toUrl("com/ingenx/annualplan/model/approvalData.json")
             );
             oModel.attachRequestCompleted(function () {
-                // Pre-load all requests on init for summary KPIs
                 this._refreshSummaryCounts();
             }.bind(this));
             this.getView().setModel(oModel, "apv");
         },
 
-        // ════════════════════════════════════════════════════════════════════
-        //  LOAD / FILTER
-        // ════════════════════════════════════════════════════════════════════
-
-        /** Load all requests without any filter */
+       
         onLoadAll: function () {
             var oModel = this.getView().getModel("apv");
             // Reset filters
@@ -48,9 +44,11 @@ sap.ui.define([
         },
 
         /** Apply active filter criteria */
-        onApplyFilter: function () {
+        c: function () {
             this._applyFilterInternal();
         },
+
+ 
 
         onClearFilter: function () {
             var oModel = this.getView().getModel("apv");
@@ -574,7 +572,18 @@ sap.ui.define([
             var d  = new Date();
             var mm = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
             return d.getDate() + " " + mm[d.getMonth()] + " " + d.getFullYear();
-        }
+        },
+
+               onPressNavBack : function(){
+               var oHistory = sap.ui.core.routing.History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
+
+                if (sPreviousHash !== undefined) {
+                    window.history.go(-1);
+                } else {
+                    this.getOwnerComponent().getRouter().navTo("onRouteDashboard", {}, true);
+                }
+            },
 
     });
 });

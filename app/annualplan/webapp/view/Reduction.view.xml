@@ -12,18 +12,16 @@
 
    <Page showHeader="false">
    
-     <ScrollContainer id="zonal_Scrollcontainer" vertical="true">
-      <tnt:ToolHeader id="zonal__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
-            <Title id="zonal__Mapping_Title" textAlign="Center" text="Zonal Annual Plan Review" wrapping="false">
-                <layoutData>
-                    <OverflowToolbarLayoutData id="zonal__Mapping_OverflowToolbarLayoutData" priority="Disappear" />
-                </layoutData>
+     <ScrollContainer id="reduction_Scrollcontainer" vertical="true">
+      <tnt:ToolHeader id="reduction__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
+            <Button icon="sap-icon://nav-back" press="onPressNavBack"/>
+            <Title id="reduction__Mapping_Title" textAlign="Center" text="Reduction" wrapping="false">
             </Title>
-            <ToolbarSpacer id="zonal__Mapping_ToolbarSpacer" />
+            <ToolbarSpacer id="reduction__Mapping_ToolbarSpacer" />
         </tnt:ToolHeader>
 
         <!-- filter area -->
-        <HBox class="filterArea">
+        <HBox class="filterArea" visible="false">
              <HBox class="headerSelectArea">
                 <!-- material -->
                 <VBox class="sapUiSmallMarginEnd">

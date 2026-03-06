@@ -268,14 +268,25 @@ sap.ui.define([
             }
         },
 
-        onPressReductionBtn : function(){
-             const tile = this.getOwnerComponent().getRouter();
-            tile.navTo("onRouteReduction");
+        onPressReductionBtn: function (oEvent) {
+            var oRowData = oEvent.getSource().getBindingContext("dash").getObject();
+            this.getOwnerComponent().getRouter().navTo("onRouteReduction", {
+                material    : oRowData.material,
+                salesOffice : oRowData.salesOffice,
+                customer    : oRowData.customerId,
+                contract    : oRowData.contract,
+                industry    : oRowData.industry
+            });
         },
-
-        onPressApprovalBtn : function(){
-              const tile = this.getOwnerComponent().getRouter();
-              tile.navTo("onRouteApproval");
+        onPressApprovalBtn: function (oEvent) {
+            var oRowData = oEvent.getSource().getBindingContext("dash").getObject();
+            this.getOwnerComponent().getRouter().navTo("onRouteApproval", {
+                material    : oRowData.material,
+                salesOffice : oRowData.salesOffice,
+                customer    : oRowData.customerId,
+                contract    : oRowData.contract,
+                industry    : oRowData.industry
+            });
         },
 
         onCloseLegend: function () {

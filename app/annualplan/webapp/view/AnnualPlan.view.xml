@@ -7,33 +7,88 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:table="sap.ui.table"
     xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
     displayBlock="true">
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         DYNAMIC PAGE
-    ════════════════════════════════════════════════════════════════ -->
-    <f:DynamicPage id="annualPlanPage" showFooter="{ap>/ui/contractSelected}">
+    <Page showHeader="false">
+  
 
-        <!-- ── TITLE ── -->
-        <f:title>
-            <f:DynamicPageTitle id="_IDGenDynamicPageTitle">
-                <f:heading>
-                    <Title id="_IDGenTitle" text="Annual Plan Submission" level="H2"/>
-                </f:heading>
-                <!-- <f:subheading>
-                    <Text id="_IDGenText" text="Submit month-wise annual gas plan for contract year · {ap>/ui/fiscalYear}"/>
-                </f:subheading> -->
-                <f:snappedHeading>
-                    <HBox id="_IDGenHBox3" alignItems="Center">
-                        <Title id="_IDGenTitle1" text="Annual Plan" level="H3" class="sapUiSmallMarginEnd"/>
-                        <ObjectStatus id="_IDGenObjectStatus"
-                            text="{ap>/selectedContract/contractNumber}"
-                            state="Information"
-                            visible="{ap>/ui/contractSelected}"/>
-                    </HBox>
-                </f:snappedHeading>
-                <f:actions>
-                    <Button id="_IDGenButton3"
+        <!-- tool header -->
+         <tnt:ToolHeader id="annualPlan__toolheader" class="sapUiTinyMargin header_nav">
+            <Title id="annualPlan_Title" textAlign="Center" text="Annual Plan Submission" wrapping="false">
+                <layoutData>
+                    <OverflowToolbarLayoutData id="annualPlan_OverflowToolbarLayoutData" priority="Disappear" />
+                </layoutData>
+            </Title>
+            <ToolbarSpacer id="annualPlan_ToolbarSpacer" />
+        </tnt:ToolHeader>
+
+        <!-- filter Bar -->
+        <HBox class="filterArea">
+             <HBox class="headerSelectArea">
+                 <VBox>
+                     <Label id="_IDGenLabel1" text="Calendar Year" design="Bold" width="100px"/>
+                        <Select
+                            id="selYear"
+                            width="200px"
+                            selectedKey="{ap>/contractSelection/calendarYear}"
+                            change=".onSelectionChange">
+                            <items>
+                                <core:Item id="_IDGenItem" key="2024" text="2024"/>
+                                <core:Item id="_IDGenItem1" key="2025" text="2025"/>
+                                <core:Item id="_IDGenItem2" key="2026" text="2026"/>
+                                <core:Item id="_IDGenItem3" key="2027" text="2027"/>
+                            </items>
+                        </Select>
+                 </VBox>
+
+                 <VBox class="sapUiTinyMarginBegin"> 
+                      <Label id="_IDGenLabel11" text="Customer ID" design="Bold" width="90px"/>
+                        <Input
+                            id="inputCustomerId"
+                            value="{ap>/contractSelection/customerId}"
+                            placeholder="e.g. CUST-1001"
+                            width="200px"
+                            showValueHelp="true"
+                            valueHelpRequest=".onCustomerVH"
+                            change=".onSelectionChange"/>
+                 </VBox>
+
+                 <VBox class="sapUiTinyMarginBegin">
+                            <Label id="_IDGenLabel38" text="Contract No." design="Bold" width="90px"/>
+                        <Select
+                            id="selContract"
+                            width="200px"
+                            selectedKey="{ap>/contractSelection/contractNumber}"
+                            change=".onContractChange">
+                            <items>
+                                <core:Item id="_IDGenItem4" key="" text="Select Contract…"/>
+                                <core:Item id="_IDGenItem5" key="CTR-2025-001" text="CTR-2025-001 (RLNG)"/>
+                                <core:Item id="_IDGenItem6" key="CTR-2025-008" text="CTR-2025-008 (PNG)"/>
+                            </items>
+                        </Select>
+                 </VBox>
+
+                 <VBox>
+                    <Label text=""/>
+                     <HBox>
+                          <Button id="_IDGenButton6"
+                            text="Go"
+                            type="Emphasized"
+                            class="sapUiTinyMarginBegin"
+                            press=".onLoadContract"/>
+                        <Button id="_IDGenButton7"
+                            text="Clear"
+                            type="Ghost"
+                            press=".onClearAll"
+                            class="sapUiTinyMarginBegin"/>
+                     </HBox>
+                 </VBox>
+                 <ToolbarSpacer width="200px"/>
+                 <VBox>
+                     <Label text=""/>
+                     <HBox>
+                           <Button id="_IDGenButton3"
                         text="Save Draft"
                         icon="sap-icon://save"
                         type="Ghost"
@@ -46,83 +101,25 @@
                         type="Ghost"
                         enabled="{ap>/ui/hasChanges}"
                         press=".onReset"
+                        class="sapUiTinyMarginBegin"
                         visible="{ap>/ui/contractSelected}"/>
                     <Button id="_IDGenButton5"
                         text="Submit Plan"
                         icon="sap-icon://paper-plane"
                         type="Emphasized"
+                        class="sapUiTinyMarginBegin"
                         enabled="{ap>/ui/submitEnabled}"
                         press=".onSubmitPlan"
                         visible="{ap>/ui/contractSelected}"/>
-                </f:actions>
-            </f:DynamicPageTitle>
-        </f:title>
+                     </HBox>
+                 </VBox>
+             </HBox>
+        </HBox>
 
-        <!-- ═══════════════════════════════════════════════════════════
-             HEADER  ─  Contract Selection + Read-only Contract Info
-        ════════════════════════════════════════════════════════════ -->
-        <f:header>
-            <f:DynamicPageHeader id="_IDGenDynamicPageHeader" pinnable="true" backgroundDesign="Solid">
-                <l:VerticalLayout id="_IDGenVerticalLayout" width="100%">
-
-                    <!-- ── STEP 1: Contract Selection Bar ── -->
-                    <Toolbar id="selectionBar" design="Solid">
-                        <Label id="_IDGenLabel1" text="Calendar Year" design="Bold" width="100px"/>
-                        <Select
-                            id="selYear"
-                            width="100px"
-                            selectedKey="{ap>/contractSelection/calendarYear}"
-                            change=".onSelectionChange">
-                            <items>
-                                <core:Item id="_IDGenItem" key="2024" text="2024"/>
-                                <core:Item id="_IDGenItem1" key="2025" text="2025"/>
-                                <core:Item id="_IDGenItem2" key="2026" text="2026"/>
-                                <core:Item id="_IDGenItem3" key="2027" text="2027"/>
-                            </items>
-                        </Select>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer1" width="16px"/>
-
-                        <Label id="_IDGenLabel11" text="Customer ID" design="Bold" width="90px"/>
-                        <Input
-                            id="inputCustomerId"
-                            value="{ap>/contractSelection/customerId}"
-                            placeholder="e.g. CUST-1001"
-                            width="130px"
-                            showValueHelp="true"
-                            valueHelpRequest=".onCustomerVH"
-                            change=".onSelectionChange"/>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer2" width="16px"/>
-
-                        <Label id="_IDGenLabel38" text="Contract No." design="Bold" width="90px"/>
-                        <Select
-                            id="selContract"
-                            width="175px"
-                            selectedKey="{ap>/contractSelection/contractNumber}"
-                            change=".onContractChange">
-                            <items>
-                                <core:Item id="_IDGenItem4" key="" text="Select Contract…"/>
-                                <core:Item id="_IDGenItem5" key="CTR-2025-001" text="CTR-2025-001 (RLNG)"/>
-                                <core:Item id="_IDGenItem6" key="CTR-2025-008" text="CTR-2025-008 (PNG)"/>
-                            </items>
-                        </Select>
-                        <ToolbarSpacer id="_IDGenToolbarSpacer3" width="12px"/>
-
-                        <Button id="_IDGenButton6"
-                            text="Load Contract"
-                            type="Emphasized"
-                            icon="sap-icon://search"
-                            press=".onLoadContract"/>
-                        <Button id="_IDGenButton7"
-                            text="Clear"
-                            type="Ghost"
-                            press=".onClearAll"
-                            class="sapUiTinyMarginBegin"/>
-                    </Toolbar>
-
-                    <!-- ── STEP 2: Contract Info (shown after load) ── -->
-                    <Panel
+        <!-- contract details content -->
+         <VBox class="filterArea sapUiSmallMarginTop annualPlanArea"  visible="{ap>/ui/contractSelected}">
+           <Panel
                         id="contractInfoPanel"
-                        visible="{ap>/ui/contractSelected}"
                         backgroundDesign="Solid"
                         class="sapUiSmallMarginTop">
 
@@ -227,18 +224,12 @@
 
                         </content>
                     </Panel>
+         </VBox>
 
-                </l:VerticalLayout>
-            </f:DynamicPageHeader>
-        </f:header>
+         <!-- monthly qty entered content -->
 
-        <!-- ═══════════════════════════════════════════════════════════
-             CONTENT  ─  Monthly Plan Entry + Shutdown Panel
-        ════════════════════════════════════════════════════════════ -->
-        <f:content>
-            <l:VerticalLayout id="_IDGenVerticalLayout1" width="100%" class="sapUiSmallMargin">
-
-                <!-- Pre-load empty state -->
+          <VBox class="filterArea sapUiSmallMarginTop">
+             <!-- Pre-load empty state -->
                 <VBox
                     id="emptyState"
                     visible="{= !${ap>/ui/contractSelected}}"
@@ -327,7 +318,7 @@
                         <content>
                             <HBox id="_IDGenHBox7" wrap="Wrap" class="sapUiSmallMargin">
                                 <!-- January -->
-                                <VBox id="_IDGenVBox17" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox17" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel51" text="January *" design="Bold"/>
                                     <StepInput
                                         id="siJan"
@@ -340,7 +331,7 @@
                                         change=".onMonthChange"/>
                                 </VBox>
                                 <!-- February -->
-                                <VBox id="_IDGenVBox18" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox18" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel52" text="February *" design="Bold"/>
                                     <StepInput
                                         id="siFeb"
@@ -353,7 +344,7 @@
                                         change=".onMonthChange"/>
                                 </VBox>
                                 <!-- March -->
-                                <VBox id="_IDGenVBox19" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox19" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel53" text="March *" design="Bold"/>
                                     <StepInput
                                         id="siMar"
@@ -366,7 +357,7 @@
                                         change=".onMonthChange"/>
                                 </VBox>
                                 <!-- Q1 Auto-calc total -->
-                                <VBox id="_IDGenVBox20" width="160px">
+                                <VBox id="_IDGenVBox20" width="160px" class="sapUiSmallMarginBegin">
                                     <Label id="_IDGenLabel54" text="Q1 Auto-Total" design="Bold"/>
                                     <ObjectStatus id="_IDGenObjectStatus21"
                                         text="{ap>/annualPlan/q1Total} {ap>/selectedContract/uom}"
@@ -402,25 +393,25 @@
                         </headerToolbar>
                         <content>
                             <HBox id="_IDGenHBox8" wrap="Wrap" class="sapUiSmallMargin">
-                                <VBox id="_IDGenVBox21" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox21" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel55" text="April *" design="Bold"/>
                                     <StepInput id="siApr" value="{ap>/annualPlan/apr}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox22" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox22" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel56" text="May *" design="Bold"/>
                                     <StepInput id="siMay" value="{ap>/annualPlan/may}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox23" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox23" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel57" text="June *" design="Bold"/>
                                     <StepInput id="siJun" value="{ap>/annualPlan/jun}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox24" width="160px">
+                                <VBox id="_IDGenVBox24" width="160px" class="sapUiSmallMarginBegin">
                                     <Label id="_IDGenLabel58" text="Q2 Auto-Total" design="Bold"/>
                                     <ObjectStatus id="_IDGenObjectStatus22" text="{ap>/annualPlan/q2Total} {ap>/selectedContract/uom}"
                                         state="{ap>/annualPlan/q2State}" class="sapUiSmallMarginTop"/>
@@ -452,25 +443,25 @@
                         </headerToolbar>
                         <content>
                             <HBox id="_IDGenHBox9" wrap="Wrap" class="sapUiSmallMargin">
-                                <VBox id="_IDGenVBox25" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox25" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel59" text="July *" design="Bold"/>
                                     <StepInput id="siJul" value="{ap>/annualPlan/jul}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox26" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox26" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel60" text="August *" design="Bold"/>
                                     <StepInput id="siAug" value="{ap>/annualPlan/aug}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox27" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox27" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel61" text="September *" design="Bold"/>
                                     <StepInput id="siSep" value="{ap>/annualPlan/sep}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox28" width="160px">
+                                <VBox id="_IDGenVBox28" width="160px" class="sapUiSmallMarginBegin">
                                     <Label id="_IDGenLabel62" text="Q3 Auto-Total" design="Bold"/>
                                     <ObjectStatus id="_IDGenObjectStatus23" text="{ap>/annualPlan/q3Total} {ap>/selectedContract/uom}"
                                         state="{ap>/annualPlan/q3State}" class="sapUiSmallMarginTop"/>
@@ -502,25 +493,25 @@
                         </headerToolbar>
                         <content>
                             <HBox id="_IDGenHBox10" wrap="Wrap" class="sapUiSmallMargin">
-                                <VBox id="_IDGenVBox29" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox29" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel63" text="October *" design="Bold"/>
                                     <StepInput id="siOct" value="{ap>/annualPlan/oct}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox30" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox30" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel64" text="November *" design="Bold"/>
                                     <StepInput id="siNov" value="{ap>/annualPlan/nov}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox31" class="sapUiSmallMarginEnd" width="130px">
+                                <VBox id="_IDGenVBox31" class="sapUiSmallMarginEnd" width="180px">
                                     <Label id="_IDGenLabel65" text="December *" design="Bold"/>
                                     <StepInput id="siDec" value="{ap>/annualPlan/dec}" min="0" step="1"
                                         displayValuePrecision="0" description="{ap>/selectedContract/uom}"
                                         width="100%" enabled="{= !${ap>/ui/planSubmitted}}" change=".onMonthChange"/>
                                 </VBox>
-                                <VBox id="_IDGenVBox32" width="160px">
+                                <VBox id="_IDGenVBox32" width="160px" class="sapUiSmallMarginBegin">
                                     <Label id="_IDGenLabel66" text="Q4 Auto-Total" design="Bold"/>
                                     <ObjectStatus id="_IDGenObjectStatus24" text="{ap>/annualPlan/q4Total} {ap>/selectedContract/uom}"
                                         state="{ap>/annualPlan/q4State}" class="sapUiSmallMarginTop"/>
@@ -568,7 +559,7 @@
                         headerText="Shutdown / Planned Maintenance Days"
                         expandable="true"
                         expanded="false"
-                        class="sapUiSmallMarginBottom"
+                        class="sapUiSmallMarginBottom panelStyle"
                         visible="{ap>/ui/contractSelected}">
 
                         <headerToolbar>
@@ -602,10 +593,10 @@
                                 rows="{ap>/shutdownRows}"
                                 selectionMode="None"
                                 alternateRowColors="true"
-                                visibleRowCount="{= Math.max(${ap>/shutdownRows}.length, 3)}"
+                                visibleRowCount="{= Math.max(${ap>/shutdownRows}.length, 1)}"
                                 rowHeight="48"
                                 noData="No shutdown periods added. Click 'Add Shutdown Period' to begin."
-                                class="sapUiSmallMargin">
+                                class="sapUiSmallMargin zonalPlanTable">
 
                                 <table:Column id="_IDGenColumn26" width="11rem" label="Month">
                                     <Label id="_IDGenLabel69" text="Month"/>
@@ -690,48 +681,48 @@
                                 </table:Column>
 
                             </table:Table>
+                            
 
                         </content>
+                        
                     </Panel>
-
-                </VBox>
-
-            </l:VerticalLayout>
-        </f:content>
-
-        <!-- ═══════════════════════════════════════════════════════════
-             STICKY FOOTER
-        ════════════════════════════════════════════════════════════ -->
-        <f:footer>
-            <OverflowToolbar id="_IDGenOverflowToolbar">
-                <ObjectStatus id="_IDGenObjectStatus30"
-                    text="Annual Total: {ap>/annualPlan/annualTotal} / {ap>/selectedContract/aacq} {ap>/selectedContract/uom}"
-                    state="{ap>/annualPlan/annualState}"/>
-                <ToolbarSpacer id="_IDGenToolbarSpacer10"/>
-                <Button id="_IDGenButton10"
-                    text="Reset"
+        <HBox class="mainFooter" justifyContent="SpaceBetween" alignItems="Center">
+          <HBox alignItems="Center">
+          <ObjectStatus
+                text="Annual Total: {ap>/annualPlan/annualTotal} / {ap>/selectedContract/aacq} {ap>/selectedContract/uom}"
+                state="{ap>/annualPlan/annualState}"/>
+            <ToolbarSpacer/>
+          </HBox>
+          <HBox>
+            <Button text="Reset"
                     type="Ghost"
+                    class="sapUiTinyMarginEnd"
                     icon="sap-icon://undo"
                     press=".onReset"
                     enabled="{ap>/ui/hasChanges}"
                     visible="{= !${ap>/ui/planSubmitted}}"/>
-                <Button id="_IDGenButton11"
-                    text="Save Draft"
+            <Button text="Save Draft"
                     type="Ghost"
                     icon="sap-icon://save"
+                    class="sapUiTinyMarginEnd"
                     press=".onSaveDraft"
                     enabled="{ap>/ui/hasChanges}"
                     visible="{= !${ap>/ui/planSubmitted}}"/>
-                <Button id="_IDGenButton16"
-                    text="Submit Plan to Zonal"
+            <Button text="Submit Plan to Zonal"
                     type="Emphasized"
                     icon="sap-icon://paper-plane"
                     press=".onSubmitPlan"
                     enabled="{ap>/ui/submitEnabled}"
                     visible="{= !${ap>/ui/planSubmitted}}"/>
-            </OverflowToolbar>
-        </f:footer>
+         </HBox>
+        </HBox>
 
-    </f:DynamicPage>
+                </VBox>
+                <!-- footer -->
+       
+          </VBox>
 
+        
+          
+ </Page>
 </mvc:View>

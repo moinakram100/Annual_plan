@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, MessageBox, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/core/routing/History"
+], function (Controller, JSONModel, MessageBox, MessageToast,History) {
     "use strict";
 
     var MONTH_META = [
@@ -26,11 +27,46 @@ sap.ui.define([
     return Controller.extend("com.ingenx.annualplan.controller.Reduction", {
 
         onInit: function () {
-            var oModel = new JSONModel(
-                sap.ui.require.toUrl("com/ingenx/annualplan/model/reductionData.json")
-            );
-            this.getView().setModel(oModel, "red");
-        },
+
+    var oModel = new sap.ui.model.json.JSONModel();
+    this.getView().setModel(oModel, "red");
+
+    // LOAD JSON PROPERLY
+    oModel.loadData(
+        sap.ui.require.toUrl("com/ingenx/annualplan/model/reductionData.json")
+    );
+
+    // WAIT TILL JSON IS LOADED
+    oModel.attachRequestCompleted(function () {
+
+        console.log("Reduction JSON Loaded");
+
+        var oRouter = this.getOwnerComponent().getRouter();
+        oRouter.getRoute("onRouteReduction")
+               .attachPatternMatched(this._onReductionMatched, this);
+
+    }.bind(this));
+
+},
+
+        _onReductionMatched: function (oEvent) {
+            debugger
+
+    var oArgs = oEvent.getParameter("arguments");
+
+    var oModel = this.getView().getModel("red");
+
+    // Set filters in model
+    oModel.setProperty("/filters/material",    oArgs.material);
+    oModel.setProperty("/filters/salesOffice", oArgs.salesOffice);
+    oModel.setProperty("/filters/customer",    oArgs.customer);
+    oModel.setProperty("/filters/contract",    oArgs.contract);
+    oModel.setProperty("/filters/industry",    oArgs.industry);
+
+    // 🔥 Now AUTO APPLY FILTER
+    this.onApplyFilter();
+
+},
 
         // ── FILTER BAR ───────────────────────────────────────────────────
 
@@ -40,15 +76,34 @@ sap.ui.define([
             var aAll   = oModel.getProperty("/planRecords");
             var ZONE   = { NORTH:"North Zone", WEST:"West Zone", SOUTH:"South Zone", EAST:"East Zone" };
             var IND    = { POWER:"Power", FERTILIZER:"Fertilizer", INDUSTRIAL:"Industrial", TEXTILE:"Textile", CHEMICAL:"Chemical" };
+            
+            var normalize = function(str){
+    return (str || "")
+        .replace(/–/g, "-")
+        .toLowerCase()
+        .trim();
+};
 
-            var aFiltered = aAll.filter(function(r) {
-                if (oF.material    && r.material !== oF.material)                             return false;
-                if (oF.salesOffice && r.salesOffice.indexOf(ZONE[oF.salesOffice]) === -1)     return false;
-                if (oF.customer    && r.customerId !== oF.customer)                           return false;
-                if (oF.contract    && r.contract !== oF.contract)                             return false;
-                if (oF.industry    && r.industry !== (IND[oF.industry] || oF.industry))      return false;
-                return true;
-            });
+var aFiltered = aAll.filter(function(r) {
+
+    if (oF.material && r.material !== oF.material)
+        return false;
+
+    if (oF.salesOffice &&
+        normalize(r.salesOffice) !== normalize(oF.salesOffice))
+        return false;
+
+    if (oF.customer && r.customerId !== oF.customer)
+        return false;
+
+    if (oF.contract && r.contract !== oF.contract)
+        return false;
+
+    if (oF.industry && r.industry !== oF.industry)
+        return false;
+
+    return true;
+});
 
             oModel.setProperty("/filteredRecords", aFiltered);
             oModel.setProperty("/ui/dataLoaded",   true);
@@ -58,6 +113,7 @@ sap.ui.define([
             this._clearPreview();
             MessageToast.show(aFiltered.length + " approved plan(s) found.");
         },
+
 
         onClearFilter: function () {
             var oModel = this.getView().getModel("red");
@@ -69,6 +125,17 @@ sap.ui.define([
             this._clearPreview();
             MessageToast.show("Filters cleared.");
         },
+
+            onPressNavBack : function(){
+                var oHistory = sap.ui.core.routing.History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
+
+                if (sPreviousHash !== undefined) {
+                    window.history.go(-1);
+                } else {
+                    this.getOwnerComponent().getRouter().navTo("onRouteReduction", {}, true);
+                }
+            },
 
         // ── PLAN SELECTION ───────────────────────────────────────────────
 
@@ -118,7 +185,6 @@ sap.ui.define([
                 return;
             }
 
-            // Build index arrays
             var aRedIdx  = [];
             for (var i = iFrom; i <= iTo; i++) aRedIdx.push(i);
 
@@ -131,7 +197,6 @@ sap.ui.define([
                 return;
             }
 
-            // Step 1: Apply reduction
             var oOrig    = oPlan.currentPlan;
             var aRevised = MONTH_KEYS.map(function(k){ return oOrig[k]; });
             var totalReduced = 0;
@@ -200,7 +265,6 @@ sap.ui.define([
             var rQ3P = aacq ? parseFloat(((rQ3/aacq)*100).toFixed(1)) : 0;
             var rQ4P = aacq ? parseFloat(((rQ4/aacq)*100).toFixed(1)) : 0;
 
-            // Write to model
             oModel.setProperty("/reduction/previewRows",           aRows);
             oModel.setProperty("/reduction/totalReducedQty",       totalReduced);
             oModel.setProperty("/reduction/reapportionMonthCount", n);
@@ -326,7 +390,6 @@ sap.ui.define([
 
         onExport: function () { MessageToast.show("Export – connect to sap.ui.export.Spreadsheet."); },
 
-        // ── PRIVATE HELPERS ──────────────────────────────────────────────
 
         _clearSelection: function() {
             var oModel = this.getView().getModel("red");

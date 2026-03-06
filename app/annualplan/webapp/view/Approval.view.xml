@@ -11,10 +11,11 @@
     <Page showHeader="false">
     
     <tnt:ToolHeader id="approval__MappingshellOnlyMandatoryControls" class="sapUiTinyMargin header_nav">
+            <Button icon="sap-icon://nav-back" press="onPressNavBack"/>
             <Title id="approval__Mapping_Title" textAlign="Center" text="Approval Workflow" wrapping="false">
-                <layoutData>
+                <!-- <layoutData>
                     <OverflowToolbarLayoutData id="approval__Mapping_OverflowToolbarLayoutData" priority="Disappear" />
-                </layoutData>
+                </layoutData> -->
             </Title>
             <ToolbarSpacer id="approval__Mapping_ToolbarSpacer" />
         </tnt:ToolHeader>
