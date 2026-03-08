@@ -168,12 +168,7 @@
                             <core:Item id="dash_Item28" key="industry"   text="Industry"      />
                         </items>
                     </Select>
-                    <Button id="dash_Button9"
-                        icon="sap-icon://download"
-                        type="Ghost"
-                        tooltip="Export Table"
-                        press=".onExport"
-                        class="sapUiTinyMarginBegin"/>
+                    
                 </Toolbar>
                 <table:Table
                     id="dashTable"

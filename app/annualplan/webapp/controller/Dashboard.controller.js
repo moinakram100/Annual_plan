@@ -93,7 +93,6 @@ sap.ui.define([
             MessageToast.show("Filters cleared.");
         },
 
-    //    
         onRefresh: function () {
             var oModel = this.getView().getModel("dash");
             if (!oModel.getProperty("/ui/dataLoaded")) {
@@ -120,7 +119,6 @@ sap.ui.define([
         },
 
         //  Group the table rows by the selected property.
-        //  Uses sap.ui.model.Sorter on the table binding.
         onGroupByChange: function (oEvent) {
             var sKey    = oEvent.getSource().getSelectedKey();
             var oTable  = this.byId("dashTable");
@@ -205,25 +203,37 @@ sap.ui.define([
             }
         },
 
-        onPressReductionBtn: function (oEvent) {
-            var oRowData = oEvent.getSource().getBindingContext("dash").getObject();
-            this.getOwnerComponent().getRouter().navTo("onRouteReduction", {
-                material    : oRowData.material,
-                salesOffice : oRowData.salesOffice,
-                customer    : oRowData.customerId,
-                contract    : oRowData.contract,
-                industry    : oRowData.industry
-            });
-        },
+
+            onPressReductionBtn: function (oEvent) {
+                var oRowData = oEvent.getSource().getBindingContext("dash").getObject();
+
+                // Route pattern: reduction/{material}/{salesOffice}/{customer}/{contract}/{industry}
+                // encodeURIComponent handles spaces and special chars in values
+                this.getOwnerComponent().getRouter().navTo("onRouteReduction", {
+                    material    : encodeURIComponent(oRowData.material    || "ALL"),
+                    salesOffice : encodeURIComponent(oRowData.salesOffice || "ALL"),
+                    customer    : encodeURIComponent(oRowData.customerId  || "ALL"),
+                    contract    : encodeURIComponent(oRowData.contract    || "ALL"),
+                    industry    : encodeURIComponent(oRowData.industry    || "ALL")
+                });
+            },
+
         onPressApprovalBtn: function (oEvent) {
-            var oRowData = oEvent.getSource().getBindingContext("dash").getObject();
-            this.getOwnerComponent().getRouter().navTo("onRouteApproval", {
-                material    : oRowData.material,
-                salesOffice : oRowData.salesOffice,
-                customer    : oRowData.customerId,
-                contract    : oRowData.contract,
-                industry    : oRowData.industry
-            });
+             var oRowData = oEvent.getSource().getBindingContext("dash").getObject();
+
+            sap.ui.getCore().getEventBus().publish(
+                "com.ingenx.annualplan",
+                "NavigateToApproval",
+                {
+                    customerId  : oRowData.customerId,   
+                    customer    : oRowData.customer,    
+                    material    : oRowData.material,
+                    salesOffice : oRowData.salesOffice,
+                    contract    : oRowData.contract,
+                    industry    : oRowData.industry
+                }
+            );
+            this.getOwnerComponent().getRouter().navTo("onRouteApproval");
         },
 
         onCloseLegend: function () {
@@ -232,7 +242,6 @@ sap.ui.define([
 
 
         //  Calculate cumulative KPI summary from the filtered plan rows.
-      
         _calcKPIs: function (aRows, oLimits) {
             var cumAACQ = 0, cumQ1 = 0, cumQ2 = 0, cumQ3 = 0, cumQ4 = 0;
             var violating = 0, compliant = 0;
