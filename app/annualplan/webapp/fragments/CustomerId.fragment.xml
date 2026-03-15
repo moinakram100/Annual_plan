@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <SelectDialog
+        id="customerIdVHDialog"
+        title="Select Customer"
+        search=".onCustomerVHSearch"
+        liveChange=".onCustomerVHSearch"
+        confirm=".onCustomerVHConfirm"
+        growing="true"
+        growingThreshold="20"
+        cancel=".onCustomerVHCancel"
+        items="{
+        path: '/getDistinctCustomers()',
+        sorter: { path: 'Customer' }
+    }">
+
+        <StandardListItem
+            title="{Customer}"
+            description="{CustomerName}"
+            icon="sap-icon://customer"
+            type="Active"
+            />
+
+    </SelectDialog>
+
+</core:FragmentDefinition>

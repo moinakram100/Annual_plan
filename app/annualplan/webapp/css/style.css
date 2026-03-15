@@ -22,6 +22,15 @@
     border-radius: 8px;
     background-color: #fff;
 }
+.iconTabbarArea{
+   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 13px 0px;
+    padding: 10px;
+    width: 97.5%;
+    /* margin: 0.8% 0.5% 0.5% 0.5%; */
+    border-radius: 8px;
+    margin: 0px 0.5%;
+    background-color: #fff; 
+}
 html, body {
     overflow: hidden;
     height: 100%;
@@ -35,9 +44,6 @@ html, body {
 
 .dynamicPageArea{
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 13px 0px;
-    /* padding: 10px; */
-    /* width: 98%; */
-    /* margin: 0.8% 0.5% 0.5% 0.5%; */
     border-radius: 8px;
     background-color: #fff;
     margin: 0.2%;
@@ -60,4 +66,534 @@ html, body {
 }
 .panelStyle{
     margin-bottom: 3.2% !important;
+}
+.dialogBar{
+    padding: 1px;
+}
+
+/* Quarter Card */
+.editQtrCard {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 16px 18px 14px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s ease;
+}
+.editQtrCard:hover {
+    box-shadow: 0 4px 16px rgba(0,112,242,0.10);
+}
+
+
+.editQtrCard:nth-child(1) { border-left: 4px solid #0070f2; }  /* Q1 blue  */
+.editQtrCard:nth-child(2) { border-left: 4px solid #e9730c; }  /* Q2 amber */
+.editQtrCard:nth-child(3) { border-left: 4px solid #188918; }  /* Q3 green */
+.editQtrCard:nth-child(4) { border-left: 4px solid #bb0000; }  /* Q4 red   */
+
+.editQtrHeader {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 14px !important;
+}
+
+.editMonthBox {
+    min-width: 120px;
+}
+
+.editMonthLabel {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #6c7a8a !important;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px !important;
+}
+
+.editMonthInput.sapMInput {
+    border-radius: 6px !important;
+    border: 1.5px solid #d0d7de !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #1a1a2e !important;
+    background: #f8fafc !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.editMonthInput.sapMInput:focus-within {
+    border-color: #0070f2 !important;
+    box-shadow: 0 0 0 3px rgba(0,112,242,0.12) !important;
+    background: #fff !important;
+}
+
+.editPlanDialogCustom .sapMDialogTitle {
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}
+
+.sapUiTinyText {
+    font-size: 11px !important;
+    color: #8a96a3 !important;
+}
+
+
+/* Quarter Card */
+.editQtrCard {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 16px 18px 14px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s ease;
+}
+.editQtrCard:hover {
+    box-shadow: 0 4px 16px rgba(0,112,242,0.10);
+}
+
+/* Quarter header bar — subtle left border accent per quarter */
+.editQtrCard:nth-child(1) { border-left: 4px solid #d0d7de; }  
+.editQtrCard:nth-child(2) { border-left: 4px solid #d0d7de }  
+.editQtrCard:nth-child(3) { border-left: 4px solid #d0d7de }  
+.editQtrCard:nth-child(4) { border-left: 4px solid #d0d7de } 
+
+.editQtrHeader {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 14px !important;
+}
+
+.editMonthBox {
+    min-width: 120px;
+}
+
+.editMonthLabel {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #6c7a8a !important;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px !important;
+}
+
+.editMonthInput.sapMInput {
+    border-radius: 6px !important;
+    border: 1.5px solid #d0d7de !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #1a1a2e !important;
+    background: #f8fafc !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.editMonthInput.sapMInput:focus-within {
+    border-color: #0070f2 !important;
+    box-shadow: 0 0 0 3px rgba(0,112,242,0.12) !important;
+    background: #fff !important;
+}
+
+.editPlanDialogCustom .sapMDialogTitle {
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}
+
+.sapUiTinyText {
+    font-size: 11px !important;
+    color: #8a96a3 !important;
+}
+
+
+   /* view — Custom Styles */
+.drillQtrCard {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 14px 16px;
+    min-width: 220px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s ease;
+}
+.drillQtrCard:hover {
+    box-shadow: 0 4px 16px rgba(0,112,242,0.10);
+}
+.drillQtrCard:nth-child(1) { border-left: 4px solid #d0d7de;; }
+.drillQtrCard:nth-child(2) { border-left: 4px solid #d0d7de;; }
+.drillQtrCard:nth-child(3) { border-left: 4px solid #d0d7de;; }
+.drillQtrCard:nth-child(4) { border-left: 4px solid #d0d7de;; }
+
+.drillQtrCardHeader {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.drillMonthMini {
+    min-width: 48px;
+}
+.drillMonthMiniLabel {
+    font-size: 10px !important;
+    color: #8a96a3 !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.drillMonthMiniVal {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #1a1a2e !important;
+}
+
+.drillQtrFooter {
+    border-top: 1px solid #f4f4f4;
+    padding-top: 6px;
+    margin-top: 6px;
+}
+.drillQtrTotal {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #32363a !important;
+}
+.drillQtrLimit {
+    font-size: 11px !important;
+    color: #8a96a3 !important;
+}
+
+.drillMonthTable .sapUiTableColHdr {
+    background: #f5f7fa !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* config tile */
+.ucStatsStrip {
+    background: #fff;
+    width:99%;
+    border-radius: 10px;
+    padding: 12px 16px;
+    box-shadow: rgba(14,30,37,0.10) 0px 2px 6px, rgba(14,30,37,0.18) 0px 2px 10px;
+    margin-bottom: 2px;
+    margin-left: -4px !important;
+}
+
+.ucUserName {
+    font-weight: 600 !important;
+    color: #1a1a2e !important;
+    font-size: 13px !important;
+}
+.ucUserEmail {
+    font-size: 11px !important;
+    color: #8a96a3 !important;
+}
+
+.ucDialog .sapMDialogTitle {
+    font-weight: 700 !important;
+}
+.ucDialogSubtitle {
+    font-size: 12px !important;
+    color: #6c7a8a !important;
+}
+.ucFormBody {
+    background: #fafbfc;
+    border-radius: 8px;
+    padding: 4px !important;
+}
+.ucFormField {
+    min-width: 210px;
+    flex: 1;
+}
+.ucFieldLabel {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    color: #5a6472 !important;
+    margin-bottom: 4px !important;
+}
+.ucReadonlyInput .sapMInputBaseInner {
+    background: #f0f2f5 !important;
+    color: #8a96a3 !important;
+    font-style: italic !important;
+}
+.ucStatusRow {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px dashed #d0d7de;
+}
+.ucStatusStrip {
+    flex: 1;
+    margin-left: 16px !important;
+}
+
+/* approval workflow */
+.approvalDialog .sapMDialogTitle {
+    display: none !important;
+}
+
+.approvalDialogHeader.sapMBar {
+    padding: 12px 20px !important;
+    min-height: 64px !important;
+}
+
+.approvalDialogTitle.sapMTitle {
+    /* color: #ffffff !important; */
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+}
+
+.approvalDialogSubtitle.sapMText {
+    font-size: 0.75rem !important;
+    margin-top: 2px !important;
+}
+
+.approvalStatusBadge .sapMObjStatusText {
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+}
+
+.approvalHeroBand {
+    background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+    border-bottom: 3px solid #0070f2;
+    padding: 16px 24px !important;
+}
+
+.approvalHeroCustomer.sapMTitle {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: #1a1a2e !important;
+}
+
+.approvalHeroSub.sapMText {
+    color: #6b7280 !important;
+    font-size: 0.8rem !important;
+    margin-top: 2px !important;
+}
+
+.approvalKpiBox {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 16px;
+    min-width: 110px;
+    box-shadow: 0 2px 8px rgba(0,112,242,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+
+.approvalKpiVal.sapMTitle {
+    color: #0070f2 !important;
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+}
+
+.approvalKpiValSm.sapMTitle {
+    color: #374151 !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+}
+
+.approvalKpiLabel.sapMLabel {
+    color: #9ca3af !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+.approvalSection {
+    padding: 16px 24px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.approvalSectionHeader {
+    margin-bottom: 12px !important;
+}
+
+.approvalSectionHeader .sapMTitle {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+}
+
+.approvalQtrRow {
+    gap: 12px !important;
+}
+
+.approvalQtrCard {
+    flex: 1;
+    min-width: 190px;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    border-left: 4px solid transparent !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+    margin-right: 12px !important;
+}
+
+.approvalQtrCard:last-child {
+    margin-right: 0 !important;
+}
+
+/* .approvalQtrCard:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+} */
+
+.approvalQtrBlue  { border-left-color: #d0d7de !important; }
+.approvalQtrAmber { border-left-color: #d0d7de !important; }
+.approvalQtrGreen { border-left-color: #d0d7de !important; }
+.approvalQtrRed   { border-left-color: #d0d7de !important; }
+
+.approvalQtrLabel.sapMLabel {
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: #6b7280 !important;
+}
+
+.approvalQtrQty.sapMTitle {
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    color: #1a1a2e !important;
+    margin-top: 4px !important;
+}
+
+.approvalQtrUnit.sapMText {
+    font-size: 0.7rem !important;
+    color: #9ca3af !important;
+    margin-top: -4px !important;
+}
+
+.approvalQtrMonths.sapMText {
+    font-size: 0.75rem !important;
+    color: #6b7280 !important;
+    margin-top: 8px !important;
+}
+
+.approvalQtrLimit.sapMText {
+    font-size: 0.72rem !important;
+    color: #9ca3af !important;
+    font-style: italic !important;
+    margin-top: 2px !important;
+}
+
+.approvalMonthTable {
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+.approvalStepper {
+    background: #f8faff !important;
+    border-radius: 10px !important;
+    padding: 16px !important;
+}
+.addMaterialStepper {
+    background: #f8faff !important;
+    border-radius: 10px !important;
+    /* padding: 32px !important; */
+    margin: 2%;
+}
+
+/* ── Action Zone ────────────────────────────────────────────── */
+.approvalActionZone {
+    background: linear-gradient(135deg, #fffbf0 0%, #fff8ec 100%) !important;
+    border-top: 3px solid #e9730c !important;
+    padding: 20px 24px !important;
+}
+
+.approvalActionHint.sapMText {
+    color: #6b7280 !important;
+    font-size: 0.82rem !important;
+}
+
+.approvalTextArea {
+    border-radius: 8px !important;
+    border: 1.5px solid #e5e7eb !important;
+    transition: border-color 0.2s !important;
+}
+
+.approvalTextArea:focus-within {
+    border-color: #0070f2 !important;
+    box-shadow: 0 0 0 3px rgba(0,112,242,0.1) !important;
+}
+
+.approvalApproveBtn.sapMBtn .sapMBtnInner {
+    border-radius: 8px !important;
+    padding: 0 24px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    transition: transform 0.15s, box-shadow 0.15s !important;
+}
+
+.approvalApproveBtn.sapMBtn:hover .sapMBtnInner {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(16,128,16,0.3) !important;
+}
+
+.approvalRejectBtn.sapMBtn .sapMBtnInner {
+    border-radius: 8px !important;
+    padding: 0 24px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    transition: transform 0.15s, box-shadow 0.15s !important;
+}
+
+.approvalRejectBtn.sapMBtn:hover .sapMBtnInner {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(187,0,0,0.3) !important;
+}
+
+/* ── Workflow Step List ──────────────────────────────────────── */
+.approvalStepList.sapMList {
+    background: transparent !important;
+    width: 100% !important;
+}
+
+.approvalStepList .sapMLIB {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    height: auto !important;
+}
+
+.approvalStepItem {
+    padding: 8px 0 !important;
+    position: relative !important;
+}
+
+.approvalStepIconCol {
+    width: 40px !important;
+    min-width: 40px !important;
+    align-items: center !important;
+}
+
+.approvalStepLine {
+    width: 2px !important;
+    height: 32px !important;
+    background: #e5e7eb !important;
+    margin-top: 4px !important;
+}
+
+.approvalStepLevel.sapMTitle {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+}
+
+.approvalStepStatus {
+    margin-top: 2px !important;
+}
+
+.approvalStepUser.sapMText {
+    font-size: 0.75rem !important;
+    color: #6b7280 !important;
+    margin-top: 2px !important;
+}
+
+.approvalStepDate.sapMText {
+    font-size: 0.7rem !important;
+    color: #9ca3af !important;
 }

@@ -115,7 +115,7 @@
                 <VBox id="_IDGenVBox33" visible="{= !${red>/ui/dataLoaded}}" alignItems="Center" class="sapUiMediumMarginTop sapUiMediumMarginBottom">
                     <core:Icon id="_IDGenIcon3" src="sap-icon://curriculum" size="3.5rem" color="#c2c2c2" class="sapUiSmallMarginBottom"/>
                     <Title id="_IDGenTitle14" text="No Plans Loaded" level="H5"/>
-                    <Text id="_IDGenText47" text="Apply filters above and click Go to find approved annual plans." class="sapUiSmallMarginTop"/>
+                    <Text id="_IDGenText47" text="Please go back to the Dashboard screen and press the Reduction button to view the records." class="sapUiSmallMarginTop"/>
                 </VBox>
         
           <table:Table
@@ -362,8 +362,7 @@
                                 class="sapUiSmallMargin"/>
 
                             <HBox id="_IDGenHBox19" justifyContent="End" class="sapUiSmallMargin">
-                                <Button id="_IDGenButton22" text="Apply Reduction"      type="Critical"   icon="sap-icon://trend-down"   press=".onApplyReduction"      enabled="{red>/reduction/aacqIntact}" class="sapUiSmallMarginEnd"/>
-                                <Button id="_IDGenButton23" text="Submit for Approval"  type="Emphasized" icon="sap-icon://paper-plane"   press=".onSubmitForApproval"   enabled="{red>/ui/submitEnabled}"/>
+                                <Button id="_IDGenButton23" text="Submit Reduction"  type="Emphasized" icon="sap-icon://paper-plane"   press=".onSubmitReduction" enabled="{red>/reduction/aacqIntact}"/>
                             </HBox>
                         </l:VerticalLayout>
                     </content>

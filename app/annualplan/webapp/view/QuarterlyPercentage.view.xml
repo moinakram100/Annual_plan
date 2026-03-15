@@ -24,17 +24,20 @@
              <HBox id="_IDGenHBox27">
               <Label id="_IDGenLabel143" text="Material" class="sapUiTinyMargin" design="Bold"/>
                 <MultiComboBox
-                    id="materialMultiInput"
-                    selectionChange="handleSelectionChange"
-                    selectionFinish="handleSelectionFinish"
-                    width="250px"
-                    items="{
-                        path: 'qtrPct>/materialValueHelp',
-                        sorter: { path: 'Material' }
-                    }">
-                    <core:Item id="_IDGenItem85" key="{qtrPct>key}"
-                    text="{qtrPct>text}"/>
-                </MultiComboBox>
+                id="materialMultiInput"
+                width="250px"
+                selectionFinish=".onMaterialFilterChange"
+                items="{
+                    path: '/xGMSxAP_MATERIAL',
+                    length: 1000,
+                    sorter: { path: 'Material' }
+                }">
+
+                <core:Item
+                    key="{Material}"
+                    text="{= ${Material} + ' - ' + ${MaterialDesc} }"/>
+
+            </MultiComboBox>
              </HBox>
              <HBox id="_IDGenHBox28">
                  <Button
@@ -50,7 +53,6 @@
                         text="Add Material"
                         icon="sap-icon://add"
                         type="Ghost"
-                        enabled="{qtrPct>/ui/editMode}"
                         press=".onAddRow"/>
                     <!-- Save -->
                     <Button
@@ -138,25 +140,22 @@
                             <HBox id="_IDGenHBox" visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}">
                                 <core:Icon id="_IDGenIcon" src="sap-icon://product" class="sapUiSmallMarginEnd" color="#0070f2"/>
                                 <VBox id="_IDGenVBox6">
-                                    <Text id="_IDGenText31" text="{qtrPct>material}" class="sapUiNoMargin"/>
-                                    <Text id="_IDGenText32" text="{qtrPct>materialDesc}"
-                                        class="sapUiNoMargin"
-                                        />
+                                    <Text id="_IDGenText31" text="{qtrPct>Material}" class="sapUiNoMargin"/>
+                                    
                                 </VBox>
                             </HBox>
                             <!-- EDIT view: Input with Value Help -->
                             <Input
-                                id="inputMaterial"
-                                value="{qtrPct>material}"
-                                placeholder="Select material…"
-                                showValueHelp="true"
-                                valueHelpRequest=".onMaterialValueHelp"
-                                valueHelpOnly="false"
-                                required="true"
-                                editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
-                                liveChange=".onFieldChange"
-                                valueState="{qtrPct>materialState}"
-                                valueStateText="{qtrPct>materialStateText}"/>
+    id="inputMaterial"
+    value="{qtrPct>material}"
+    placeholder="Select material…"
+    showValueHelp="{= ${qtrPct>isNew} }"
+    valueHelpRequest=".onMaterialValueHelp"
+    valueHelpOnly="{= ${qtrPct>isNew} }"
+    editable="{= ${qtrPct>isNew} }"
+    liveChange=".onFieldChange"
+    valueState="{qtrPct>materialState}"
+    valueStateText="{qtrPct>materialStateText}"/>
                         </table:template>
                     </table:Column>
 
@@ -282,14 +281,31 @@
                     </table:Column>
 
                     <!-- ── Col: Last Updated ── -->
-                    <table:Column id="_IDGenColumn7" width="12rem" label="Last Updated">
-                        <Label id="_IDGenLabel9" text="Last Updated"/>
+                    <table:Column id="_IDGenColumn7" width="10rem" label="Last Updated">
+                        <Label id="_IDGenLabel9" text="Valid From"/>
                         <table:template>
                             <VBox id="_IDGenVBox7" visible="{= !${qtrPct>isNew}}">
-                                <Text id="_IDGenText33" text="{qtrPct>lastUpdatedOn}"
-                                   />
-                                <Text id="_IDGenText34" text="By: {qtrPct>lastUpdatedBy}"
-                                    />
+                <DatePicker
+					id="DP6"
+					change="handleChange"
+					class="sapUiSmallMarginBottom"
+                    editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+					value="{qtrPct>startDate}"/>
+                            </VBox>
+                        </table:template>
+                    </table:Column>
+
+                     <table:Column id="_IDGnColumn47" width="10rem" label="Last Updated">
+                        <Label id="_IGenLabel9" text="Valid TO"/>
+                        <table:template>
+                            <VBox id="_IDenVBox7" visible="{= !${qtrPct>isNew}}">
+                <DatePicker
+					id="DP7"
+					change="handleChange"
+					class="sapUiSmallMarginBottom"
+                    editable="{= ${qtrPct>/ui/editMode} || ${qtrPct>isNew}}"
+                    value="{qtrPct>endDate}"
+					/>
                             </VBox>
                         </table:template>
                     </table:Column>
@@ -311,7 +327,7 @@
                                     src="sap-icon://display"
                                     color="#0070f2"
                                     tooltip="Read-only – switch to Edit Mode to modify"
-                                    visible="{= !${qtrPct>/ui/editMode}}"/>
+                                    visible="{= !${qtrPct>/ui/editMode} &amp;&amp; !${qtrPct>isNew}}"/>
                             </HBox>
                         </table:template>
                     </table:Column>

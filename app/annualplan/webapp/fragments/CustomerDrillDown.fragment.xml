@@ -6,95 +6,197 @@
 
     <Dialog
         id="customerDrillDialog"
-        title="Customer Plan Detail – {drill>/customer}"
-        contentWidth="900px"
-        contentHeight="480px"
+        contentWidth="960px"
+        contentHeight="auto"
         resizable="true"
-        draggable="true">
+        draggable="true"
+        class="drillDownDialog">
 
-        <subHeader>
+        <customHeader>
             <Bar>
                 <contentLeft>
-                    <ObjectStatus title="Contract"     text="{drill>/contract}"    state="None"/>
-                    <ObjectStatus title="Material"     text="{drill>/material}"    state="Information" class="sapUiSmallMarginBegin"/>
-                    <ObjectStatus title="Industry"     text="{drill>/industry}"    state="None" class="sapUiSmallMarginBegin"/>
-                    <ObjectStatus title="Sales Office" text="{drill>/salesOffice}" state="None" class="sapUiSmallMarginBegin"/>
+                    <VBox>
+                        <HBox alignItems="Center">
+                        <Title text="{drill>/customer}" level="H4"/>
+                            <ObjectStatus text="{drill>/contract}"    state="None"        class="sapUiTinyMargin"/>
+                            <ObjectStatus text="{drill>/material}"    state="Information" class="sapUiTinyMargin"/>
+                            <ObjectStatus text="{drill>/salesOffice}" state="None"        class="sapUiTinyMargin"/>
+                            <ObjectStatus text="{drill>/industry}"    state="None"/>
+                        </HBox>
+                    </VBox>
                 </contentLeft>
                 <contentRight>
-                    <ObjectNumber number="{drill>/aacq}" unit="MMSCM" emphasized="true"/>
+                    <HBox alignItems="End">
+                        <Label text="AACQ" design="Bold" class="sapUiTinyMarginEnd"/>
+                        <ObjectNumber number="{drill>/aacq}" unit="{drill>/uom}" emphasized="true" state="{drill>/annualState}"/>
+                    </HBox>
                 </contentRight>
             </Bar>
-        </subHeader>
+        </customHeader>
 
         <content>
-            <l:VerticalLayout width="100%" class="sapUiSmallMargin">
+            <VBox class="sapUiSmallMargin">
 
-                <!-- Quarterly compliance summary -->
-                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
-                    <VBox class="sapUiSmallMarginEnd" width="130px">
-                        <Label text="Q1 (Jan–Mar)" design="Bold"/>
-                        <ObjectStatus
-                            text="{drill>/q1} ({drill>/q1Pct}%)"
-                            state="{drill>/q1State}"/>
-                        <Text text="Limit: {dash>/quarterlyLimits/q1Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+                <!-- ── Quarterly Compliance Cards ── -->
+                <Title text="Quarterly Compliance" level="H5" class="sapUiSmallMarginBottom"/>
+                <HBox wrap="Wrap" class="sapUiMediumMarginBottom">
+
+                    <!-- Q1 -->
+                    <VBox class="drillQtrCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="drillQtrCardHeader">
+                            <HBox alignItems="Center">
+                                <core:Icon src="sap-icon://calendar" color="#0070f2" class="sapUiTinyMarginEnd"/>
+                                <Title text="Q1" level="H5"/>
+                            </HBox>
+                            <ObjectStatus text="{drill>/q1Pct}%" state="{drill>/q1State}"/>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Jan" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/jan}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Feb" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/feb}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Mar" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/mar}" class="drillMonthMiniVal"/>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="drillQtrFooter sapUiTinyMarginTop">
+                            <Text text="Total: {drill>/q1}" class="drillQtrTotal"/>
+                            <Text text="Limit: {drill>/quarterlyLimits/q1Limit}%" class="drillQtrLimit"/>
+                        </HBox>
                     </VBox>
-                    <VBox class="sapUiSmallMarginEnd" width="130px">
-                        <Label text="Q2 (Apr–Jun)" design="Bold"/>
-                        <ObjectStatus
-                            text="{drill>/q2} ({drill>/q2Pct}%)"
-                            state="{drill>/q2State}"/>
-                        <Text text="Limit: {dash>/quarterlyLimits/q2Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+
+                    <!-- Q2 -->
+                    <VBox class="drillQtrCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="drillQtrCardHeader">
+                            <HBox alignItems="Center">
+                                <core:Icon src="sap-icon://calendar" color="#e9730c" class="sapUiTinyMarginEnd"/>
+                                <Title text="Q2" level="H5"/>
+                            </HBox>
+                            <ObjectStatus text="{drill>/q2Pct}%" state="{drill>/q2State}"/>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Apr" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/apr}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="May" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/may}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Jun" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/jun}" class="drillMonthMiniVal"/>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="drillQtrFooter sapUiTinyMarginTop">
+                            <Text text="Total: {drill>/q2}" class="drillQtrTotal"/>
+                            <Text text="Limit: {drill>/quarterlyLimits/q2Limit}%" class="drillQtrLimit"/>
+                        </HBox>
                     </VBox>
-                    <VBox class="sapUiSmallMarginEnd" width="130px">
-                        <Label text="Q3 (Jul–Sep)" design="Bold"/>
-                        <ObjectStatus
-                            text="{drill>/q3} ({drill>/q3Pct}%)"
-                            state="{drill>/q3State}"/>
-                        <Text text="Limit: {dash>/quarterlyLimits/q3Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+
+                    <!-- Q3 -->
+                    <VBox class="drillQtrCard sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="drillQtrCardHeader">
+                            <HBox alignItems="Center">
+                                <core:Icon src="sap-icon://calendar" color="#188918" class="sapUiTinyMarginEnd"/>
+                                <Title text="Q3" level="H5"/>
+                            </HBox>
+                            <ObjectStatus text="{drill>/q3Pct}%" state="{drill>/q3State}"/>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Jul" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/jul}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Aug" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/aug}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Sep" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/sep}" class="drillMonthMiniVal"/>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="drillQtrFooter sapUiTinyMarginTop">
+                            <Text text="Total: {drill>/q3}" class="drillQtrTotal"/>
+                            <Text text="Limit: {drill>/quarterlyLimits/q3Limit}%" class="drillQtrLimit"/>
+                        </HBox>
                     </VBox>
-                    <VBox width="130px">
-                        <Label text="Q4 (Oct–Dec)" design="Bold"/>
-                        <ObjectStatus
-                            text="{drill>/q4} ({drill>/q4Pct}%)"
-                            state="{drill>/q4State}"/>
-                        <Text text="Limit: {dash>/quarterlyLimits/q4Limit}%" style="font-size:11px;color:#6a7a8a;"/>
+
+                    <!-- Q4 -->
+                    <VBox class="drillQtrCard sapUiSmallMarginBottom">
+                        <HBox justifyContent="SpaceBetween" alignItems="Center" class="drillQtrCardHeader">
+                            <HBox alignItems="Center">
+                                <core:Icon src="sap-icon://calendar" color="#bb0000" class="sapUiTinyMarginEnd"/>
+                                <Title text="Q4" level="H5"/>
+                            </HBox>
+                            <ObjectStatus text="{drill>/q4Pct}%" state="{drill>/q4State}"/>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Oct" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/oct}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Nov" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/nov}" class="drillMonthMiniVal"/>
+                            </VBox>
+                            <VBox alignItems="Center" class="drillMonthMini">
+                                <Label text="Dec" class="drillMonthMiniLabel"/>
+                                <Text text="{drill>/dec}" class="drillMonthMiniVal"/>
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="drillQtrFooter sapUiTinyMarginTop">
+                            <Text text="Total: {drill>/q4}" class="drillQtrTotal"/>
+                            <Text text="Limit: {drill>/quarterlyLimits/q4Limit}%" class="drillQtrLimit"/>
+                        </HBox>
                     </VBox>
+
                 </HBox>
 
-                <!-- Monthly breakdown table (single row) -->
+                <!-- ── Month-wise Table (FIX: drill> prefix on all bindings) ── -->
                 <Title text="Month-wise Breakdown" level="H5" class="sapUiSmallMarginBottom"/>
                 <table:Table
+                    id="drillMonthTable"
                     rows="{drill>/monthlyRow}"
                     selectionMode="None"
                     visibleRowCount="1"
-                    rowHeight="44">
+                    rowHeight="48"
+                    alternateRowColors="false"
+                    class="drillMonthTable zonalPlanTable">
                     <table:columns>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Jan"/><table:template><ObjectStatus text="{jan}" state="{janState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Feb"/><table:template><ObjectStatus text="{feb}" state="{febState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Mar"/><table:template><ObjectStatus text="{mar}" state="{marState}"/></table:template></table:Column>
-                        <table:Column width="6rem" hAlign="Center"><Label text="Q1"/><table:template><ObjectStatus text="{q1}" state="{q1State}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Apr"/><table:template><ObjectStatus text="{apr}" state="{aprState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="May"/><table:template><ObjectStatus text="{may}" state="{mayState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Jun"/><table:template><ObjectStatus text="{jun}" state="{junState}"/></table:template></table:Column>
-                        <table:Column width="6rem" hAlign="Center"><Label text="Q2"/><table:template><ObjectStatus text="{q2}" state="{q2State}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Jul"/><table:template><ObjectStatus text="{jul}" state="{julState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Aug"/><table:template><ObjectStatus text="{aug}" state="{augState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Sep"/><table:template><ObjectStatus text="{sep}" state="{sepState}"/></table:template></table:Column>
-                        <table:Column width="6rem" hAlign="Center"><Label text="Q3"/><table:template><ObjectStatus text="{q3}" state="{q3State}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Oct"/><table:template><ObjectStatus text="{oct}" state="{octState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Nov"/><table:template><ObjectStatus text="{nov}" state="{novState}"/></table:template></table:Column>
-                        <table:Column width="5rem" hAlign="Center"><Label text="Dec"/><table:template><ObjectStatus text="{dec}" state="{decState}"/></table:template></table:Column>
-                        <table:Column width="6rem" hAlign="Center"><Label text="Q4"/><table:template><ObjectStatus text="{q4}" state="{q4State}"/></table:template></table:Column>
-                        <table:Column width="7rem" hAlign="Center"><Label text="Annual"/><table:template><ObjectNumber number="{annual}" emphasized="true"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Jan"/><table:template><ObjectStatus text="{drill>jan}" state="{drill>janState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Feb"/><table:template><ObjectStatus text="{drill>feb}" state="{drill>febState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Mar"/><table:template><ObjectStatus text="{drill>mar}" state="{drill>marState}"/></table:template></table:Column>
+                        <table:Column width="5.5rem" hAlign="Center" label="Q1 Total"><Label text="Q1"/><table:template><ObjectStatus text="{drill>q1}" state="{drill>q1State}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Apr"/><table:template><ObjectStatus text="{drill>apr}" state="{drill>aprState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="May"/><table:template><ObjectStatus text="{drill>may}" state="{drill>mayState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Jun"/><table:template><ObjectStatus text="{drill>jun}" state="{drill>junState}"/></table:template></table:Column>
+                        <table:Column width="5.5rem" hAlign="Center"><Label text="Q2"/><table:template><ObjectStatus text="{drill>q2}" state="{drill>q2State}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Jul"/><table:template><ObjectStatus text="{drill>jul}" state="{drill>julState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Aug"/><table:template><ObjectStatus text="{drill>aug}" state="{drill>augState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Sep"/><table:template><ObjectStatus text="{drill>sep}" state="{drill>sepState}"/></table:template></table:Column>
+                        <table:Column width="5.5rem" hAlign="Center"><Label text="Q3"/><table:template><ObjectStatus text="{drill>q3}" state="{drill>q3State}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Oct"/><table:template><ObjectStatus text="{drill>oct}" state="{drill>octState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Nov"/><table:template><ObjectStatus text="{drill>nov}" state="{drill>novState}"/></table:template></table:Column>
+                        <table:Column width="5rem" hAlign="Center"><Label text="Dec"/><table:template><ObjectStatus text="{drill>dec}" state="{drill>decState}"/></table:template></table:Column>
+                        <table:Column width="5.5rem" hAlign="Center"><Label text="Q4"/><table:template><ObjectStatus text="{drill>q4}" state="{drill>q4State}"/></table:template></table:Column>
+                        <table:Column width="7rem"  hAlign="Center"><Label text="Annual"/><table:template><ObjectNumber number="{drill>annual}" emphasized="true" state="{drill>annualState}"/></table:template></table:Column>
                     </table:columns>
                 </table:Table>
 
-            </l:VerticalLayout>
+            </VBox>
         </content>
 
         <endButton>
-            <Button text="Close" type="Emphasized" press=".onCloseDrillDown"/>
+            <Button text="Close" type="Emphasized" icon="sap-icon://decline" press=".onCloseDrillDown"/>
         </endButton>
+
     </Dialog>
 
 </core:FragmentDefinition>

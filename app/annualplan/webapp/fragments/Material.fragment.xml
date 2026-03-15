@@ -4,8 +4,8 @@
        <SelectDialog
            noDataText="Loading..."
            title="Select Material"
-           search="onSalesOrderValueHelpSearch"
-           liveChange="onSalesOrderValueHelpSearch"
+           search="onMaterialSearch"
+           liveChange="onMaterialSearch"
            confirm="onMaterialSelect"
           items="{quarterlyModel>/MaterialVH}"
            initialFocus="SearchField">

@@ -2,13 +2,6 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <!--
-        Workflow Progress Tracker
-        Renders the 4-step approval workflow as a visual timeline.
-        Bound to apv>/selectedRequest/workflowSteps (array).
-        Each step: { step, label, status, date, by }
-        Status values: DONE | CURRENT | PENDING | REJECTED | SKIPPED
-    -->
     <HBox alignItems="Center" wrap="NoWrap">
         <List
             id="workflowStepList"
@@ -18,7 +11,6 @@
             backgroundDesign="Transparent">
             <CustomListItem>
                 <HBox alignItems="Center">
-                    <!-- Step circle icon -->
                     <VBox alignItems="Center" width="80px">
                         <core:Icon
                             src="{= ${apv>status} === 'DONE'     ? 'sap-icon://accept'   :
@@ -39,7 +31,6 @@
                             class="sapUiTinyMarginTop"/>
                     </VBox>
 
-                    <!-- Step details -->
                     <VBox width="160px" class="sapUiSmallMarginBegin">
                         <ObjectStatus
                             text="{apv>label}"
@@ -50,7 +41,6 @@
                         <Text text="{apv>by}"   style="font-size:11px;color:#6a7a8a;" wrapping="false"/>
                     </VBox>
 
-                    <!-- Connector arrow (not after last item) -->
                     <core:Icon
                         src="sap-icon://arrow-right"
                         color="#c2c2c2"

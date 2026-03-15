@@ -1,0 +1,132 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        title="{= ${cfg>/form/isEdit} ? 'Edit User' : 'Add New User'}"
+        contentWidth="520px"
+        resizable="false"
+        draggable="true"
+        class="ucDialog">
+
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <HBox>
+                        <Title text="{= ${cfg>/form/isEdit} ? 'Edit User' : 'Add New User'}" level="H4" class="sapUiTinyMarginEnd"/>
+                        <Text text="{= ${cfg>/form/isEdit} ? 'Update user configuration' : 'Create a new user account'}" class="ucDialogSubtitle"/>
+                    </HBox>
+                </contentLeft>
+                <contentRight>
+                    <core:Icon
+                        src="{= ${cfg>/form/isEdit} ? 'sap-icon://edit' : 'sap-icon://add-employee'}"
+                        size="2rem"
+                        color="#0070f2"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin ucFormBody">
+
+                <!-- Row 1: Username + Email -->
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="ucFormField sapUiSmallMarginEnd">
+                        <Label text="Username *" design="Bold" class="ucFieldLabel"/>
+                        <Input
+                            value="{cfg>/form/username}"
+                            placeholder="e.g. john.doe"
+                            valueState="{cfg>/form/usernameState}"
+                            valueStateText="Username is required"/>
+                    </VBox>
+                    <VBox class="ucFormField">
+                        <Label text="Email" design="Bold" class="ucFieldLabel"/>
+                        <Input
+                            value="{cfg>/form/email}"
+                            placeholder="e.g. john@company.com"
+                            type="Email"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Row 2: Level + Change Mode -->
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="ucFormField sapUiSmallMarginEnd">
+                        <Label text="Level *" design="Bold" class="ucFieldLabel"/>
+                        <Select  selectedKey="{cfg>/form/level}" width="100%"
+                            valueState="{cfg>/form/levelState}">
+                            <core:Item key="" text="— Select Level —"/>
+                            <core:Item key="L1" text="L1 — Viewer"/>
+                            <core:Item key="L2" text="L2 — Operator"/>
+                            <core:Item key="L3" text="L3 — Manager"/>
+                            <core:Item key="ADMIN" text="Admin — Full Access"/>
+                        </Select>
+                    </VBox>
+                    <VBox class="ucFormField">
+                        <Label text="Change Mode *" design="Bold" class="ucFieldLabel"/>
+                        <Select  selectedKey="{cfg>/form/changeMode}" width="100%"
+                            valueState="{cfg>/form/changeModeState}">
+                            <core:Item key="" text="— Select Mode —"/>
+                            <core:Item key="READ_ONLY"   text="Read Only"/>
+                            <core:Item key="READ_WRITE"  text="Read / Write"/>
+                            <core:Item key="RESTRICTED"  text="Restricted"/>
+                        </Select>
+                    </VBox>
+                </HBox>
+
+                <!-- Row 3: Sales Office + Zone -->
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="ucFormField sapUiSmallMarginEnd">
+                        <Label text="Sales Office *" design="Bold" class="ucFieldLabel"/>
+                        <Select  selectedKey="{cfg>/form/salesOffice}" width="100%"
+                            valueState="{cfg>/form/salesOfficeState}"
+                            change=".onSalesOfficeChange">
+                            <core:Item key="" text="— Select Office —"/>
+                            <core:Item key="NORTH_DELHI"   text="North — Delhi"/>
+                            <core:Item key="WEST_MUMBAI"   text="West — Mumbai"/>
+                            <core:Item key="SOUTH_CHENNAI" text="South — Chennai"/>
+                            <core:Item key="EAST_KOLKATA"  text="East — Kolkata"/>
+                            <core:Item key="CENTRAL_HYD"   text="Central — Hyderabad"/>
+                            <core:Item key="ALL"            text="All Offices"/>
+                        </Select>
+                    </VBox>
+                    <VBox class="ucFormField">
+                        <Label text="Zone" design="Bold" class="ucFieldLabel"/>
+                        <Input
+                            value="{cfg>/form/zone}"
+                            placeholder="Auto-filled"
+                            editable="false"
+                            class="ucReadonlyInput"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Row 4: Status toggle + note -->
+                <HBox alignItems="Center" class="sapUiSmallMarginBottom ucStatusRow">
+                    <VBox class="sapUiSmallMarginEnd">
+                        <Label text="Active Status" design="Bold" class="ucFieldLabel"/>
+                        <Switch state="{cfg>/form/active}" customTextOn="Active" customTextOff="Inactive"/>
+                    </VBox>
+                    <MessageStrip
+                        text="{= ${cfg>/form/active} ? 'User will have system access.' : 'User access will be disabled.'}"
+                        type="{= ${cfg>/form/active} ? 'Success' : 'Warning'}"
+                        showIcon="true"
+                        class="ucStatusStrip"/>
+                </HBox>
+
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="{= ${cfg>/form/isEdit} ? 'Save Changes' : 'Create User'}"
+                type="Emphasized"
+                icon="{= ${cfg>/form/isEdit} ? 'sap-icon://save' : 'sap-icon://add'}"
+                press=".onSaveUser"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" type="Ghost" icon="sap-icon://decline" press=".onCancelUser"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

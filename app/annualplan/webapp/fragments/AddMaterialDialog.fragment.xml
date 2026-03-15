@@ -1,0 +1,174 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="addMaterialDialog"
+        title="Add Material Quarterly Limits"
+        contentWidth="580px"
+        draggable="true"
+        resizable="false">
+
+        <content>
+           <HBox class="addMaterialStepper" alignItems="Center" wrap="Wrap">
+            <VBox class="sapUiSmallMargin">
+
+                <!-- Material -->
+                <l:VerticalLayout width="100%" class="sapUiSmallMarginBottom">
+                    <Label text="Material" required="true" design="Bold" class="sapUiTinyMarginBottom"/>
+                    <Input
+                        id="dlgMaterial"
+                        value="{addMat>/material}"
+                        placeholder="Select material…"
+                        showValueHelp="true"
+                        valueHelpOnly="true"
+                        valueHelpRequest=".onAddMatVH"
+                        valueState="{addMat>/state/material}"
+                        valueStateText="Material is required"
+                        width="100%"/>
+                    <Text
+                        text="{addMat>/materialDesc}"
+                        class="sapUiTinyMarginTop"
+                        visible="{= !!${addMat>/materialDesc}}"/>
+                </l:VerticalLayout>
+
+                <!-- Valid From / Valid To -->
+                <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                    <l:VerticalLayout>
+                        <Label text="Valid From" required="true" design="Bold" class="sapUiTinyMarginBottom"/>
+                        <DatePicker
+                            id="dlgValidFrom"
+                            value="{addMat>/validFrom}"
+                            valueFormat="yyyy-MM-dd"
+                            displayFormat="dd MMM yyyy"
+                            valueState="{addMat>/state/validFrom}"
+                            valueStateText="Valid From is required"
+                            width="100%"
+                            change=".onAddMatDateChange"/>
+                    </l:VerticalLayout>
+                    <l:VerticalLayout >
+                        <Label text="Valid To" required="true" design="Bold" class="sapUiTinyMarginBottom"/>
+                        <DatePicker
+                            id="dlgValidTo"
+                            value="{addMat>/validTo}"
+                            valueFormat="yyyy-MM-dd"
+                            displayFormat="dd MMM yyyy"
+                            valueState="{addMat>/state/validTo}"
+                            valueStateText="Valid To is required"
+                            width="100%"
+                            change=".onAddMatDateChange"/>
+                    </l:VerticalLayout>
+                </HBox>
+
+                <!-- Quarterly % inputs -->
+                <l:VerticalLayout width="100%" class="sapUiSmallMarginBottom">
+                    <Label text="Quarterly Distribution" required="true" design="Bold" class="sapUiTinyMarginBottom"/>
+                    <HBox justifyContent="SpaceBetween" alignItems="Center">
+
+                        <!-- Q1 -->
+                        <VBox alignItems="Center" width="22%">
+                            <Label text="Q1 (Jan–Mar)" class="sapUiTinyMarginBottom"/>
+                            <StepInput
+                                id="dlgQ1"
+                                value="{addMat>/q1Pct}"
+                                min="1" max="97" step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                valueState="{addMat>/state/q1}"
+                                change=".onAddMatPctChange"/>
+                        </VBox>
+
+                        <!-- Q2 -->
+                        <VBox alignItems="Center" width="22%">
+                            <Label text="Q2 (Apr–Jun)" class="sapUiTinyMarginBottom"/>
+                            <StepInput
+                                id="dlgQ2"
+                                value="{addMat>/q2Pct}"
+                                min="1" max="97" step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                valueState="{addMat>/state/q2}"
+                                change=".onAddMatPctChange"/>
+                        </VBox>
+
+                        <!-- Q3 -->
+                        <VBox alignItems="Center" width="22%">
+                            <Label text="Q3 (Jul–Sep)" class="sapUiTinyMarginBottom"/>
+                            <StepInput
+                                id="dlgQ3"
+                                value="{addMat>/q3Pct}"
+                                min="1" max="97" step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                valueState="{addMat>/state/q3}"
+                                change=".onAddMatPctChange"/>
+                        </VBox>
+
+                        <!-- Q4 -->
+                        <VBox alignItems="Center" width="22%">
+                            <Label text="Q4 (Oct–Dec)" class="sapUiTinyMarginBottom"/>
+                            <StepInput
+                                id="dlgQ4"
+                                value="{addMat>/q4Pct}"
+                                min="1" max="97" step="1"
+                                displayValuePrecision="0"
+                                description="%"
+                                textAlign="Center"
+                                width="100%"
+                                valueState="{addMat>/state/q4}"
+                                change=".onAddMatPctChange"/>
+                        </VBox>
+
+                    </HBox>
+                </l:VerticalLayout>
+
+                <!-- Total indicator -->
+                <HBox justifyContent="End" alignItems="Center" class="sapUiTinyMarginTop">
+                    <Label text="Total: " design="Bold"/>
+                    <ObjectStatus
+                        id="dlgTotal"
+                        text="{addMat>/total}%"
+                        state="{addMat>/totalState}"
+                        icon="{= ${addMat>/totalState} === 'Success' ? 'sap-icon://accept' :
+                                   ${addMat>/totalState} === 'Error'   ? 'sap-icon://error'  :
+                                                                          'sap-icon://warning' }"
+                        class="sapUiSmallMarginBegin"/>
+                </HBox>
+
+                <!-- Validation message strip -->
+                <MessageStrip
+                    id="dlgValidationStrip"
+                    text="{addMat>/validationMsg}"
+                    type="Error"
+                    showIcon="true"
+                    visible="{= !!${addMat>/validationMsg}}"
+                    class="sapUiSmallMarginTop"/>
+
+            </VBox>
+            </HBox>
+        </content>
+
+        <buttons>
+            <Button
+                id="dlgSaveBtn"
+                text="Save"
+                type="Emphasized"
+                icon="sap-icon://save"
+                enabled="{= ${addMat>/totalState} === 'Success'}"
+                press=".onAddMatSave"/>
+            <Button
+                text="Cancel"
+                type="Transparent"
+                press=".onAddMatCancel"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

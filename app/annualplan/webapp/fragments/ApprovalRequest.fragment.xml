@@ -1,0 +1,251 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:table="sap.ui.table">
+
+    <Dialog
+        id="approvalWorkflowDialog"
+        contentWidth="1050px"
+        contentHeight="90vh"
+        resizable="true"
+        draggable="true"
+        verticalScrolling="true"
+        class="approvalDialog">
+
+        <customHeader>
+            <Bar class="approvalDialogHeader">
+                <contentLeft>
+                    <HBox alignItems="Center">
+                        <core:Icon src="sap-icon://approvals" size="1.8rem" color="#ffffff" class="sapUiSmallMarginEnd"/>
+                        <HBox>
+                            <Title text="Approval Workflow" level="H3" class="approvalDialogTitle"/>
+                        </HBox>
+                    </HBox>
+                </contentLeft>
+                <contentRight>
+                    <ObjectStatus
+                        text="{apv>/statusText}"
+                        state="{apv>/statusState}"
+                        icon="{= ${apv>/status} === 'APPROVED' ? 'sap-icon://accept' :
+                                  ${apv>/status} === 'REJECTED' ? 'sap-icon://decline' :
+                                                                   'sap-icon://pending'}"
+                        class="approvalStatusBadge sapUiSmallMarginEnd"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox>
+
+                <!-- ── HERO BAND ─────────────────────────────────────── -->
+                <HBox class="approvalHeroBand" justifyContent="SpaceBetween" alignItems="Center">
+                    <VBox>
+                        <Title text="{apv>/customer}" level="H4" class="approvalHeroCustomer"/>
+                        <Text text="{apv>/contract} · {apv>/material} · {apv>/salesOffice}" class="approvalHeroSub"/>
+                    </VBox>
+                    <HBox alignItems="Center">
+                        <VBox class="approvalKpiBox sapUiSmallMarginEnd" alignItems="Center">
+                            <Title text="{apv>/aacq}" level="H3" class="approvalKpiVal"/>
+                            <Label text="{apv>/uom} AACQ" class="approvalKpiLabel"/>
+                        </VBox>
+                        <VBox class="approvalKpiBox sapUiSmallMarginEnd" alignItems="Center">
+                            <Title text="{apv>/annualTotal}" level="H3" class="approvalKpiVal"/>
+                            <Label text="Planned Total" class="approvalKpiLabel"/>
+                        </VBox>
+                        <VBox class="approvalKpiBox" alignItems="Center">
+                            <Title text="{apv>/submittedOn}" level="H5" class="approvalKpiValSm"/>
+                            <Label text="Submitted On" class="approvalKpiLabel"/>
+                        </VBox>
+                    </HBox>
+                </HBox>
+
+                <!-- ── QUARTERLY COMPLIANCE CARDS ────────────────────── -->
+                <VBox class="approvalSection">
+                    <HBox alignItems="Center" class="approvalSectionHeader">
+                        <core:Icon src="sap-icon://bar-chart" color="#0070f2" class="sapUiTinyMarginEnd"/>
+                        <Title text="Quarterly Compliance" level="H5"/>
+                    </HBox>
+                    <HBox wrap="Wrap" class="approvalQtrRow">
+                        <VBox class="approvalQtrCard approvalQtrBlue">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                <Label text="Q1" design="Bold" class="approvalQtrLabel"/>
+                                <ObjectStatus text="{apv>/quarterlyTotals/q1Pct}%" state="{apv>/quarterlyTotals/q1State}"/>
+                            </HBox>
+                            <Title text="{apv>/quarterlyTotals/q1}" level="H4" class="approvalQtrQty"/>
+                            <Text text="{apv>/uom}" class="approvalQtrUnit"/>
+                            <Text text="Jan · Feb · Mar" class="approvalQtrMonths"/>
+                            <Text text="Limit: {apv>/quarterlyLimits/q1Limit}%" class="approvalQtrLimit"/>
+                        </VBox>
+                        <VBox class="approvalQtrCard approvalQtrAmber">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                <Label text="Q2" design="Bold" class="approvalQtrLabel"/>
+                                <ObjectStatus text="{apv>/quarterlyTotals/q2Pct}%" state="{apv>/quarterlyTotals/q2State}"/>
+                            </HBox>
+                            <Title text="{apv>/quarterlyTotals/q2}" level="H4" class="approvalQtrQty"/>
+                            <Text text="{apv>/uom}" class="approvalQtrUnit"/>
+                            <Text text="Apr · May · Jun" class="approvalQtrMonths"/>
+                            <Text text="Limit: {apv>/quarterlyLimits/q2Limit}%" class="approvalQtrLimit"/>
+                        </VBox>
+                        <VBox class="approvalQtrCard approvalQtrGreen">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                <Label text="Q3" design="Bold" class="approvalQtrLabel"/>
+                                <ObjectStatus text="{apv>/quarterlyTotals/q3Pct}%" state="{apv>/quarterlyTotals/q3State}"/>
+                            </HBox>
+                            <Title text="{apv>/quarterlyTotals/q3}" level="H4" class="approvalQtrQty"/>
+                            <Text text="{apv>/uom}" class="approvalQtrUnit"/>
+                            <Text text="Jul · Aug · Sep" class="approvalQtrMonths"/>
+                            <Text text="Limit: {apv>/quarterlyLimits/q3Limit}%" class="approvalQtrLimit"/>
+                        </VBox>
+                        <VBox class="approvalQtrCard approvalQtrRed">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                <Label text="Q4" design="Bold" class="approvalQtrLabel"/>
+                                <ObjectStatus text="{apv>/quarterlyTotals/q4Pct}%" state="{apv>/quarterlyTotals/q4State}"/>
+                            </HBox>
+                            <Title text="{apv>/quarterlyTotals/q4}" level="H4" class="approvalQtrQty"/>
+                            <Text text="{apv>/uom}" class="approvalQtrUnit"/>
+                            <Text text="Oct · Nov · Dec" class="approvalQtrMonths"/>
+                            <Text text="Limit: {apv>/quarterlyLimits/q4Limit}%" class="approvalQtrLimit"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- ── MONTHLY PLAN TABLE ─────────────────────────────── -->
+                <VBox class="approvalSection">
+                    <HBox alignItems="Center" class="approvalSectionHeader">
+                        <core:Icon src="sap-icon://calendar" color="#0070f2" class="sapUiTinyMarginEnd"/>
+                        <Title text="Month-wise Planned Quantities" level="H5"/>
+                    </HBox>
+                    <!-- FIX: rows bind to apv>/monthlyRow, template uses apv> prefix -->
+                    <table:Table
+                        rows="{apv>/monthlyRow}"
+                        selectionMode="None"
+                        visibleRowCount="1"
+                        rowHeight="48"
+                        class="approvalMonthTable zonalPlanTable">
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Jan"/>
+                            <table:template><ObjectStatus text="{apv>jan}" state="{apv>janState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Feb"/>
+                            <table:template><ObjectStatus text="{apv>feb}" state="{apv>febState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Mar"/>
+                            <table:template><ObjectStatus text="{apv>mar}" state="{apv>marState}"/></table:template></table:Column>
+                        <table:Column width="6.5rem" hAlign="Center"><Label text="Q1 Total"/>
+                            <table:template><ObjectStatus text="{apv>q1}" state="{apv>q1State}" icon="sap-icon://bar-chart"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Apr"/>
+                            <table:template><ObjectStatus text="{apv>apr}" state="{apv>aprState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="May"/>
+                            <table:template><ObjectStatus text="{apv>may}" state="{apv>mayState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Jun"/>
+                            <table:template><ObjectStatus text="{apv>jun}" state="{apv>junState}"/></table:template></table:Column>
+                        <table:Column width="6.5rem" hAlign="Center"><Label text="Q2 Total"/>
+                            <table:template><ObjectStatus text="{apv>q2}" state="{apv>q2State}" icon="sap-icon://bar-chart"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Jul"/>
+                            <table:template><ObjectStatus text="{apv>jul}" state="{apv>julState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Aug"/>
+                            <table:template><ObjectStatus text="{apv>aug}" state="{apv>augState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Sep"/>
+                            <table:template><ObjectStatus text="{apv>sep}" state="{apv>sepState}"/></table:template></table:Column>
+                        <table:Column width="6.5rem" hAlign="Center"><Label text="Q3 Total"/>
+                            <table:template><ObjectStatus text="{apv>q3}" state="{apv>q3State}" icon="sap-icon://bar-chart"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Oct"/>
+                            <table:template><ObjectStatus text="{apv>oct}" state="{apv>octState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Nov"/>
+                            <table:template><ObjectStatus text="{apv>nov}" state="{apv>novState}"/></table:template></table:Column>
+                        <table:Column width="5.2rem" hAlign="Center"><Label text="Dec"/>
+                            <table:template><ObjectStatus text="{apv>dec}" state="{apv>decState}"/></table:template></table:Column>
+                        <table:Column width="6.5rem" hAlign="Center"><Label text="Q4 Total"/>
+                            <table:template><ObjectStatus text="{apv>q4}" state="{apv>q4State}" icon="sap-icon://bar-chart"/></table:template></table:Column>
+                        <table:Column width="7rem" hAlign="Center"><Label text="Annual"/>
+                            <table:template><ObjectNumber number="{apv>annual}" emphasized="true"/></table:template></table:Column>
+                    </table:Table>
+                </VBox>
+
+                <!-- ── WORKFLOW STEPPER — from xGMSxAP_APPR ─────────── -->
+                <VBox class="approvalSection">
+                    <HBox alignItems="Center" class="approvalSectionHeader">
+                        <core:Icon src="sap-icon://workflow-tasks" color="#0070f2" class="sapUiTinyMarginEnd"/>
+                        <Title text="Approval Progress" level="H5"/>
+                    </HBox>
+                    <!-- Dynamic steps from API data -->
+                    <HBox class="approvalStepper" alignItems="Center" wrap="Wrap">
+                        <List
+                            items="{apv>/workflowSteps}"
+                            showSeparators="None"
+                            class="approvalStepList">
+                            <CustomListItem>
+                                <HBox alignItems="Center" class="approvalStepItem">
+                                    <!-- Step icon -->
+                                    <VBox alignItems="Center" class="approvalStepIconCol">
+                                        <core:Icon
+                                            src="{= ${apv>indicator} === 'A' ? 'sap-icon://accept' :
+                                                     ${apv>indicator} === 'R' ? 'sap-icon://decline' :
+                                                     ${apv>isCurrent} ? 'sap-icon://pending' : 'sap-icon://circle-task'}"
+                                            color="{= ${apv>indicator} === 'A' ? '#188918' :
+                                                       ${apv>indicator} === 'R' ? '#bb0000' :
+                                                       ${apv>isCurrent} ? '#e9730c' : '#c2c2c2'}"
+                                            size="1.4rem"
+                                            class="approvalStepIcon"/>
+                                        <!-- Connector line -->
+                                        <VBox class="approvalStepLine" visible="{apv>hasNext}"/>
+                                    </VBox>
+                                    <!-- Step content -->
+                                    <VBox class="approvalStepContent sapUiSmallMarginBegin">
+                                        <Title text="Level {apv>level}" level="H6" class="approvalStepLevel"/>
+                                        <ObjectStatus
+                                            text="{apv>statusText}"
+                                            state="{= ${apv>indicator} === 'A' ? 'Success' :
+                                                       ${apv>indicator} === 'R' ? 'Error'   :
+                                                       ${apv>isCurrent} ? 'Warning' : 'None'}"
+                                            class="approvalStepStatus"/>
+                                        <Text text="{apv>user}" class="approvalStepUser"/>
+                                        <Text text="{apv>date}" class="approvalStepDate"/>
+                                    </VBox>
+                                </HBox>
+                            </CustomListItem>
+                        </List>
+                    </HBox>
+                </VBox>
+
+                <!-- ── PREVIOUS COMMENT ──────────────────────────────── -->
+                <MessageStrip
+                    text="Approver Comment: {apv>/approverComment}"
+                    type="{= ${apv>/status} === 'REJECTED' ? 'Error' : 'Success'}"
+                    showIcon="true"
+                    visible="{= !!${apv>/approverComment}}"
+                    class="sapUiSmallMarginBegin sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+
+                <!-- ── APPROVER ACTION ZONE ───────────────────────────── -->
+                <VBox
+                    class="approvalActionZone"
+                    visible="{= ${apv>/status} === 'Approved'}">
+                    <HBox alignItems="Center" class="approvalSectionHeader">
+                        <core:Icon src="sap-icon://write-new-document" color="#0070f2" class="sapUiTinyMarginEnd"/>
+                        <Title text="Your Decision" level="H5"/>
+                    </HBox>
+                    <Text text="Review the plan above. Add comments before approving or rejecting." class="approvalActionHint sapUiSmallMarginBottom"/>
+                    <TextArea
+                        id="approvalCommentInput"
+                        value="{apv>/approverComment}"
+                        placeholder="Enter your comments or reason for decision…"
+                        rows="3"
+                        width="100%"
+                        growing="true"
+                        class="approvalTextArea sapUiSmallMarginBottom"/>
+                    <HBox justifyContent="End">
+                        <Button text="Approve Plan" type="Accept" icon="sap-icon://sys-enter-2"
+                            press=".onApproveFromDialog" class="approvalApproveBtn sapUiSmallMarginEnd"/>
+                        <Button text="Reject Plan"  type="Reject" icon="sap-icon://sys-cancel-2"
+                            press=".onRejectFromDialog" class="approvalRejectBtn"/>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </content>
+
+        <endButton>
+            <Button text="Close" type="Ghost" icon="sap-icon://decline" press=".onCloseApprovalDialog"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

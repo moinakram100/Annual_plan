@@ -1,0 +1,108 @@
+###
+POST http://localhost:4004/odata/v4/annual-plan/CreateAnnualQtrSet
+Content-Type: application/json
+
+{
+  "ValidFrom": "2026-03-10",
+  "ValidTo": "2027-03-10",
+  "to_annualqtr": [
+    {
+      "ValidFrom": "2026-03-10",
+      "ValidTo": "2027-03-10",
+      "Subinterval" : "Q1",
+      "Material": "2000000183",
+      "Period": "Q",
+      "Value": "30.000"
+    },
+    {
+      "ValidFrom": "2026-03-10",
+      "ValidTo": "2027-03-10",
+      "Material": "2000000183",
+      "Period": "Q",
+      "Subinterval": "Q2",
+      "Value": "25.000"
+    },
+    {
+      "ValidFrom": "2026-03-10",
+      "ValidTo": "2027-03-10",
+      "Material": "2000000183",
+      "Period": "Q",
+      "Subinterval": "Q3",
+      "Value": "20.000"
+    },
+    {
+      "ValidFrom": "2026-03-10",
+      "ValidTo": "2027-03-10",
+      "Material": "2000000183",
+      "Period": "Q",
+      "Subinterval": "Q4",
+      "Value": "25.000"
+    }
+  ]
+}
+
+###
+GET http://localhost:4004/odata/v4/annual-plan/xGMSxAP_MATERIAL/$count
+
+###
+GET http://localhost:4004/odata/v4/annual-plan/getDistinctCustomers
+###
+GET http://localhost:4004/odata/v4/annual-plan/xGMSxAP_CONTRACT?$filter=Material eq '2000000068'&$count=true
+###
+GET http://localhost:4004/odata/v4/annual-plan/xGMSxAP_CONTRACT?$skiptoken=1000
+
+###
+POST http://localhost:4004/odata/v4/annual-plan/CreateAnnualplanSet
+Content-Type: application/json
+
+{
+  "Material": "2000000068",
+  "Customer": "1100000003",
+  "ContractNo": "40001239",
+  "ValidFrom": "2026-03-10",
+  "ValidTo": "2027-03-10",
+  "to_annualpln": [
+    {
+      "Period": "M",
+      "Calendaryear": "2026",
+      "Aacq": 1200.00,
+      "Material": "2000000068",
+      "SubInterval": "DEC",
+      "Customer": "1100000003",
+      "ContractNo": "40001239",
+      "ValidFrom": "2026-03-10",
+      "ValidTo": "2027-03-10",
+      "Acq": 1200.00,
+      "Uom": "MBT",
+      "Mqvalue": 1250.00,
+      "Status": "A",
+      "UpwardFlexper": 5.00,
+      "DnwardFlexper": 5.00,
+      "Fmdeficiency": 0,
+      "Makegood": 0,
+      "Makeup": 0,
+      "Toppercentage": 0,
+      "Sddays": "5",
+      "SdstartDate": "2026-02-12",
+      "SdendDate": "2026-02-12",
+      "Sdreason": "Maintenance",
+      "Salesoffice": ""
+    }
+  ]
+}
+
+###
+POST http://localhost:4004/odata/v4/annual-plan/xGMSxAP_APPR
+Content-Type: application/json
+
+{
+"Arindicator" : "A",
+"Arlevel" : "2",
+"ContractNo" : "40001272",
+"Salesoffice"  : "IN1",
+"Sapuser" : "Vanshaj",
+"Ardate" : "2026-03-14"
+}
+
+
+###

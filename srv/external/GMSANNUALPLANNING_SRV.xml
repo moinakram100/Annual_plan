@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://20.119.82.103:8001/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="GMS.ANNUALPLANNING_SRV" xml:lang="en" sap:schema-version="1"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="CreateAnnualQtr" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ValidFrom"/>
+                    <PropertyRef Name="ValidTo"/>
+                </Key>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid From" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid To" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="to_annualqtr" Relationship="GMS.ANNUALPLANNING_SRV.to_annualqtr" FromRole="FromRole_to_annualqtr" ToRole="ToRole_to_annualqtr"/>
+            </EntityType>
+            <EntityType Name="CreateAnnualplan" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="ContractNo"/>
+                    <PropertyRef Name="ValidFrom"/>
+                    <PropertyRef Name="ValidTo"/>
+                </Key>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Customer" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ContractNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="DocumentNo" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid From" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid To" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="to_annualpln" Relationship="GMS.ANNUALPLANNING_SRV.to_annualpln" FromRole="FromRole_to_annualpln" ToRole="ToRole_to_annualpln"/>
+            </EntityType>
+            <EntityType Name="AnnualQtrp" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="ValidFrom"/>
+                    <PropertyRef Name="ValidTo"/>
+                    <PropertyRef Name="Subinterval"/>
+                    <PropertyRef Name="Period"/>
+                </Key>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid From" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid To" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Subinterval" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sub Interval" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Period" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Interval" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Value" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createdby" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Created By" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createddate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Created Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createdtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Created Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Changedby" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Changed By" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Changeddate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Change Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Changedtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Change Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Annualplan" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Period"/>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="SubInterval"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="ContractNo"/>
+                </Key>
+                <Property Name="Period" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Interval" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SubInterval" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sub Interval" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Customer" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ContractNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="DocumentNo" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid From" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Valid To" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Acq" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="ACQ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aacq" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="AACQ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Mqvalue" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="MQ Value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Uom" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="UOM" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Annual Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Calendaryear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Calendar Year" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Toppercentage" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Top Per" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UpwardFlexper" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="UP Flexibility %" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DnwardFlexper" Type="Edm.Decimal" Nullable="false" Precision="6" Scale="2" sap:unicode="false" sap:label="Downward Flex %" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Makegood" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="Make Good" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Makeup" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="Make Up" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Fmdeficiency" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="FM deficiency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SdstartDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="SD Start Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SdendDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="SD End Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sddays" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Shutdown Days" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sdvalue" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Uom" sap:label="Shutdown Value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sdreason" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Shutdown Reason" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Salesoffice" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sales Office" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createdby" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Created By" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createddate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Created Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createdtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Created Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Changedby" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Changed By" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Changeddate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Change Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Changedtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Change Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="xGMSxANNUAL_QTType" sap:label="Fetch Annual Quarterly Report" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="ValidFrom"/>
+                    <PropertyRef Name="ValidTo"/>
+                    <PropertyRef Name="Subinterval"/>
+                    <PropertyRef Name="Period"/>
+                </Key>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Valid From"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Valid To"/>
+                <Property Name="Subinterval" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Sub Interval"/>
+                <Property Name="Period" Type="Edm.String" Nullable="false" MaxLength="1" sap:display-format="UpperCase" sap:label="Interval" sap:quickinfo="Annual Interval"/>
+                <Property Name="Value" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Value" sap:quickinfo="Interval Value"/>
+                <Property Name="Createdby" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Created By"/>
+                <Property Name="Createddate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Created Date"/>
+                <Property Name="Createdtime" Type="Edm.Time" Precision="0" sap:label="Created Time"/>
+                <Property Name="Changedby" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Changed By"/>
+                <Property Name="Changeddate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Change Date" sap:quickinfo="Changed Date"/>
+                <Property Name="Changedtime" Type="Edm.Time" Precision="0" sap:label="Change Time" sap:quickinfo="Changed Time"/>
+            </EntityType>
+            <EntityType Name="xGMSxAP_APPRType" sap:label="Annual Planning Approval" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ContractNo"/>
+                    <PropertyRef Name="Sapuser"/>
+                    <PropertyRef Name="Salesoffice"/>
+                    <PropertyRef Name="Arlevel"/>
+                </Key>
+                <Property Name="ContractNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="DocumentNo" sap:quickinfo="Document Number"/>
+                <Property Name="Sapuser" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="User" sap:quickinfo="User Name in User Master Record"/>
+                <Property Name="Salesoffice" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Sales Office"/>
+                <Property Name="Arlevel" Type="Edm.String" Nullable="false" MaxLength="1" sap:display-format="NonNegative" sap:label="AP Level"/>
+                <Property Name="Remarks" Type="Edm.String" MaxLength="100" sap:display-format="UpperCase" sap:label="AR Remark" sap:quickinfo="Approval Reject Remark"/>
+                <Property Name="Arindicator" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="AR Indicator"/>
+                <Property Name="Ardate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="AR Date"/>
+                <Property Name="Artime" Type="Edm.Time" Precision="0" sap:label="AR TIME" sap:quickinfo="AR Time"/>
+            </EntityType>
+            <EntityType Name="xGMSxAP_CONTRACTType" sap:label="Fetch Contract Data for Annual Plan" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ContractNo"/>
+                    <PropertyRef Name="SalesOffice"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="Material"/>
+                </Key>
+                <Property Name="ContractNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sales Contract"/>
+                <Property Name="SalesOffice" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Sales Office"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Sold-to Party"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="CustomerName" Type="Edm.String" MaxLength="80" sap:label="Name of Customer"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Valid-From Date" sap:quickinfo="Valid-From Date (Outline Agreements, Product Proposals)"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Valid-To Date" sap:quickinfo="Valid-To Date (Outline Agreements, Product Proposals)"/>
+                <Property Name="ACQ" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="ACQ" sap:quickinfo="Create Contract ACQ"/>
+                <Property Name="Uom" Type="Edm.String" MaxLength="3" sap:label="UOM" sap:quickinfo="Unit of Measurement" sap:semantics="unit-of-measure"/>
+                <Property Name="FinancialParamDesc" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Clause Description" sap:quickinfo="Clause Code Description"/>
+                <Property Name="ThresholdPer" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Threshold Perc" sap:quickinfo="Threshold Percentage"/>
+            </EntityType>
+            <EntityType Name="xGMSxAP_DATAType" sap:label="Annual Plan Data" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Period"/>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="SubInterval"/>
+                    <PropertyRef Name="Customer"/>
+                    <PropertyRef Name="ContractNo"/>
+                </Key>
+                <Property Name="Period" Type="Edm.String" Nullable="false" MaxLength="1" sap:display-format="UpperCase" sap:label="Interval" sap:quickinfo="Annual Interval"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="SubInterval" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Sub Interval"/>
+                <Property Name="Customer" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Customer No"/>
+                <Property Name="ContractNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="DocumentNo" sap:quickinfo="Document Number"/>
+                <Property Name="ValidFrom" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Valid From"/>
+                <Property Name="ValidTo" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Valid To"/>
+                <Property Name="Acq" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="ACQ" sap:quickinfo="Create Contract ACQ"/>
+                <Property Name="Aacq" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="AACQ" sap:quickinfo="Adjusted Annual Contractual Quantity"/>
+                <Property Name="Uom" Type="Edm.String" MaxLength="3" sap:label="UOM" sap:quickinfo="Unit of Measurement" sap:semantics="unit-of-measure"/>
+                <Property Name="Mqvalue" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="MQ Value" sap:quickinfo="Quatity Value"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Annual Status"/>
+                <Property Name="Calendaryear" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Calendar Year"/>
+                <Property Name="UpwardFlexper" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="UP Flexibility %" sap:quickinfo="Upward Flexibility Percentage"/>
+                <Property Name="DnwardFlexper" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Downward Flex %" sap:quickinfo="Downward Flexibility %"/>
+                <Property Name="Fmdeficiency" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="FM deficiency" sap:quickinfo="FM Deficiency"/>
+                <Property Name="Makegood" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="Make Good"/>
+                <Property Name="Makeup" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="Make Up"/>
+                <Property Name="Toppercentage" Type="Edm.Decimal" Precision="6" Scale="2" sap:label="Top Per" sap:quickinfo="Take Or Pay"/>
+                <Property Name="SdstartDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="SD Start Date" sap:quickinfo="Shutdown Start Date"/>
+                <Property Name="SdendDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="SD End Date" sap:quickinfo="Shutdown End Date"/>
+                <Property Name="Sddays" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Shutdown Days"/>
+                <Property Name="Sdvalue" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="Uom" sap:label="Shutdown Value"/>
+                <Property Name="Sdreason" Type="Edm.String" MaxLength="100" sap:display-format="UpperCase" sap:label="Shutdown Reason"/>
+                <Property Name="Salesoffice" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Sales Office"/>
+                <Property Name="Createdby" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Created By"/>
+                <Property Name="Createddate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Created Date"/>
+                <Property Name="Createdtime" Type="Edm.Time" Precision="0" sap:label="Created Time"/>
+                <Property Name="Changedby" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Changed By"/>
+                <Property Name="Changeddate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Change Date" sap:quickinfo="Changed Date"/>
+                <Property Name="Changedtime" Type="Edm.Time" Precision="0" sap:label="Change Time" sap:quickinfo="Changed Time"/>
+            </EntityType>
+            <EntityType Name="xGMSxAP_MATERIALType" sap:label="Fetch Material For Annual Planning" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="MaterialDesc"/>
+                </Key>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="MaterialDesc" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Material Description"/>
+                <Property Name="MaterialType" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Material Type"/>
+            </EntityType>
+            <EntityType Name="xGMSxSALESOFFICEType" sap:label="Sales Office Data" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SalesOffice"/>
+                </Key>
+                <Property Name="SalesOffice" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Sales Office"/>
+            </EntityType>
+            <Association Name="to_annualqtr" sap:content-version="1">
+                <End Type="GMS.ANNUALPLANNING_SRV.CreateAnnualQtr" Multiplicity="1" Role="FromRole_to_annualqtr"/>
+                <End Type="GMS.ANNUALPLANNING_SRV.AnnualQtrp" Multiplicity="*" Role="ToRole_to_annualqtr"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_to_annualqtr">
+                        <PropertyRef Name="ValidTo"/>
+                        <PropertyRef Name="ValidFrom"/>
+                    </Principal>
+                    <Dependent Role="ToRole_to_annualqtr">
+                        <PropertyRef Name="ValidTo"/>
+                        <PropertyRef Name="ValidFrom"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="to_annualpln" sap:content-version="1">
+                <End Type="GMS.ANNUALPLANNING_SRV.CreateAnnualplan" Multiplicity="1" Role="FromRole_to_annualpln"/>
+                <End Type="GMS.ANNUALPLANNING_SRV.Annualplan" Multiplicity="*" Role="ToRole_to_annualpln"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_to_annualpln">
+                        <PropertyRef Name="ValidTo"/>
+                        <PropertyRef Name="ValidFrom"/>
+                        <PropertyRef Name="ContractNo"/>
+                        <PropertyRef Name="Customer"/>
+                        <PropertyRef Name="Material"/>
+                    </Principal>
+                    <Dependent Role="ToRole_to_annualpln">
+                        <PropertyRef Name="ValidTo"/>
+                        <PropertyRef Name="ValidFrom"/>
+                        <PropertyRef Name="ContractNo"/>
+                        <PropertyRef Name="Customer"/>
+                        <PropertyRef Name="Material"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="GMS_ANNUALPLANNING_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="xGMSxANNUAL_QT" EntityType="GMS.ANNUALPLANNING_SRV.xGMSxANNUAL_QTType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="xGMSxAP_APPR" EntityType="GMS.ANNUALPLANNING_SRV.xGMSxAP_APPRType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="xGMSxAP_CONTRACT" EntityType="GMS.ANNUALPLANNING_SRV.xGMSxAP_CONTRACTType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="xGMSxAP_DATA" EntityType="GMS.ANNUALPLANNING_SRV.xGMSxAP_DATAType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="xGMSxAP_MATERIAL" EntityType="GMS.ANNUALPLANNING_SRV.xGMSxAP_MATERIALType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="xGMSxSALESOFFICE" EntityType="GMS.ANNUALPLANNING_SRV.xGMSxSALESOFFICEType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="CreateAnnualQtrSet" EntityType="GMS.ANNUALPLANNING_SRV.CreateAnnualQtr" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CreateAnnualplanSet" EntityType="GMS.ANNUALPLANNING_SRV.CreateAnnualplan" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AnnualQtrpSet" EntityType="GMS.ANNUALPLANNING_SRV.AnnualQtrp" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AnnualplanSet" EntityType="GMS.ANNUALPLANNING_SRV.Annualplan" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="to_annualplnSet" Association="GMS.ANNUALPLANNING_SRV.to_annualpln" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CreateAnnualplanSet" Role="FromRole_to_annualpln"/>
+                    <End EntitySet="AnnualplanSet" Role="ToRole_to_annualpln"/>
+                </AssociationSet>
+                <AssociationSet Name="to_annualqtrSet" Association="GMS.ANNUALPLANNING_SRV.to_annualqtr" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CreateAnnualQtrSet" Role="FromRole_to_annualqtr"/>
+                    <End EntitySet="AnnualQtrpSet" Role="ToRole_to_annualqtr"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+                <Annotations Target="GMS.ANNUALPLANNING_SRV.GMS_ANNUALPLANNING_SRV_Entities"
+                    xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                    <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                </Annotations>
+                <atom:link rel="self" href="http://20.119.82.103:8001/sap/opu/odata/gms/ANNUALPLANNING_SRV/$metadata"
+                    xmlns:atom="http://www.w3.org/2005/Atom"/>
+                    <atom:link rel="latest-version" href="http://20.119.82.103:8001/sap/opu/odata/gms/ANNUALPLANNING_SRV/$metadata"
+                        xmlns:atom="http://www.w3.org/2005/Atom"/>
+                    </Schema>
+                </edmx:DataServices>
+            </edmx:Edmx>

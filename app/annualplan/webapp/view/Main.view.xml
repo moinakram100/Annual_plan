@@ -27,7 +27,7 @@
 
          <GenericTile
                 class="sapUiTinyMargin"
-                header="Zonal Review"
+                header="Config"
                 press="onPressZonalReviewTile"
             >
                 <TileContent>

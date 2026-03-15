@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A simple CAP project.",
   "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^4",
+    "@sap-cloud-sdk/http-client": "^4",
+    "@sap-cloud-sdk/resilience": "^4.5.1",
     "@sap/cds": "^9",
     "express": "^4"
   },
@@ -17,5 +20,27 @@
   "private": true,
   "workspaces": [
     "app/*"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "GMSANNUALPLANNING_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/GMSANNUALPLANNING_SRV",
+        "[production]": {
+          "credentials": {
+            "destination": "Ingenx_OData_2023",
+            "path": "/sap/opu/odata/gms/ANNUALPLANNING_SRV"
+          }
+        },
+        "[development]": {
+          "credentials": {
+            "destination": "SandboxPO_2023",
+            "path": "/sap/opu/odata/gms/ANNUALPLANNING_SRV"
+          }
+        },
+        "csrf": true,
+        "csrfInBatch": true
+      }
+    }
+  }
 }

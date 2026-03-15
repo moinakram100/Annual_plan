@@ -2,27 +2,28 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <!--
-        Material Value Help Dialog
-        Shows list of available materials for the Corporate user to select.
-        Already-configured materials are shown as disabled.
-    -->
     <SelectDialog
         id="materialVHDialog"
         title="Select Material"
         search=".onMaterialVHSearch"
+        liveChange=".onMaterialVHSearch"
         confirm=".onMaterialVHConfirm"
+        growing="true"
+        growingThreshold="20"
         cancel=".onMaterialVHCancel"
         items="{
-            path: 'qtrPct>/materialValueHelp',
+            path: '/xGMSxAP_MATERIAL',
             templateShareable: false
         }">
+
         <StandardListItem
-            title="{qtrPct>text}"
-            description="{qtrPct>desc}"
+            title="{Material}"
+            description="{MaterialDesc}"
+            info="{MaterialType}"
             icon="sap-icon://product"
             type="Active"
-            enabled="{= !${qtrPct>alreadyUsed} }"/>
+            />
+
     </SelectDialog>
 
 </core:FragmentDefinition>
